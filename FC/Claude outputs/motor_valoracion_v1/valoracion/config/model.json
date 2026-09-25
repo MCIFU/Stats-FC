@@ -1,5 +1,5 @@
 {
-  "model_version": "rating_model_v1.0",
+  "model_version": "rating_model_v1.1",
   "model_date": "2026-09-25",
   "notes": "Primera versión de prueba. Todos los valores son parámetros propios del modelo, no oficiales.",
   "rating_blocks": {
@@ -211,7 +211,13 @@
       "center": 1500,
       "points_per_unit": 10,
       "center_value": 70
-    }
+    },
+    "unknown_team_strength": 65,
+    "k_team": 20,
+    "goal_margin": true,
+    "comment_team": "Elo de EQUIPOS: arranca en 1500 + 4*(fuerza de su liga-80); rivales sin liga conocida (copas, ligas fuera de tus Excel) = fuerza 65. K=20 × (ln(|dif. goles|+1)+1). Se arrastra de 25-26 a 26-27.",
+    "comment_opponent": "OPPONENT_STRENGTH (0-100) = fuerza de su liga + (80 + (Elo medio del rival antes del partido, ponderado por minutos - 1500)/4 - fuerza de su liga) × n/(n+10). Misma escala que competition_strength; con pocos partidos se acerca a la de su liga.",
+    "opponent_shrink_matches": 10
   },
   "form": {
     "windows": [
@@ -220,7 +226,9 @@
       20
     ],
     "decay_half_life_matches": 6,
-    "days_window_365": 365
+    "days_window_365": 365,
+    "min_matches": 3,
+    "comment": "FORM_n = media de la nota de partido de los últimos n partidos (≤365 días), semivida 6 partidos, ponderada por minutos. FORM = FORM_10."
   },
   "consistency": {
     "min_matches": 8,
@@ -243,5 +251,21 @@
     "club_min_players": 5,
     "league_min_players": 100,
     "message": "Liga no verificable: club con <5 jugadores en esa liga (posible ascenso/descenso o liga homónima de otro país, p.ej. Bundesliga AUT, Ligue 1 TUN). Sin CA hasta verificar."
+  },
+  "match_rating": {
+    "sofa_center": 6.8,
+    "sofa_center_value": 50,
+    "sofa_points_per_unit": 30,
+    "min_minutes": 15,
+    "ga_scale": 1.4,
+    "w_attack_by_group": {
+      "ST": 0.85,
+      "AMW": 0.8,
+      "MID": 0.6,
+      "FB": 0.4,
+      "CB": 0.25,
+      "GK": 0.0
+    },
+    "comment": "Nota de partido 0-100. Si hay nota SofaScore: 50 + 30*(nota-6.8). Si no: w_ataque*percentil((G+A)/90 en su posición) + (1-w_ataque)*100*exp(-goles encajados con él en el campo/1.4)."
   }
 }

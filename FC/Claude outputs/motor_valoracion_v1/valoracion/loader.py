@@ -50,3 +50,50 @@ def read_season(path, season):
         d["source_sheet"], d["source_row"] = w._sheet, w._row
         long.append(d)
     return pd.concat(long, ignore_index=True), w
+
+
+# ---------------------------------------------------------------- datos externos (5 grandes ligas)
+def _key(df):
+    return df.source_sheet.astype(str) + "|" + pd.to_numeric(df.source_row, errors="coerce").astype("Int64").astype(str)
+
+
+def _pid_map(w):
+    return dict(zip(w._sheet.astype(str) + "|" + w._row.astype(str), w.player_id))
+
+
+def read_matches(path, w, season, club_strength=None, notes_path=None):
+    """partidos_big5.csv (auxiliares/tmapi/descargar_partidos.py) -> formato del motor para una temporada.
+    club_strength: {club_id TM: competition_strength} para la Elo inicial de cada equipo.
+    notes_path: notas_big5.csv (SofaScore) -> columna sofa_rating por jugador y día."""
+    m = pd.read_csv(path, dtype={"club_id": str, "opponent_id": str, "tm_id": str})
+    m = m[m.season == season].copy()
+    m["player_id"] = _key(m).map(_pid_map(w))
+    m = m[m.player_id.notna()]
+    m["date"] = pd.to_datetime(m.date)
+    m["club_key"] = m.club_id.fillna(m.club)
+    m["opp_key"] = m.opponent_id.fillna(m.opponent)
+    cs = club_strength or {}
+    m["club_strength"] = m.club_id.map(cs)
+    m["opp_strength"] = m.opponent_id.map(cs)
+    m["home"] = m.home.map(lambda x: np.nan if pd.isna(x) else str(x).lower() in ("true", "1", "1.0"))
+    for c in ["gf", "ga", "Min", "G", "A", "GC"]:
+        m[c] = pd.to_numeric(m.get(c), errors="coerce")
+    if notes_path:
+        n = pd.read_csv(notes_path)
+        n = n[n.season == season].copy()
+        n["player_id"] = _key(n).map(_pid_map(w))
+        n["day"] = pd.to_datetime(n.date).dt.normalize()
+        n = n.dropna(subset=["player_id", "rating"]).drop_duplicates(["player_id", "day"])
+        m["day"] = m.date.dt.normalize()
+        m = m.merge(n[["player_id", "day", "rating"]].rename(columns={"rating": "sofa_rating"}), on=["player_id", "day"], how="left")
+        m = m.drop(columns="day")
+    return m
+
+
+def read_advanced(path, w, season, metric_names):
+    """avanzadas_big5.csv (auxiliares/sofascore/descargar_avanzadas.py) -> player_id + métricas avanzadas."""
+    a = pd.read_csv(path)
+    a = a[(a.season == season) & a.match_how.notna()].copy()
+    a["player_id"] = _key(a).map(_pid_map(w))
+    cols = [c for c in metric_names if c in a]
+    return a.dropna(subset=["player_id"])[["player_id"] + cols]

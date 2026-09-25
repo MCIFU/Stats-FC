@@ -350,9 +350,18 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
 
     # ---------------- ELO_PARTIDOS
     wm = wb.create_sheet("ELO_PARTIDOS")
-    mcols = ["player_id", "date", "block", "club", "opponent", "home", "gf", "ga", "Min", "G", "A", "match_rating", "opp_elo", "elo_before", "expected", "score", "elo_delta"]
+    mcols = ["name", "season", "date", "block", "club", "opponent", "home", "gf", "ga", "Min", "G", "A", "GC", "sofa_rating", "match_rating",
+             "opp_elo", "elo_before", "expected", "score", "elo_delta"]
     if matches is not None and len(matches):
-        write_df(wm, matches[[c for c in mcols if c in matches]], freeze="C2")
+        mx = matches.copy()
+        if "name" not in mx:
+            mx["name"] = mx.player_id.map(b.drop_duplicates("player_id").set_index("player_id").name)
+        mx["date"] = pd.to_datetime(mx.date).dt.strftime("%Y-%m-%d")
+        for c in ("match_rating", "opp_elo", "elo_before", "expected", "score", "elo_delta"):
+            if c in mx:
+                mx[c] = pd.to_numeric(mx[c], errors="coerce").round(3 if c in ("expected", "score") else 1)
+        mx = mx.sort_values(["name", "date"])
+        write_df(wm, mx[[c for c in mcols if c in mx]], freeze="C2")
     else:
         hdr(wm, 1, mcols)
         wm["A3"] = "SIN DATOS POR PARTIDO EN ESTA PRUEBA → ELO, FORM y CONSISTENCY = UNKNOWN (no se inventan ni se derivan del CA)."
@@ -614,10 +623,25 @@ def build_leeme(ws, cfg, b, source_note):
         ("PARAMETROS: celdas amarillas editables. CA/PA/SCOUT de VALORACION son fórmulas y se recalculan solas. Percentiles, atributos y roles son valores: se regeneran con el script (auxiliares/valoracion).", F_BASE),
         ("", None),
         ("LIMITACIONES DE ESTA PRUEBA (importante)", F_BOLD),
-        ("1. Tus Excel tienen PJ, minutos, G, A (y GC/CS en porteros) por competición. NO tienen xG, pases, entradas, regates, etc. Esos atributos salen UNKNOWN (gris), no 0.", F_BASE),
-        ("2. FBref perdió sus estadísticas avanzadas de Opta en enero de 2026. Para rellenarlas hará falta otra fuente (p. ej. FotMob/Sofascore por partido o el histórico de FBref).", F_BASE),
-        ("3. Por eso el CA de esta prueba se apoya en: producción de goles/asistencias por 90, peso en el equipo (minutos), rendimiento continental y, en defensas/porteros, goles encajados. La 'Cobertura datos' dice qué parte del modelo de cada posición tiene dato: en centrales y medios es baja → confianza baja. Es intencionado.", F_BASE),
-        ("4. Sin datos por partido: ELO, FORM, CONSISTENCY y OPPONENT_STRENGTH = UNKNOWN. El motor está programado; falta alimentar partidos.", F_BASE),
+    ]
+    has_adv = any(c in b and b[c].notna().any() for c in ("npxg_p90", "tackles_won_p90", "pass_cmp_pct"))
+    has_elo = "ELO" in b and b.ELO.notna().any()
+    if has_adv:
+        n_adv = int(b.npxg_p90.notna().sum()) if "npxg_p90" in b else 0
+        lines += [("1. Métricas avanzadas (xG, tiros, pases, regates, entradas, duelos, paradas…) de SofaScore/Opta SOLO para las 5 grandes ligas "
+                   f"({n_adv} jugadores-temporada). Resto de ligas: UNKNOWN (gris), no 0.", F_BASE),
+                  ("2. SofaScore no da pases progresivos, conducciones progresivas, SCA ni toques en el área: esas métricas siguen UNKNOWN. npxG = xG - 0.79 × penaltis lanzados (aprox.).", F_BASE),
+                  ("3. Fuera de las 5 grandes el CA se apoya en goles/asistencias por 90, minutos, rendimiento continental y goles encajados: su 'Cobertura datos' es menor y la confianza también.", F_BASE)]
+    else:
+        lines += [("1. Tus Excel tienen PJ, minutos, G, A (y GC/CS en porteros) por competición. NO tienen xG, pases, entradas, regates, etc. Esos atributos salen UNKNOWN (gris), no 0.", F_BASE),
+                  ("2. FBref perdió sus estadísticas avanzadas de Opta en enero de 2026. Fuente preparada: auxiliares/sofascore/descargar_avanzadas.py (SofaScore).", F_BASE),
+                  ("3. Por eso el CA se apoya en: producción de goles/asistencias por 90, peso en el equipo (minutos), rendimiento continental y, en defensas/porteros, goles encajados. La 'Cobertura datos' dice qué parte del modelo de cada posición tiene dato.", F_BASE)]
+    if has_elo:
+        lines += [(f"4. ELO, FORM, CONSISTENCY y OPPONENT_STRENGTH: partido a partido de Transfermarkt SOLO en las 5 grandes ({int(b.ELO.notna().sum())} jugadores-temporada). "
+                   "Resto: UNKNOWN. La fuerza del rival sale de un Elo de equipos calculado con los resultados (arranca según la liga y se arrastra de 25-26 a 26-27).", F_BASE)]
+    else:
+        lines += [("4. Sin datos por partido: ELO, FORM, CONSISTENCY y OPPONENT_STRENGTH = UNKNOWN. Descarga preparada: auxiliares/tmapi/descargar_partidos.py.", F_BASE)]
+    lines += [
         ("5. % minutos del equipo y la fuerza del equipo son PROXIES calculados con tus propios datos (máx. PJ de un compañero, goles de la plantilla, GC de sus porteros).", F_BASE),
         ("6. Traspasos: tus Excel fusionan clubes del mismo continente en una fila (regla del 25/09), así que no se puede separar Club A / Club B.", F_BASE),
         ("10. SIMILARES usa solo 4-6 métricas básicas (goles, asistencias, minutos, continental): la similitud es orientativa hasta tener estadísticas avanzadas.", F_BASE),
