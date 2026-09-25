@@ -1,0 +1,440 @@
+{
+ "_doc": "competition_strength 0-100 = VALORACIÓN PROPIA DEL MODELO v1 (no ranking oficial FIFA/UEFA). Editable y puede cambiar por temporada. data_quality se calcula sola según cuántos jugadores de esa liga hay en tu Excel (ver model.json > data_quality_by_players).",
+ "season_ref": "2025-26 y 2026-27 (misma tabla en v1)",
+ "leagues": {
+  "Premier": {
+   "strength": 95,
+   "country": "ENG",
+   "confederation": "UEFA"
+  },
+  "LaLiga": {
+   "strength": 91,
+   "country": "ESP",
+   "confederation": "UEFA"
+  },
+  "Serie A": {
+   "strength": 89,
+   "country": "ITA",
+   "confederation": "UEFA"
+  },
+  "Bundesliga": {
+   "strength": 89,
+   "country": "GER",
+   "confederation": "UEFA"
+  },
+  "Ligue 1": {
+   "strength": 85,
+   "country": "FRA",
+   "confederation": "UEFA"
+  },
+  "Portugal": {
+   "strength": 80,
+   "country": "POR",
+   "confederation": "UEFA"
+  },
+  "Eredivisie": {
+   "strength": 78,
+   "country": "NED",
+   "confederation": "UEFA"
+  },
+  "Liga Belga": {
+   "strength": 76,
+   "country": "BEL",
+   "confederation": "UEFA"
+  },
+  "Süper Lig": {
+   "strength": 74,
+   "country": "TUR",
+   "confederation": "UEFA"
+  },
+  "Championship": {
+   "strength": 74,
+   "country": "ENG",
+   "confederation": "UEFA"
+  },
+  "Scottish Premiership": {
+   "strength": 68,
+   "country": "SCO",
+   "confederation": "UEFA"
+  },
+  "Ekstraklasa": {
+   "strength": 66,
+   "country": "POL",
+   "confederation": "UEFA"
+  },
+  "Premier Liga": {
+   "strength": 72,
+   "country": "RUS",
+   "confederation": "UEFA"
+  },
+  "Super League 1": {
+   "strength": 70,
+   "country": "GRE",
+   "confederation": "UEFA"
+  },
+  "Super League": {
+   "strength": 71,
+   "country": "SUI",
+   "confederation": "UEFA"
+  },
+  "2. Bundesliga": {
+   "strength": 70,
+   "country": "GER",
+   "confederation": "UEFA"
+  },
+  "Superliga": {
+   "strength": 70,
+   "country": "DEN",
+   "confederation": "UEFA"
+  },
+  "Superliga Championship round": {
+   "strength": 70,
+   "country": "DEN",
+   "confederation": "UEFA"
+  },
+  "Superliga Relegation round": {
+   "strength": 70,
+   "country": "DEN",
+   "confederation": "UEFA"
+  },
+  "Chance Liga": {
+   "strength": 69,
+   "country": "CZE",
+   "confederation": "UEFA"
+  },
+  "LaLiga2": {
+   "strength": 67,
+   "country": "ESP",
+   "confederation": "UEFA"
+  },
+  "Serie B": {
+   "strength": 66,
+   "country": "ITA",
+   "confederation": "UEFA"
+  },
+  "SuperSport HNL": {
+   "strength": 66,
+   "country": "CRO",
+   "confederation": "UEFA"
+  },
+  "Eliteserien": {
+   "strength": 66,
+   "country": "NOR",
+   "confederation": "UEFA"
+  },
+  "Ligue 2": {
+   "strength": 64,
+   "country": "FRA",
+   "confederation": "UEFA"
+  },
+  "Super liga Srbije": {
+   "strength": 64,
+   "country": "SRB",
+   "confederation": "UEFA"
+  },
+  "Allsvenskan": {
+   "strength": 64,
+   "country": "SWE",
+   "confederation": "UEFA"
+  },
+  "League One": {
+   "strength": 62,
+   "country": "ENG",
+   "confederation": "UEFA"
+  },
+  "Keuken Kampioen Divisie": {
+   "strength": 62,
+   "country": "NED",
+   "confederation": "UEFA"
+  },
+  "Cyprus League": {
+   "strength": 62,
+   "country": "CYP",
+   "confederation": "UEFA"
+  },
+  "Ligat ha'Al": {
+   "strength": 62,
+   "country": "ISR",
+   "confederation": "UEFA"
+  },
+  "Ligat ha'Al -  Championship round": {
+   "strength": 62,
+   "country": "ISR",
+   "confederation": "UEFA"
+  },
+  "Ligat ha'Al - Relegation round": {
+   "strength": 62,
+   "country": "ISR",
+   "confederation": "UEFA"
+  },
+  "SuperLiga - Championship group": {
+   "strength": 62,
+   "country": "ROU",
+   "confederation": "UEFA"
+  },
+  "Liga Portugal 2": {
+   "strength": 60,
+   "country": "POR",
+   "confederation": "UEFA"
+  },
+  "Nemzeti Bajnokság": {
+   "strength": 60,
+   "country": "HUN",
+   "confederation": "UEFA"
+  },
+  "efbet Liga": {
+   "strength": 58,
+   "country": "BUL",
+   "confederation": "UEFA"
+  },
+  "Niké Liga": {
+   "strength": 58,
+   "country": "SVK",
+   "confederation": "UEFA"
+  },
+  "Challenger Pro League": {
+   "strength": 58,
+   "country": "BEL",
+   "confederation": "UEFA"
+  },
+  "1.Lig": {
+   "strength": 58,
+   "country": "TUR",
+   "confederation": "UEFA"
+  },
+  "League Two": {
+   "strength": 55,
+   "country": "ENG",
+   "confederation": "UEFA"
+  },
+  "Primera Federación - Grupo I": {
+   "strength": 55,
+   "country": "ESP",
+   "confederation": "UEFA"
+  },
+  "Primera Federación - Grupo II": {
+   "strength": 55,
+   "country": "ESP",
+   "confederation": "UEFA"
+  },
+  "Serie C - Girone A": {
+   "strength": 55,
+   "country": "ITA",
+   "confederation": "UEFA"
+  },
+  "Serie C - Girone B": {
+   "strength": 55,
+   "country": "ITA",
+   "confederation": "UEFA"
+  },
+  "Veikkausliiga Championship Group": {
+   "strength": 55,
+   "country": "FIN",
+   "confederation": "UEFA"
+  },
+  "Betclic 1 Liga": {
+   "strength": 52,
+   "country": "POL",
+   "confederation": "UEFA"
+  },
+  "Scottish Championship": {
+   "strength": 52,
+   "country": "SCO",
+   "confederation": "UEFA"
+  },
+  "Tweede Divisie": {
+   "strength": 40,
+   "country": "NED",
+   "confederation": "UEFA"
+  },
+  "National League North": {
+   "strength": 40,
+   "country": "ENG",
+   "confederation": "UEFA"
+  },
+  "Derde Divisie B": {
+   "strength": 35,
+   "country": "NED",
+   "confederation": "UEFA"
+  },
+  "Brasileirão": {
+   "strength": 80,
+   "country": "BRA",
+   "confederation": "CONMEBOL"
+  },
+  "Liga Argentina": {
+   "strength": 74,
+   "country": "ARG",
+   "confederation": "CONMEBOL"
+  },
+  "Liga AUF Apertura": {
+   "strength": 64,
+   "country": "URU",
+   "confederation": "CONMEBOL"
+  },
+  "Liga AUF Clausura": {
+   "strength": 64,
+   "country": "URU",
+   "confederation": "CONMEBOL"
+  },
+  "Liga DIMAYOR Apertura": {
+   "strength": 65,
+   "country": "COL",
+   "confederation": "CONMEBOL"
+  },
+  "Liga Dimayor Finalización": {
+   "strength": 65,
+   "country": "COL",
+   "confederation": "CONMEBOL"
+  },
+  "Torneo DIMAYOR I": {
+   "strength": 65,
+   "country": "COL",
+   "confederation": "CONMEBOL"
+  },
+  "LigaPro Serie A": {
+   "strength": 65,
+   "country": "ECU",
+   "confederation": "CONMEBOL"
+  },
+  "Liga de Primera": {
+   "strength": 62,
+   "country": "CHI",
+   "confederation": "CONMEBOL"
+  },
+  "Campeonato Brasileiro Série B": {
+   "strength": 62,
+   "country": "BRA",
+   "confederation": "CONMEBOL"
+  },
+  "Campeonato Brasileiro Série C": {
+   "strength": 52,
+   "country": "BRA",
+   "confederation": "CONMEBOL"
+  },
+  "Primera Nacional": {
+   "strength": 58,
+   "country": "ARG",
+   "confederation": "CONMEBOL"
+  },
+  "Liga 1 Apertura": {
+   "strength": 58,
+   "country": "PER",
+   "confederation": "CONMEBOL"
+  },
+  "Liga 1 Clausura": {
+   "strength": 58,
+   "country": "PER",
+   "confederation": "CONMEBOL"
+  },
+  "Liga FUTVE Apertura": {
+   "strength": 55,
+   "country": "VEN",
+   "confederation": "CONMEBOL"
+  },
+  "Liga FUTVE Clausura": {
+   "strength": 55,
+   "country": "VEN",
+   "confederation": "CONMEBOL"
+  },
+  "División Profesional": {
+   "strength": 58,
+   "country": "PAR/BOL",
+   "confederation": "CONMEBOL",
+   "note": "Nombre ambiguo en TM (país no identificable solo con el nombre): fuerza genérica."
+  },
+  "Segunda División - Fase Regular": {
+   "strength": 52,
+   "country": "?",
+   "confederation": "?",
+   "note": "Nombre ambiguo en TM (país no identificable solo con el nombre): fuerza genérica."
+  },
+  "MLS": {
+   "strength": 71,
+   "country": "USA",
+   "confederation": "CONCACAF"
+  },
+  "Liga MX": {
+   "strength": 72,
+   "country": "MEX",
+   "confederation": "CONCACAF"
+  },
+  "Liga de Ascenso": {
+   "strength": 55,
+   "country": "MEX",
+   "confederation": "CONCACAF"
+  },
+  "USL Championship": {
+   "strength": 58,
+   "country": "USA",
+   "confederation": "CONCACAF"
+  },
+  "Primera División Apertura": {
+   "strength": 56,
+   "country": "?",
+   "confederation": "CONCACAF/CONMEBOL",
+   "note": "Nombre ambiguo en TM (país no identificable solo con el nombre): fuerza genérica."
+  },
+  "Primera División Clausura": {
+   "strength": 56,
+   "country": "?",
+   "confederation": "CONCACAF/CONMEBOL",
+   "note": "Nombre ambiguo en TM (país no identificable solo con el nombre): fuerza genérica."
+  },
+  "Saudi Pro": {
+   "strength": 70,
+   "country": "KSA",
+   "confederation": "AFC"
+  },
+  "Saudi First Division League": {
+   "strength": 52,
+   "country": "KSA",
+   "confederation": "AFC"
+  },
+  "J1 League": {
+   "strength": 71,
+   "country": "JPN",
+   "confederation": "AFC"
+  },
+  "J2 League": {
+   "strength": 60,
+   "country": "JPN",
+   "confederation": "AFC"
+  },
+  "K League 1": {
+   "strength": 66,
+   "country": "KOR",
+   "confederation": "AFC"
+  },
+  "K League 2": {
+   "strength": 55,
+   "country": "KOR",
+   "confederation": "AFC"
+  },
+  "UAE Pro League": {
+   "strength": 62,
+   "country": "UAE",
+   "confederation": "AFC"
+  },
+  "Qatar Stars League": {
+   "strength": 60,
+   "country": "QAT",
+   "confederation": "AFC"
+  },
+  "Chinese Super League": {
+   "strength": 60,
+   "country": "CHN",
+   "confederation": "AFC"
+  },
+  "A-League Men": {
+   "strength": 62,
+   "country": "AUS",
+   "confederation": "AFC"
+  },
+  "Botola Pro Inwi": {
+   "strength": 58,
+   "country": "MAR",
+   "confederation": "CAF"
+  }
+ }
+}

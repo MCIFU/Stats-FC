@@ -1,0 +1,210 @@
+{
+  "_doc": "Atributos DERIVADOS DE DATOS (0-100 = media ponderada de percentiles). No son medidas físicas ni psicológicas. Dentro de un atributo, métricas del mismo corr_group comparten peso para no contar doble.",
+  "attributes": {
+    "GOAL_OUTPUT": {
+      "label": "Producción goleadora",
+      "family": "ATAQUE",
+      "components": {
+        "goals_p90": 0.55,
+        "npxg_p90": 0.45
+      }
+    },
+    "FINISHING": {
+      "label": "Definición",
+      "family": "ATAQUE",
+      "components": {
+        "npg_minus_npxg_p90": 0.65,
+        "sot_pct": 0.35
+      }
+    },
+    "SHOT_QUALITY": {
+      "label": "Calidad de tiro",
+      "family": "ATAQUE",
+      "components": {
+        "npxg_per_shot": 1.0
+      }
+    },
+    "BOX_PRESENCE": {
+      "label": "Presencia en el área",
+      "family": "ATAQUE",
+      "components": {
+        "touches_box_p90": 0.6,
+        "shots_p90": 0.4
+      }
+    },
+    "ASSIST_OUTPUT": {
+      "label": "Producción asistente",
+      "family": "CREACIÓN",
+      "components": {
+        "assists_p90": 0.55,
+        "xa_p90": 0.45
+      }
+    },
+    "CHANCE_CREATION": {
+      "label": "Creación de ocasiones",
+      "family": "CREACIÓN",
+      "components": {
+        "xa_p90": 0.3,
+        "key_passes_p90": 0.25,
+        "sca_p90": 0.25,
+        "passes_box_p90": 0.2
+      }
+    },
+    "PASSING": {
+      "label": "Pase",
+      "family": "PASE",
+      "components": {
+        "pass_cmp_pct": 0.3,
+        "prog_passes_p90": 0.2,
+        "final_third_passes_p90": 0.15,
+        "passes_box_p90": 0.15,
+        "key_passes_p90": 0.1,
+        "long_cmp_pct": 0.1
+      }
+    },
+    "PROGRESSIVE_PASSING": {
+      "label": "Pase progresivo",
+      "family": "PASE",
+      "components": {
+        "prog_passes_p90": 0.6,
+        "final_third_passes_p90": 0.4
+      }
+    },
+    "LONG_PASSING": {
+      "label": "Pase largo",
+      "family": "PASE",
+      "components": {
+        "long_cmp_pct": 1.0
+      }
+    },
+    "CROSSING": {
+      "label": "Centro",
+      "family": "PASE",
+      "components": {
+        "crosses_cmp_p90": 1.0
+      }
+    },
+    "CARRYING": {
+      "label": "Conducción",
+      "family": "POSESIÓN",
+      "components": {
+        "prog_carries_p90": 1.0
+      }
+    },
+    "DRIBBLING": {
+      "label": "Regate",
+      "family": "POSESIÓN",
+      "components": {
+        "take_ons_won_p90": 0.6,
+        "take_on_pct": 0.4
+      }
+    },
+    "BALL_RETENTION": {
+      "label": "Seguridad con balón",
+      "family": "POSESIÓN",
+      "components": {
+        "miscontrols_disp_p90": 1.0
+      }
+    },
+    "TACKLING": {
+      "label": "Entrada",
+      "family": "DEFENSA",
+      "components": {
+        "tackles_won_p90": 0.6,
+        "tackle_pct": 0.4
+      }
+    },
+    "INTERCEPTING": {
+      "label": "Anticipación / intercepción",
+      "family": "DEFENSA",
+      "components": {
+        "interceptions_p90": 1.0
+      }
+    },
+    "AERIAL": {
+      "label": "Juego aéreo",
+      "family": "DEFENSA",
+      "components": {
+        "aerial_pct": 0.5,
+        "aerials_won_p90": 0.5
+      }
+    },
+    "PRESSING": {
+      "label": "Presión",
+      "family": "DEFENSA",
+      "components": {
+        "pressures_att3_p90": 0.6,
+        "recoveries_p90": 0.4
+      }
+    },
+    "BOX_DEFENDING": {
+      "label": "Defensa del área",
+      "family": "DEFENSA",
+      "components": {
+        "blocks_clear_p90": 0.7,
+        "errors_p90": 0.3
+      }
+    },
+    "TEAM_DEFENCE": {
+      "label": "Solidez defensiva del equipo (dato de equipo)",
+      "family": "CONTEXTO",
+      "components": {
+        "team_gc_p90": 1.0
+      }
+    },
+    "USAGE": {
+      "label": "Peso en el equipo (minutos)",
+      "family": "USO",
+      "components": {
+        "min_share": 0.6,
+        "min_per_app": 0.4
+      }
+    },
+    "BIG_STAGE": {
+      "label": "Rendimiento continental",
+      "family": "CONTEXTO",
+      "components": {
+        "cont_ga_p90": 0.6,
+        "cont_min_share": 0.4
+      }
+    },
+    "GK_RESULTS": {
+      "label": "Resultados en portería (GC y CS)",
+      "family": "PORTERÍA",
+      "components": {
+        "gk_gc_p90": 0.5,
+        "gk_cs_pct": 0.5
+      }
+    },
+    "SHOT_STOPPING": {
+      "label": "Paradas",
+      "family": "PORTERÍA",
+      "components": {
+        "gk_psxg_minus_ga_p90": 0.6,
+        "gk_save_pct": 0.4
+      }
+    },
+    "CROSS_HANDLING": {
+      "label": "Juego aéreo (POR)",
+      "family": "PORTERÍA",
+      "components": {
+        "gk_crosses_stopped_pct": 1.0
+      }
+    },
+    "SWEEPING": {
+      "label": "Salidas / portero-líbero",
+      "family": "PORTERÍA",
+      "components": {
+        "gk_def_actions_outside_p90": 1.0
+      }
+    },
+    "DISTRIBUTION": {
+      "label": "Distribución",
+      "family": "PORTERÍA",
+      "components": {
+        "gk_launch_cmp_pct": 0.5,
+        "pass_cmp_pct": 0.5
+      }
+    }
+  }
+}

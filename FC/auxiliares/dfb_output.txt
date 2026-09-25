@@ -1,0 +1,188 @@
+Hoffenheim|Oliver Baumann|2|210|0|0
+Hoffenheim|Albian Hajdari|1|120|0|0
+Hoffenheim|Ozan Kabak|1|35|0|0
+Hoffenheim|Robin Hranac|2|172|0|0
+Hoffenheim|Koki Machida|1|90|0|0
+Hoffenheim|Arthur Chaves|1|3|0|0
+Hoffenheim|Bernardo|2|210|0|0
+Hoffenheim|Vladimír Coufal|1|90|0|0
+Hoffenheim|Kevin Akpoguma|1|12|0|0
+Hoffenheim|Leon Avdullahu|2|210|0|0
+Hoffenheim|Wouter Burger|2|139|1|1
+Hoffenheim|Alexander Prass|2|119|0|0
+Hoffenheim|Muhammed Damar|1|11|0|1
+Hoffenheim|Umut Tohumcu|2|37|0|0
+Hoffenheim|Grischa Prömel|1|71|1|0
+Hoffenheim|Bazoumana Touré|2|199|0|0
+Hoffenheim|Fisnik Asllani|2|164|1|1
+Hoffenheim|Tim Lemperle|2|152|0|0
+Hoffenheim|Max Moerstedt|1|24|2|0
+Hoffenheim|Andrej Kramaric|2|199|1|2
+Hoffenheim|Ihlas Bebou|1|43|0|0
+Wolfsburgo|Kamil Grabara|1|90|0|0
+Wolfsburgo|Marius Müller|1|90|0|0
+Wolfsburgo|Konstantinos Koulierakis|2|149|0|0
+Wolfsburgo|Saël Kumbedi|1|90|0|0
+Wolfsburgo|Joakim Maehle|2|107|0|0
+Wolfsburgo|Jenson Seelt|1|36|0|0
+Wolfsburgo|Moritz Jenz|1|80|1|0
+Wolfsburgo|Aaron Zehnter|1|73|0|0
+Wolfsburgo|Kilian Fischer|1|90|0|1
+Wolfsburgo|Denis Vavro|1|10|0|0
+Wolfsburgo|Lovro Majer|1|59|1|2
+Wolfsburgo|Mattias Svanberg|1|31|2|1
+Wolfsburgo|Vini Souza|2|159|0|0
+Wolfsburgo|Bence Dárdai|2|21|0|0
+Wolfsburgo|Maximilian Arnold|2|180|0|0
+Wolfsburgo|Christian Eriksen|1|90|0|0
+Wolfsburgo|Yannick Gerhardt|1|31|0|0
+Wolfsburgo|Mohamed Amoura|1|90|0|0
+Wolfsburgo|Dzenan Pejcinovic|2|135|3|1
+Wolfsburgo|Patrick Wimmer|2|135|0|3
+Wolfsburgo|Adam Daghim|1|45|0|0
+Wolfsburgo|Vaclav Cerny|1|31|1|0
+Wolfsburgo|Andreas Skov Olsen|2|104|1|0
+Werder Bremen|Michael Zetterer|1|90|0|0
+Werder Bremen|Marco Friedl|1|90|0|0
+Werder Bremen|Felix Agu|1|90|0|0
+Werder Bremen|Olivier Deman|1|11|0|0
+Werder Bremen|Maximilian Wöber|1|79|0|0
+Werder Bremen|Niklas Stark|1|90|0|0
+Werder Bremen|Romano Schmid|1|90|0|0
+Werder Bremen|Senne Lynen|1|90|0|0
+Werder Bremen|Patrice Covic|1|72|0|0
+Werder Bremen|Leonardo Bittencourt|1|54|0|0
+Werder Bremen|Samuel Mbangula|1|30|0|0
+Werder Bremen|Justin Njinmah|1|60|0|0
+Werder Bremen|Marco Grüll|1|90|0|0
+Werder Bremen|Keke Topp|1|18|0|0
+Unión Berlín|Frederik Rönnow|3|260|0|0
+Unión Berlín|Matheo Raab|1|40|0|0
+Unión Berlín|Leopold Querfeld|3|300|4|0
+Unión Berlín|Danilho Doekhi|3|300|2|0
+Unión Berlín|Diogo Leite|2|210|0|1
+Unión Berlín|Tom Rothe|3|293|0|0
+Unión Berlín|Stanley Nsoki|1|2|0|0
+Unión Berlín|Christopher Trimmel|2|166|0|1
+Unión Berlín|Aljoscha Kemlein|2|149|0|0
+Unión Berlín|András Schäfer|3|234|0|0
+Unión Berlín|Woo-yeong Jeong|3|148|1|0
+Unión Berlín|Alex Král|1|22|0|0
+Unión Berlín|Rani Khedira|3|300|0|0
+Unión Berlín|Janik Haberer|3|156|0|1
+Unión Berlín|Robert Skov|1|68|1|0
+Unión Berlín|Ilyas Ansah|3|235|0|0
+Unión Berlín|Andrej Ilic|2|157|1|2
+Unión Berlín|Livan Burcu|1|7|0|0
+Unión Berlín|Oliver Burke|2|121|0|0
+Unión Berlín|Tim Skarke|3|79|0|0
+Unión Berlín|Dmytro Bogdanov|1|53|0|1
+Augsburgo|Finn Dahmen|1|90|0|0
+Augsburgo|Nediljko Labrovic|1|90|0|0
+Augsburgo|Chrislain Matsima|2|170|0|0
+Augsburgo|Keven Schlotterbeck|2|93|0|0
+Augsburgo|Cédric Zesiger|2|97|0|0
+Augsburgo|Dimitrios Giannoulis|2|75|0|0
+Augsburgo|Marius Wolf|2|150|0|0
+Augsburgo|Jeffrey Gouweleeuw|1|90|0|0
+Augsburgo|Alexis Claude-Maurice|1|13|0|0
+Augsburgo|Fabian Rieder|1|45|0|0
+Augsburgo|Mert Kömür|2|121|0|0
+Augsburgo|Anton Kade|1|77|0|0
+Augsburgo|Han-Noah Massengo|1|90|0|0
+Augsburgo|Kristijan Jakic|2|180|0|0
+Augsburgo|Elvis Rexhbecaj|1|90|0|0
+Augsburgo|Robin Fellhauer|2|135|0|1
+Augsburgo|Ismaël Gharbi|1|90|0|0
+Augsburgo|Phillip Tietz|2|122|0|0
+Augsburgo|Samuel Essende|2|58|1|0
+Augsburgo|Elias Saad|1|14|0|1
+Augsburgo|Steve Mounié|1|90|1|0
+Colonia|Ron-Robert Zieler|2|180|0|0
+Colonia|Sebastian Sebulonsen|2|180|0|0
+Colonia|Kristoffer Lund|2|112|0|0
+Colonia|Cenk Özkacar|2|93|0|0
+Colonia|Joël Schmied|2|180|0|0
+Colonia|Timo Hübers|1|90|0|0
+Colonia|Eric Martel|2|180|1|0
+Colonia|Ísak Jóhannesson|2|169|1|1
+Colonia|Tom Krauß|1|75|0|0
+Colonia|Denis Huseinbasic|1|25|0|0
+Colonia|Florian Kainz|2|30|0|0
+Colonia|Said El Mala|2|80|0|0
+Colonia|Jakub Kamiński|2|154|0|0
+Colonia|Ragnar Ache|2|105|1|2
+Colonia|Jan Thielmann|1|22|0|0
+Colonia|Linton Maina|2|79|0|0
+Colonia|Luca Waldschmidt|2|86|0|0
+Colonia|Marius Bülter|2|140|0|0
+Hamburgo SV|Daniel Peretz|2|210|0|0
+Hamburgo SV|Daniel Heuer Fernandes|1|120|0|0
+Hamburgo SV|Luka Vuskovic|2|210|0|0
+Hamburgo SV|Nicolás Capaldo|1|120|0|0
+Hamburgo SV|Miro Muheim|3|330|0|2
+Hamburgo SV|Warmed Omari|1|120|0|0
+Hamburgo SV|Jordan Torunarigha|3|256|0|0
+Hamburgo SV|Daniel Elfadli|2|210|0|0
+Hamburgo SV|Giorgi Gocholeishvili|3|218|0|0
+Hamburgo SV|Aboubaka Soumahoro|1|22|0|0
+Hamburgo SV|Gui Ramos|2|154|1|0
+Hamburgo SV|Fábio Vieira|2|210|0|1
+Hamburgo SV|Nicolai Remberg|2|109|0|0
+Hamburgo SV|Immanuel Pherai|1|29|0|0
+Hamburgo SV|Bakery Jatta|1|21|1|0
+Hamburgo SV|Jonas Meffert|3|187|0|0
+Hamburgo SV|Ransford Königsdörffer|3|280|1|0
+Hamburgo SV|Alexander Røssing-Lelesiit|3|171|0|0
+Hamburgo SV|Fábio Baldé|1|74|0|0
+Hamburgo SV|Rayan Philippe|3|255|0|0
+Hamburgo SV|Otto Stange|1|74|0|0
+Hamburgo SV|Jean-Luc Dompé|1|38|0|0
+Hamburgo SV|Emir Sahiti|2|108|0|0
+Hamburgo SV|Robert Glatzel|2|103|1|0
+Hamburgo SV|Yussuf Poulsen|1|1|0|0
+St. Pauli|Nikola Vasilj|2|210|0|0
+St. Pauli|Ben Voll|2|210|0|0
+St. Pauli|Eric Smith|3|322|0|0
+St. Pauli|Arkadiusz Pyrka|4|306|0|0
+St. Pauli|Tomoya Ando|1|90|0|0
+St. Pauli|David Nemeth|1|120|0|0
+St. Pauli|Louis Oppie|4|375|1|0
+St. Pauli|Manolis Saliakas|3|159|0|0
+St. Pauli|Hauke Wahl|3|330|1|0
+St. Pauli|Lars Ritzka|3|39|0|0
+St. Pauli|Karol Mets|3|270|0|0
+St. Pauli|Joel Chima Fujita|4|398|0|1
+St. Pauli|James Sands|4|390|0|1
+St. Pauli|Danel Sinani|3|211|0|0
+St. Pauli|Mathias Rasmussen|1|89|0|0
+St. Pauli|Connor Metcalfe|3|112|0|0
+St. Pauli|Jackson Irvine|2|112|0|0
+St. Pauli|Martijn Kaars|3|218|1|1
+St. Pauli|Andréas Hountondji|2|126|0|0
+St. Pauli|Mathias Pereira Lage|4|264|1|0
+St. Pauli|Oladapo Afolayan|2|140|0|0
+St. Pauli|Ricky-Jade Jones|1|34|0|0
+St. Pauli|Abdoulie Ceesay|4|86|0|0
+St. Pauli|Taichi Hara|1|10|0|0
+Heidenheim|Diant Ramaj|2|180|0|0
+Heidenheim|Patrick Mainka|2|180|0|0
+Heidenheim|Omar Traoré|1|45|0|0
+Heidenheim|Tim Siersleben|2|110|0|0
+Heidenheim|Benedikt Gimber|1|90|0|0
+Heidenheim|Marnon Busch|2|60|0|0
+Heidenheim|Jonas Föhrenbach|2|135|0|0
+Heidenheim|Adam Kölle|1|4|0|0
+Heidenheim|Niklas Dorsch|2|110|0|1
+Heidenheim|Jan Schöppner|2|180|0|0
+Heidenheim|Luca Kerber|2|70|0|0
+Heidenheim|Julian Niehues|1|86|0|0
+Heidenheim|Léo Scienza|1|82|2|0
+Heidenheim|Arijon Ibrahimovic|2|165|0|1
+Heidenheim|Marvin Pieringer|1|17|0|0
+Heidenheim|Mathias Honsak|2|63|1|0
+Heidenheim|Mikkel Kaufmann|1|25|1|1
+Heidenheim|Budu Zivzivadze|2|162|0|0
+Heidenheim|Sirlord Conteh|1|90|1|0
+Heidenheim|Yannik Wagner|1|8|0|0
+Heidenheim|Stefan Schimmer|1|73|0|0

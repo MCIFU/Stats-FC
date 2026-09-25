@@ -1,0 +1,352 @@
+Gimnasia La Plata|Nelson Insfrán|2|180|0|0
+Gimnasia La Plata|Harlen Castillo|1|90|0|0
+Gimnasia La Plata|Alexis Steimbach|2|173|1|0
+Gimnasia La Plata|Renzo Giampaoli|2|147|1|0
+Gimnasia La Plata|Enzo Martínez|2|180|0|0
+Gimnasia La Plata|Pedro Silva Torrejón|3|223|0|0
+Gimnasia La Plata|Juan Cortazzo|1|45|0|0
+Gimnasia La Plata|Bautista Barros Schelotto|1|90|0|0
+Gimnasia La Plata|Matías Melluso|2|47|0|0
+Gimnasia La Plata|Gonzalo Errecalde|1|33|0|1
+Gimnasia La Plata|Germán Conti|2|180|0|0
+Gimnasia La Plata|Nicolás Barros Schelotto|3|161|1|0
+Gimnasia La Plata|Ignacio Miramón|2|103|0|0
+Gimnasia La Plata|Mateo Seoane|3|206|1|0
+Gimnasia La Plata|Nacho Fernández|3|231|1|1
+Gimnasia La Plata|Juan Pérez|1|60|0|0
+Gimnasia La Plata|Lucas Castro|2|79|0|0
+Gimnasia La Plata|Augusto Max|2|96|0|0
+Gimnasia La Plata|Marcelo Torres|2|159|1|2
+Gimnasia La Plata|Manuel Panaro|2|40|0|0
+Gimnasia La Plata|Agustín Auzmendi|3|191|0|0
+Gimnasia La Plata|Jeremías Merlo|1|7|0|0
+Gimnasia La Plata|Maximiliano Zalazar|2|52|1|0
+Gimnasia La Plata|Agustín Colazo|1|90|0|0
+Gimnasia La Plata|Franco Torres|1|90|1|0
+Gimnasia La Plata|Lucas Janson|1|17|0|0
+Newell's Old Boys|Williams Barlasina|1|90|0|0
+Newell's Old Boys|Oscar Salomón|1|64|0|0
+Newell's Old Boys|Jeronimo Russo|1|90|0|0
+Newell's Old Boys|Armando Méndez|1|90|0|0
+Newell's Old Boys|Bruno Cabrera|1|90|0|0
+Newell's Old Boys|Nicolás Goitea|1|26|0|0
+Newell's Old Boys|Luca Regiardo|1|85|0|0
+Newell's Old Boys|Facundo Guch|1|29|0|0
+Newell's Old Boys|Jerónimo Gómez Mattar|1|45|0|0
+Newell's Old Boys|Valentino Acuña|1|45|0|0
+Newell's Old Boys|David Sotelo|1|45|0|0
+Newell's Old Boys|Walter Mazzantti|1|90|0|0
+Newell's Old Boys|Matías Cóccaro|1|90|0|0
+Newell's Old Boys|Ignacio Ramírez|1|5|0|0
+Newell's Old Boys|Luciano Herrera|1|45|0|0
+Newell's Old Boys|Walter Núñez|1|61|0|0
+Platense|Juan Pablo Cozzani|1|90|0|0
+Platense|Nicolás Sumavil|2|180|0|0
+Platense|Ignacio Vázquez|1|90|0|0
+Platense|Tomás Silva|1|90|1|0
+Platense|Eugenio Raggio|1|90|0|0
+Platense|Santiago Quirós|1|90|0|0
+Platense|Agustín Lagos|3|270|0|0
+Platense|Mateo Mendía|2|180|0|0
+Platense|Victor Cuesta|2|180|1|0
+Platense|Celías Ingenthron|1|90|0|0
+Platense|Franco Zapiola|3|38|0|0
+Platense|Maximiliano Amarfil|1|14|0|0
+Platense|Pablo Ferreira|1|79|0|0
+Platense|Iván Gómez|2|101|0|0
+Platense|Leonardo Heredia|2|109|0|0
+Platense|Martín Barrios|3|256|0|0
+Platense|Mauro Luna Diale|1|62|0|0
+Platense|Santiago Dalmasso|1|80|0|0
+Platense|Guido Mainero|2|79|0|0
+Platense|Gastón Togni|1|79|0|0
+Platense|Tomás Nasif|1|90|0|0
+Platense|Nicolás Retamar|2|67|0|1
+Platense|Juan Carlos Gauto|3|128|0|1
+Platense|Nicolás López|1|70|0|0
+Platense|Gonzalo Lencina|1|17|0|0
+Platense|Héctor Bobadilla|1|9|0|0
+Platense|Bautista Merlini|3|156|0|0
+Platense|Luciano Giménez|1|45|0|0
+Platense|Benjamín Bosch|1|27|0|0
+Platense|Manuel Tucker|2|114|0|0
+Defensa y Justicia|Cristopher Fiermarín|1|90|0|0
+Defensa y Justicia|Lautaro Amadé|1|90|0|0
+Defensa y Justicia|Damián Fernández|1|90|0|0
+Defensa y Justicia|Ayrton Portillo|2|43|0|0
+Defensa y Justicia|David Martínez|2|180|0|0
+Defensa y Justicia|Emiliano Amor|1|90|0|0
+Defensa y Justicia|Lucas Souto|2|164|0|0
+Defensa y Justicia|Darío Cáceres|1|90|0|0
+Defensa y Justicia|Máximo Rodríguez|1|90|0|1
+Defensa y Justicia|Santiago Sosa|1|90|0|0
+Defensa y Justicia|Aarón Molinas|1|90|1|0
+Defensa y Justicia|César Pérez|1|90|0|0
+Defensa y Justicia|Julián López|1|65|0|0
+Defensa y Justicia|David Barbona|2|89|0|0
+Defensa y Justicia|Éver Banega|1|63|0|1
+Defensa y Justicia|Rubén Botta|1|27|0|0
+Defensa y Justicia|Jonás Cabrera|1|25|0|0
+Defensa y Justicia|Juan Gutiérrez|2|165|0|0
+Defensa y Justicia|Domingo Blanco|1|25|0|0
+Defensa y Justicia|Agustín Hausch|2|140|1|1
+Defensa y Justicia|Leandro Fernández|1|90|1|0
+Defensa y Justicia|Alan Coria|1|15|0|0
+Defensa y Justicia|Luciano González|1|63|0|0
+Defensa y Justicia|Emiliano Cantero|1|16|0|0
+Instituto|Manuel Roffo|1|90|0|0
+Instituto|Marcos Ledesma|1|90|0|0
+Instituto|Emanuel Sittaro|1|90|0|0
+Instituto|Fernando Alarcón|2|143|0|0
+Instituto|Giuliano Cerato|3|257|0|0
+Instituto|Diego Sosa|3|270|0|0
+Instituto|Leonel Mosevich|3|270|0|1
+Instituto|Jonatan Galván|3|270|0|0
+Instituto|Hernán de la Fuente|1|13|0|0
+Instituto|Agustín Massaccesi|2|121|0|0
+Instituto|Alex Luna|3|122|1|1
+Instituto|Matías Gallardo|2|86|0|0
+Instituto|Gustavo Abregú|3|265|0|0
+Instituto|Juan Ignacio Méndez|3|123|0|0
+Instituto|Jeremías Lázaro|3|134|1|0
+Instituto|Jhon Córdoba|3|204|1|0
+Instituto|Lucas Sanseviero|1|23|0|0
+Instituto|Matías Tissera|3|142|1|0
+Instituto|Jonás Acevedo|2|25|0|1
+Instituto|Nicolás Guerra|2|129|0|0
+Instituto|Facundo Suárez|1|23|0|0
+Instituto|Luca Rafaelli|1|23|0|0
+Instituto|Matías Fonseca|1|20|0|0
+Godoy Cruz|Roberto Ramírez|1|90|0|0
+Godoy Cruz|Lucas Arce|1|6|0|0
+Godoy Cruz|Nahuel Brunet|1|90|0|0
+Godoy Cruz|Francisco Gerometta|1|84|0|0
+Godoy Cruz|Tomás Rossi|1|90|0|0
+Godoy Cruz|Federico Milo|1|72|0|0
+Godoy Cruz|Vicente Poggi|1|90|0|0
+Godoy Cruz|Tomás Pozzo|1|84|0|0
+Godoy Cruz|Brian Orosco|1|90|0|0
+Godoy Cruz|Mariano Santiago|1|66|0|0
+Godoy Cruz|Luciano Pascual|1|24|0|0
+Godoy Cruz|Santiago Martínez|1|18|0|0
+Godoy Cruz|Exequiel Tejada|1|6|0|0
+Godoy Cruz|Matías Ramírez|1|45|0|0
+Godoy Cruz|Martín Pino|1|45|0|0
+Godoy Cruz|Nahuel Ulariaga|1|90|0|0
+Independiente Rivadavia|Nicolás Bolcato|4|360|0|0
+Independiente Rivadavia|Sheyko Studer|4|360|0|0
+Independiente Rivadavia|Alejo Osella|1|74|0|1
+Independiente Rivadavia|Leonard Costa|4|360|0|0
+Independiente Rivadavia|Iván Villalba|4|183|0|0
+Independiente Rivadavia|Luciano Gómez|1|90|1|0
+Independiente Rivadavia|Alex Vigo|2|94|0|0
+Independiente Rivadavia|Juan Elordi|3|216|0|1
+Independiente Rivadavia|Ezequiel Bonifacio|2|106|0|0
+Independiente Rivadavia|Matías Fernández|4|333|0|1
+Independiente Rivadavia|José Florentín|4|360|1|0
+Independiente Rivadavia|Gonzalo Ríos|4|296|2|0
+Independiente Rivadavia|Tomás Bottari|3|270|0|0
+Independiente Rivadavia|Leonel Bucca|4|225|0|0
+Independiente Rivadavia|Stefano Moreyra|1|14|0|0
+Independiente Rivadavia|Luis Sequeira|1|3|0|0
+Independiente Rivadavia|Maximiliano Salas|2|172|0|0
+Independiente Rivadavia|Álex Arce|4|295|2|0
+Independiente Rivadavia|Fabrizio Sartori|4|126|0|0
+Independiente Rivadavia|Rodrigo Atencio|2|16|0|0
+Independiente Rivadavia|Luis Díaz|1|1|0|1
+Independiente Rivadavia|Diego Crego|2|8|0|0
+Unión Santa Fe|Matías Mansilla|2|180|0|0
+Unión Santa Fe|Mateo Del Blanco|2|179|0|0
+Unión Santa Fe|Lautaro Vargas|2|133|0|0
+Unión Santa Fe|Maizon Rodríguez|1|22|0|0
+Unión Santa Fe|Juan Pablo Ludueña|2|180|0|0
+Unión Santa Fe|Valentín Fascendini|1|90|0|0
+Unión Santa Fe|Emiliano Álvarez|1|36|0|0
+Unión Santa Fe|Bruno Pittón|1|12|0|0
+Unión Santa Fe|Claudio Corvalán|1|1|0|0
+Unión Santa Fe|Julián Palacios|2|168|0|0
+Unión Santa Fe|Rafael Profini|2|180|0|0
+Unión Santa Fe|Brahian Cuello|1|61|0|0
+Unión Santa Fe|Mauro Pittón|2|168|0|1
+Unión Santa Fe|Lucas Menossi|2|91|0|1
+Unión Santa Fe|Augusto Solari|2|74|0|0
+Unión Santa Fe|Santiago Grella|1|11|0|0
+Unión Santa Fe|Marcelo Estigarribia|1|29|0|0
+Unión Santa Fe|Tomás González|1|11|0|0
+Unión Santa Fe|Agustín Colazo|2|106|0|0
+Unión Santa Fe|Cristian Tarragona|2|179|2|0
+Unión Santa Fe|Diego Díaz|1|1|0|0
+Central Córdoba|Alan Aguerre|1|90|0|0
+Central Córdoba|Alejandro Maciel|1|90|0|0
+Central Córdoba|Facundo Mansilla|1|45|0|0
+Central Córdoba|Fernando Martínez|1|35|0|0
+Central Córdoba|José Gómez|1|55|0|0
+Central Córdoba|Juan Pablo Pignani|1|90|0|0
+Central Córdoba|Leonardo Marchi|1|90|0|0
+Central Córdoba|Lucas González|1|90|0|0
+Central Córdoba|Marco Iacobellis|1|90|1|0
+Central Córdoba|Matías Vera|1|90|1|0
+Central Córdoba|Fernando Juárez|1|28|0|0
+Central Córdoba|Tiago Cravero|1|45|0|0
+Central Córdoba|Ezequiel Naya|1|45|0|0
+Central Córdoba|Michael Santos|1|45|0|1
+Central Córdoba|Horacio Tijanovich|1|45|0|0
+Central Córdoba|Joaquín Flores|1|16|0|0
+Sarmiento|Thyago Ayala|1|90|0|0
+Sarmiento|Javier Burrai|1|90|0|0
+Sarmiento|Thiago Santamaría|2|180|0|0
+Sarmiento|Renzo Orihuela|1|90|0|0
+Sarmiento|Gabriel Díaz|1|57|0|0
+Sarmiento|Lucas Suárez|1|45|0|1
+Sarmiento|Agustín Seyral|1|90|0|0
+Sarmiento|Nicolás Pasquini|2|180|0|0
+Sarmiento|Juan Manuel Insaurralde|2|135|0|0
+Sarmiento|Julián Mavilla|1|20|0|0
+Sarmiento|Santiago Salle|2|135|0|0
+Sarmiento|Cristian Zabala|2|178|0|0
+Sarmiento|Manuel García|2|123|0|0
+Sarmiento|Carlos Villalba|1|45|0|0
+Sarmiento|Elián Giménez|1|33|0|0
+Sarmiento|Mauricio Martínez|2|122|0|0
+Sarmiento|Junior Marabel|2|115|0|0
+Sarmiento|Jhon Rentería|1|25|0|0
+Sarmiento|Julián Contrera|2|159|0|0
+Sarmiento|Pablo Magnin|2|3|1|0
+Sarmiento|Diego Churín|2|65|0|0
+Banfield|Facundo Sanguinetti|3|270|0|0
+Banfield|Diego Rodríguez|1|90|0|0
+Banfield|Ignacio Abraham|4|360|0|0
+Banfield|Danilo Arboleda|2|180|0|1
+Banfield|Nicolás Meriano|4|315|0|0
+Banfield|Brandon Oviedo|2|135|0|0
+Banfield|Santiago Daniele|2|180|0|0
+Banfield|Sergio Vittor|1|45|0|0
+Banfield|Santiago López García|4|360|0|0
+Banfield|Ignacio Pais|2|135|0|1
+Banfield|Neyder Moreno|2|46|0|0
+Banfield|Lautaro Gómez|4|202|0|1
+Banfield|Santiago Esquivel|2|135|0|0
+Banfield|Tomás Adoryán|4|295|2|0
+Banfield|Lautaro Villegas|3|107|0|0
+Banfield|Favio Álvarez|1|13|0|0
+Banfield|Tiziano Perrotta|2|160|2|0
+Banfield|Mauro Méndez|2|169|1|0
+Banfield|Adrián Balboa|1|77|0|0
+Banfield|Lisandro Piñero|2|122|0|0
+Banfield|Alexander Machado|2|174|1|0
+Banfield|David Zalazar|3|147|0|0
+Banfield|Bruno Sepúlveda|3|32|0|0
+Banfield|Federico Medina|1|77|0|0
+Banfield|Federico Anselmo|3|58|1|0
+Banfield|Thomas Rodríguez|1|11|0|0
+Banfield|Matías Hernández|1|65|0|0
+Barracas Central|Marcelo Miño|2|180|0|0
+Barracas Central|Juan Espínola|1|90|0|0
+Barracas Central|Kevin Jappert|3|166|0|0
+Barracas Central|Rodrigo Insúa|3|270|0|0
+Barracas Central|Nicolás Demartini|2|180|0|0
+Barracas Central|Nicolás Capraro|2|98|0|0
+Barracas Central|Yonatthan Rak|2|127|0|0
+Barracas Central|Fernando Tobio|2|135|0|0
+Barracas Central|Gastón Campi|2|91|0|0
+Barracas Central|Damián Martínez|2|125|1|0
+Barracas Central|Rafael Barrios|2|69|0|0
+Barracas Central|Tomás Porra|3|206|0|0
+Barracas Central|Gonzalo Maroni|3|154|0|1
+Barracas Central|Iván Tapia|3|225|0|1
+Barracas Central|Rodrigo Bogarín|1|45|0|0
+Barracas Central|Esteban Rolón|1|24|0|0
+Barracas Central|Dardo Miloc|3|220|0|0
+Barracas Central|Facundo Bruera|3|255|2|0
+Barracas Central|Gonzalo Morales|2|100|0|0
+Barracas Central|Nicolás Orsini|1|15|0|0
+Barracas Central|Norberto Briasco|3|151|0|1
+Barracas Central|Lucas Gamba|1|45|0|0
+Riestra|Ignacio Arce|1|90|0|0
+Riestra|Marino Arzamendia|2|180|0|0
+Riestra|Iván López|1|90|0|0
+Riestra|Facundo Miño|4|299|0|0
+Riestra|Pedro Ramírez|2|180|0|1
+Riestra|Cristian Paz|2|113|0|0
+Riestra|Mariano Bracamonte|3|186|0|2
+Riestra|Nicolás Sansotre|1|14|0|0
+Riestra|Juan Randazzo|1|90|0|0
+Riestra|Ignacio Gariglio|3|235|0|0
+Riestra|Rodrigo Gallo|2|137|0|0
+Riestra|Nicolás Caro Torres|1|90|0|0
+Riestra|Rodrigo Sayavedra|1|90|0|0
+Riestra|Carlos Quintana|2|125|0|0
+Riestra|Eric Tovo|1|61|0|0
+Riestra|Pablo Monje|2|104|0|0
+Riestra|Nicolás Watson|4|338|0|0
+Riestra|Yonatan Goitía|2|110|0|0
+Riestra|Matías García|1|21|0|0
+Riestra|Milton Céliz|3|66|0|0
+Riestra|Patricio Madero|1|8|0|0
+Riestra|Braian Sánchez|1|45|0|0
+Riestra|Mateo Ramírez|1|69|0|0
+Riestra|Benjamín Pérez|2|68|0|0
+Riestra|Thiago Lauro|1|45|0|0
+Riestra|Alexander Díaz|1|76|0|0
+Riestra|Antony Alonso|1|70|0|1
+Riestra|Tomás González|3|155|1|0
+Riestra|Nicolás Benegas|4|290|1|0
+Riestra|José María Ingratti|1|21|0|0
+Riestra|Gonzalo Flores|1|45|0|0
+Riestra|Gabriel Obredor|3|155|0|0
+Riestra|Ramón González|1|69|0|0
+Riestra|Ángel Stringa|3|225|2|0
+Aldosivi|Lucas Acosta|1|90|0|0
+Aldosivi|Ignacio Chicco|2|180|0|0
+Aldosivi|Nicolás Zalazar|2|104|0|0
+Aldosivi|Guillermo Enrique|1|90|0|0
+Aldosivi|Fernando Román|1|90|0|0
+Aldosivi|Joaquín Pombo|2|180|0|0
+Aldosivi|Rodrigo González|1|65|0|0
+Aldosivi|Santiago Moya|3|270|0|0
+Aldosivi|Néstor Breitenbruch|1|90|0|0
+Aldosivi|Elías López|2|83|0|0
+Aldosivi|Joaquín Novillo|1|90|1|0
+Aldosivi|Federico Laurelli|1|90|0|2
+Aldosivi|Nicolás Linares|1|18|0|0
+Aldosivi|Francisco Perruzzi|1|45|0|0
+Aldosivi|Federico Gino|1|24|0|0
+Aldosivi|Martín García|3|137|0|0
+Aldosivi|Franco Leys|1|90|0|0
+Aldosivi|Lucas Castro|2|110|0|0
+Aldosivi|Nico Gaitán|1|32|0|0
+Aldosivi|Andrés Vombergar|1|90|0|0
+Aldosivi|Matías Godoy|2|109|0|0
+Aldosivi|Alan Sosa|3|141|1|0
+Aldosivi|Tomás Fernández|2|150|3|1
+Aldosivi|Nicolás Cordero|2|180|1|0
+Aldosivi|Mauro Da Luz|1|14|0|0
+Aldosivi|Alejandro Villarreal|1|5|0|0
+Aldosivi|Agustín Palavecino|3|167|0|0
+Aldosivi|Bautista Dadín|2|70|0|0
+Aldosivi|Natanael Guzmán|1|76|0|0
+Aldosivi|Facundo De La Vega|1|76|0|0
+Aldosivi|Andrés Chávez|1|14|0|0
+San Martín SJ|Maximiliano Velazco|2|180|0|0
+San Martín SJ|Hernán Zuliani|2|28|0|0
+San Martín SJ|Federico Murillo|2|113|1|0
+San Martín SJ|Mauro Osores|1|90|0|0
+San Martín SJ|Facundo Nadalín|1|90|0|0
+San Martín SJ|Julián Marchio|2|180|0|0
+San Martín SJ|Emanuel Aguilera|1|90|0|0
+San Martín SJ|Gonzalo Lucero|1|73|0|0
+San Martín SJ|Sebastián Jaurena|1|79|0|0
+San Martín SJ|Nicolás Pelaitay|1|90|0|0
+San Martín SJ|Sebastián González|2|53|0|0
+San Martín SJ|Gabriel Hachen|1|11|0|1
+San Martín SJ|Leonardo Monje|2|180|1|0
+San Martín SJ|Dante Álvarez|1|79|0|0
+San Martín SJ|Guillermo Acosta|1|90|0|0
+San Martín SJ|Nicolás Iachetti|1|73|0|0
+San Martín SJ|Ramiro Rúmbolo|1|60|0|0
+San Martín SJ|Nazareno Fúnez|2|25|0|0
+San Martín SJ|Nahuel Acosta|1|31|0|0
+San Martín SJ|Carlo Lattanzio|2|126|0|0
+San Martín SJ|Genaro Rossi|2|155|0|0
+San Martín SJ|Bruno Juncos|1|67|0|0
+San Martín SJ|Lautaro Agüero|1|17|0|0

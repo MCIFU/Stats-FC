@@ -1,0 +1,23 @@
+{
+  "_doc": "Roles propios inspirados en FM. ROLE_SCORE = suma(atributo*peso)/suma(pesos con dato). Solo se calcula si cobertura >= role_min_coverage.",
+  "roles": {
+    "GK_Goalkeeper":        {"label": "Portero", "groups": ["GK"], "weights": {"SHOT_STOPPING": 0.45, "GK_RESULTS": 0.25, "CROSS_HANDLING": 0.20, "DISTRIBUTION": 0.10}},
+    "GK_SweeperKeeper":     {"label": "Portero-líbero", "groups": ["GK"], "weights": {"SHOT_STOPPING": 0.30, "SWEEPING": 0.30, "DISTRIBUTION": 0.25, "GK_RESULTS": 0.15}},
+    "CB_CentralDefender":   {"label": "Central", "groups": ["CB"], "weights": {"AERIAL": 0.25, "INTERCEPTING": 0.20, "TACKLING": 0.20, "BOX_DEFENDING": 0.20, "TEAM_DEFENCE": 0.15}},
+    "CB_BallPlaying":       {"label": "Central con salida de balón", "groups": ["CB"], "weights": {"PROGRESSIVE_PASSING": 0.30, "PASSING": 0.20, "LONG_PASSING": 0.15, "INTERCEPTING": 0.15, "AERIAL": 0.10, "BALL_RETENTION": 0.10}},
+    "CB_Stopper":           {"label": "Stopper", "groups": ["CB"], "weights": {"TACKLING": 0.35, "AERIAL": 0.25, "PRESSING": 0.20, "INTERCEPTING": 0.20}},
+    "FB_Fullback":          {"label": "Lateral", "groups": ["FB"], "weights": {"TACKLING": 0.25, "INTERCEPTING": 0.20, "PROGRESSIVE_PASSING": 0.20, "CROSSING": 0.15, "TEAM_DEFENCE": 0.20}},
+    "FB_Wingback":          {"label": "Carrilero", "groups": ["FB"], "weights": {"CROSSING": 0.20, "CARRYING": 0.20, "ASSIST_OUTPUT": 0.20, "CHANCE_CREATION": 0.20, "DRIBBLING": 0.20}},
+    "MID_Anchor":           {"label": "Ancla", "groups": ["MID"], "weights": {"INTERCEPTING": 0.30, "TACKLING": 0.25, "BALL_RETENTION": 0.25, "PASSING": 0.20}},
+    "MID_BallWinner":       {"label": "Recuperador", "groups": ["MID"], "weights": {"TACKLING": 0.35, "PRESSING": 0.35, "INTERCEPTING": 0.30}},
+    "MID_DeepPlaymaker":    {"label": "Organizador retrasado", "groups": ["MID"], "weights": {"PROGRESSIVE_PASSING": 0.35, "PASSING": 0.25, "LONG_PASSING": 0.20, "BALL_RETENTION": 0.20}},
+    "MID_BoxToBox":         {"label": "Box to box", "groups": ["MID"], "weights": {"CARRYING": 0.20, "PRESSING": 0.20, "TACKLING": 0.15, "GOAL_OUTPUT": 0.15, "ASSIST_OUTPUT": 0.10, "PROGRESSIVE_PASSING": 0.20}},
+    "AMW_AdvancedPlaymaker":{"label": "Enganche / creador", "groups": ["AMW", "MID"], "weights": {"CHANCE_CREATION": 0.35, "ASSIST_OUTPUT": 0.25, "PASSING": 0.20, "DRIBBLING": 0.20}},
+    "AMW_Winger":           {"label": "Extremo", "groups": ["AMW", "FB"], "weights": {"DRIBBLING": 0.30, "CROSSING": 0.25, "ASSIST_OUTPUT": 0.25, "CARRYING": 0.20}},
+    "AMW_InsideForward":    {"label": "Extremo a pierna cambiada", "groups": ["AMW", "ST"], "weights": {"GOAL_OUTPUT": 0.40, "DRIBBLING": 0.20, "SHOT_QUALITY": 0.20, "CARRYING": 0.20}},
+    "ST_Poacher":           {"label": "Delantero de área", "groups": ["ST"], "weights": {"GOAL_OUTPUT": 0.50, "FINISHING": 0.20, "BOX_PRESENCE": 0.15, "SHOT_QUALITY": 0.15}},
+    "ST_AdvancedForward":   {"label": "Delantero avanzado", "groups": ["ST", "AMW"], "weights": {"GOAL_OUTPUT": 0.30, "FINISHING": 0.20, "CARRYING": 0.15, "DRIBBLING": 0.15, "BOX_PRESENCE": 0.20}},
+    "ST_CompleteForward":   {"label": "Delantero completo", "groups": ["ST"], "weights": {"GOAL_OUTPUT": 0.25, "ASSIST_OUTPUT": 0.20, "CHANCE_CREATION": 0.15, "AERIAL": 0.15, "DRIBBLING": 0.10, "PRESSING": 0.15}},
+    "ST_TargetForward":     {"label": "Delantero referencia", "groups": ["ST"], "weights": {"AERIAL": 0.40, "BOX_PRESENCE": 0.25, "GOAL_OUTPUT": 0.20, "BALL_RETENTION": 0.15}}
+  }
+}

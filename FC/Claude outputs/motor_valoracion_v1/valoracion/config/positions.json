@@ -1,0 +1,12 @@
+{
+  "_doc": "Mapeo de la POS de tus Excel (códigos TM en español) a grupos de comparación, y peso de cada atributo en el CA de cada grupo. Suma de pesos = 1 por grupo. La cobertura = suma de pesos de atributos con dato.",
+  "pos_map": {"POR": "GK", "DFC": "CB", "LI": "FB", "LD": "FB", "MCD": "MID", "MC": "MID", "MCO": "AMW", "EI": "AMW", "ED": "AMW", "DC": "ST"},
+  "groups": {
+    "GK":  {"label": "Porteros", "ca_weights": {"SHOT_STOPPING": 0.35, "GK_RESULTS": 0.20, "USAGE": 0.15, "DISTRIBUTION": 0.12, "CROSS_HANDLING": 0.10, "SWEEPING": 0.08}},
+    "CB":  {"label": "Centrales", "ca_weights": {"USAGE": 0.18, "AERIAL": 0.14, "INTERCEPTING": 0.12, "TACKLING": 0.10, "BOX_DEFENDING": 0.10, "PROGRESSIVE_PASSING": 0.10, "PASSING": 0.08, "TEAM_DEFENCE": 0.07, "BALL_RETENTION": 0.04, "GOAL_OUTPUT": 0.03, "BIG_STAGE": 0.04}},
+    "FB":  {"label": "Laterales", "ca_weights": {"USAGE": 0.16, "TACKLING": 0.12, "INTERCEPTING": 0.08, "PROGRESSIVE_PASSING": 0.10, "CROSSING": 0.08, "CARRYING": 0.10, "CHANCE_CREATION": 0.08, "ASSIST_OUTPUT": 0.08, "PRESSING": 0.06, "TEAM_DEFENCE": 0.05, "DRIBBLING": 0.05, "BIG_STAGE": 0.04}},
+    "MID": {"label": "Mediocentros (MCD/MC)", "ca_weights": {"USAGE": 0.15, "PASSING": 0.14, "PROGRESSIVE_PASSING": 0.12, "BALL_RETENTION": 0.10, "TACKLING": 0.10, "INTERCEPTING": 0.08, "PRESSING": 0.07, "CARRYING": 0.06, "CHANCE_CREATION": 0.06, "ASSIST_OUTPUT": 0.04, "GOAL_OUTPUT": 0.04, "BIG_STAGE": 0.04}},
+    "AMW": {"label": "Mediapuntas y extremos", "ca_weights": {"GOAL_OUTPUT": 0.16, "ASSIST_OUTPUT": 0.14, "USAGE": 0.12, "CHANCE_CREATION": 0.14, "DRIBBLING": 0.12, "CARRYING": 0.10, "SHOT_QUALITY": 0.05, "PRESSING": 0.05, "BALL_RETENTION": 0.04, "FINISHING": 0.04, "BIG_STAGE": 0.04}},
+    "ST":  {"label": "Delanteros", "ca_weights": {"GOAL_OUTPUT": 0.28, "USAGE": 0.12, "FINISHING": 0.12, "BOX_PRESENCE": 0.10, "SHOT_QUALITY": 0.08, "ASSIST_OUTPUT": 0.08, "CHANCE_CREATION": 0.06, "AERIAL": 0.05, "PRESSING": 0.04, "DRIBBLING": 0.03, "BIG_STAGE": 0.04}}
+  }
+}

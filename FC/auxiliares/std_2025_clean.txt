@@ -1,0 +1,896 @@
+Adam Bareiro|FW|Fortaleza|21|886|7|2
+Ademir Santos|FW,MF|Bahia|30|1971|2|6
+Aderlan Silva|DF|Santos|2|87|0|0
+Adonis Frías|DF|Santos|13|1112|0|0
+Adson|MF|Vasco|10|210|0|0
+Agustín Canobbio|MF|Fluminense|30|2108|4|2
+Agustín Giay|DF,MF|Palmeiras|29|1978|0|0
+Agustín Rogel|DF|Internacional|5|450|0|0
+Agustín Rossi|GK|Flamengo|37|3330|0|0
+Aitor Cantalapiedra|MF,FW|Vitoria|19|1275|3|3
+Alan Benítez|DF,MF|Internacional|11|550|0|0
+Alan Franco|MF|Atletico-MG|30|2628|1|0
+Alan Patrick|MF,FW|Internacional|30|2506|11|7
+Alan Rodríguez|MF|Internacional|15|943|0|1
+Alejandro Martínez|FW,MF|Ceara|2|49|0|1
+Alesson|FW,MF|Mirassol|26|1456|6|5
+Alex Muralha|GK|Mirassol|7|630|0|0
+Alex Sandro|DF|Flamengo|20|1544|0|0
+Alex Santana|MF|Corinthians|3|106|0|0
+Alex Santana|MF|Gremio|8|389|0|0
+Alex Teixeira|FW,MF|Vasco|9|118|0|0
+Alex Telles|DF|Botafogo|27|1690|5|4
+Alexander Aravena|FW,MF|Gremio|22|581|3|0
+Alexander Barboza|DF|Botafogo|24|2147|0|0
+Alexandro Bernabei|DF,MF|Internacional|30|2579|0|4
+Alexis Duarte|DF|Santos|5|405|0|0
+Alexsander|MF|Atletico-MG|14|828|1|0
+Alisson Rodrigues|DF|Internacional|1|26|0|0
+Allan|MF|Palmeiras|28|921|2|3
+Allan|GK|Vasco|0|0|0|0
+Allan|MF|Flamengo|13|683|0|0
+Allan|MF|Botafogo|21|965|0|0
+Allanzinho|MF|Fortaleza|9|287|0|2
+Allex|MF|Internacional|0|0|0|0
+Alysson Edward|FW,MF|Gremio|31|1718|1|2
+Andre Martins|FW|Gremio|25|793|5|2
+Andreas Pereira|MF|Palmeiras|15|1005|2|0
+Andrei|DF|Vitoria|0|0|0|0
+André|MF|Corinthians|9|315|2|0
+André Carrillo|MF|Corinthians|22|1279|1|0
+André Ramalho|DF|Corinthians|21|1780|0|0
+Anthoni|GK|Internacional|18|1530|0|0
+Antonio Galeano|MF|Ceara|38|3125|7|3
+Aníbal Moreno|MF|Palmeiras|28|1805|0|1
+Aranha|GK|Palmeiras|0|0|0|0
+Arthur|DF|Palmeiras|0|0|0|0
+Arthur Cabral|FW|Botafogo|21|1439|4|2
+Arthur Melo|MF|Gremio|13|1082|0|0
+Artur|MF|Botafogo|28|1917|5|4
+Avellar|DF|Vasco|0|0|0|0
+Aylon|MF,FW|Ceara|23|792|2|0
+Ayrton Lucas|DF|Flamengo|18|1231|2|0
+Bahia|MF|Corinthians|2|49|0|0
+Benjamin Arhin|MF|Internacional|0|0|0|0
+Benjamín Garré|MF|Vasco|10|293|0|0
+Benjamín Kuscevic|DF|Fortaleza|20|1707|1|0
+Benjamín Rollheiser|MF,FW|Santos|36|2212|2|3
+Bernard|MF,FW|Atletico-MG|30|1210|1|1
+Bernardo Jacob|MF|Internacional|0|0|0|0
+Biel|MF,FW|Atletico-MG|17|595|1|2
+Bilal Brahimi|FW,MF|Santos|1|21|0|0
+Brahian Palacios|MF|Atletico-MG|1|8|0|0
+Braian Aguirre|DF,MF|Internacional|30|2389|1|0
+Brenno|GK|Fortaleza|15|1350|0|0
+Breno|MF|Corinthians|33|2522|1|1
+Breno|MF,FW|Fortaleza|32|2280|6|3
+Breno Vereza|DF|Vasco|0|0|0|0
+Bruninho|MF|Fortaleza|1|68|0|0
+Bruno Alves|DF|Cruzeiro|0|0|0|0
+Bruno Fernandes Xavier|MF|Flamengo|0|0|0|0
+Bruno Ferreira|GK|Ceara|31|2763|0|0
+Bruno Fuchs|DF|Palmeiras|27|1723|2|1
+Bruno Gomes|MF,DF|Internacional|14|981|0|2
+Bruno Henrique|MF|Internacional|29|1397|2|0
+Bruno Henrique|FW,MF|Flamengo|32|1811|8|0
+Bruno Nascimento|FW|Palmeiras|10|341|2|0
+Bruno Pacheco|DF|Fortaleza|15|1261|1|1
+Bruno Tabata|MF,FW|Internacional|24|1073|3|0
+Bruno Tubarão|DF,MF|Ceara|7|100|0|0
+Bruno Xavier|MF|Vitoria|0|0|0|0
+Budiga Roni|MF|Mirassol|9|150|0|0
+Cacá|DF|Corinthians|18|1408|2|0
+Cadu|FW|Atletico-MG|1|7|0|0
+Caio Alexandre|MF|Bahia|21|1303|0|1
+Caio Paulista|MF,DF|Atletico-MG|20|885|0|0
+Calebe|MF|Fortaleza|7|229|1|0
+Camilo|MF,DF|Gremio|16|735|0|0
+Camutanga|DF|Vitoria|15|1238|0|0
+Carlinhos|FW|Vitoria|6|165|1|0
+Carlos Cuesta|DF|Vasco|13|1092|1|0
+Carlos Eduardo|FW,DF|Vitoria|2|41|0|0
+Carlos Eduardo|FW,MF|Mirassol|24|734|2|5
+Carlos Eduardo|MF|Cruzeiro|29|906|1|0
+Carlos Gómez|MF|Vasco|16|1028|1|5
+Carlos Miguel|GK|Palmeiras|9|810|0|0
+Carlos Vinícius|FW|Gremio|14|942|12|1
+Cauan Baptistella|MF|Cruzeiro|0|0|0|0
+Cauan Barros|MF|Vasco|17|1340|1|0
+Cauly Oliveira Souza|FW,MF|Bahia|29|910|1|3
+Cauã Zappelini|MF|Botafogo|0|0|0|0
+Charles Rigon Matos|MF,DF|Corinthians|17|571|1|0
+Chico|MF|Mirassol|13|349|1|1
+Chris Ramos|FW|Botafogo|13|718|4|0
+Christian|MF|Cruzeiro|30|2357|5|2
+Claudinho|DF|Vitoria|15|901|0|0
+Clayson|MF|Mirassol|6|256|0|1
+Clayton|DF|Internacional|11|762|0|0
+Cleiton|DF|Flamengo|2|79|0|0
+Cléber|GK|Botafogo|0|0|0|0
+Cristhian Loor|GK|Botafogo|0|0|0|0
+Cristian Olivera|FW,MF|Gremio|22|1285|2|0
+Cristian Pavón|FW,MF|Gremio|28|1373|0|7
+Cristian Renato|FW|Mirassol|32|1351|5|3
+Cuiabano|DF,MF|Botafogo|30|1534|5|2
+Cássio|GK|Cruzeiro|35|3086|0|0
+Da Silva|DF|Mirassol|0|0|0|0
+Daniel Borges|DF|Mirassol|16|904|2|2
+Daniel Fuzato|GK|Vasco|3|182|0|0
+Daniel Sales|DF|Flamengo|1|68|0|0
+Danielzinho|MF|Mirassol|37|3265|0|2
+Danilo|DF|Flamengo|20|1410|1|1
+Danilo|MF|Botafogo|13|827|1|3
+Danilo Barbosa|DF,MF|Botafogo|3|39|0|0
+Danilo Fernandes|GK|Bahia|0|0|0|0
+Davi Barbosa|GK|Vitoria|0|0|0|0
+Davi Schuindt|DF|Fluminense|2|180|0|0
+David|MF,FW|Vasco|24|750|2|3
+David Duarte|DF|Bahia|25|2207|1|1
+David Loiola|DF|Botafogo|22|1830|1|1
+David Luiz|DF|Fortaleza|7|399|0|0
+David Martins|MF|Bahia|0|0|0|0
+David Ramos|MF|Atletico-MG|0|0|0|0
+Deivid Washington|FW|Santos|17|557|1|0
+Dell|FW|Bahia|0|0|0|0
+Deyverson|FW|Fortaleza|27|1174|7|0
+Diego Esser|GK|Internacional|0|0|0|0
+Diego Minete|FW|Vasco|0|0|0|0
+Diego Palacios|DF|Corinthians|0|0|0|0
+Diego Pituca|MF|Santos|10|392|1|0
+Diego Rosa|MF|Internacional|7|199|0|0
+Dieguinho|MF,FW|Corinthians|13|451|0|1
+Dieguinho Diego|MF|Ceara|32|2653|0|2
+Dimitri Payet|MF|Vasco|4|191|0|2
+Diogenes|GK|Santos|1|23|0|0
+Diogo Barbosa|DF|Fortaleza|19|1239|1|0
+Dodi|MF|Gremio|32|2343|0|1
+Douglas Telles|MF|Flamengo|2|84|2|0
+Dudu|MF|Vitoria|12|319|0|0
+Dudu|MF,FW|Cruzeiro|5|215|1|0
+Dudu|MF|Atletico-MG|18|1048|3|2
+Dylan Borrero|MF|Fortaleza|0|0|0|0
+Dyogo Alves|GK|Flamengo|1|90|0|0
+Edenilson|MF|Vitoria|0|0|0|0
+Edenílson|MF|Gremio|31|1802|3|2
+Eder|DF|Ceara|3|270|0|0
+Edson Carioca|FW,MF|Mirassol|21|1168|4|2
+EDU|DF|Vitoria|20|1074|0|0
+Elias Manoel|FW|Botafogo|2|27|0|0
+Emanuel Brítez|DF|Fortaleza|18|1597|0|1
+Emerson|DF|Flamengo|15|1247|1|1
+Emiliano Martínez|MF,DF|Palmeiras|25|1516|1|0
+Enner Valencia|FW|Internacional|14|628|1|0
+Enzo|DF|Gremio|0|0|0|0
+Erick|MF,DF|Bahia|16|683|1|0
+Erick|MF,FW|Vitoria|31|2054|3|5
+Erick Belé|MF|Palmeiras|2|24|0|0
+Erick Noriega|DF,MF|Gremio|14|1184|0|0
+Erick Pulga|FW,MF|Bahia|24|1687|3|3
+Erick Pulgar|MF|Flamengo|17|1240|1|0
+Eros Mancuso|DF|Fortaleza|30|2377|1|3
+Estêvão Willian|MF,FW|Palmeiras|11|831|0|3
+Euder|MF|Vasco|0|0|0|0
+Everaldo Stum|FW|Fluminense|28|1352|2|0
+Everton Maceió|MF|Mirassol|6|147|0|0
+Everton Ribeiro|MF|Bahia|31|1925|2|4
+Everton Soares|MF|Flamengo|23|874|1|3
+Evertton|MF|Flamengo|18|981|1|0
+Fabiano Souza|DF|Ceara|34|2907|0|1
+Fabián Balbuena|DF|Gremio|3|225|1|0
+Fabrizio Angileri|DF|Corinthians|28|1638|0|0
+Fabrício|FW,MF|Vitoria|17|393|0|2
+Fabrício|MF,FW|Mirassol|8|301|0|0
+Fabrício Bruno|DF|Cruzeiro|33|2950|3|0
+Facundo Bernal|MF|Fluminense|22|1037|0|0
+Facundo Torres|MF,FW|Palmeiras|29|1665|6|3
+Fagner|DF|Cruzeiro|10|830|0|0
+Fausto Vera|MF|Atletico-MG|18|1127|1|0
+Felipe Anderson|MF|Palmeiras|31|1773|4|2
+Felipe Cardoso|FW|Vitoria|3|78|0|0
+Felipe Jonatan|DF|Mirassol|7|440|0|1
+Felipe Longo|GK|Corinthians|6|540|0|0
+Fernandinho|MF|Ceara|22|995|0|1
+Fernando|MF,DF|Internacional|6|412|0|0
+Fernando|FW|Cruzeiro|0|0|0|0
+Fernando Marçal|DF|Botafogo|15|1009|5|0
+Fernando Miguel|GK|Ceara|8|657|0|0
+Fernando Sobral|MF|Ceara|30|1504|1|0
+Fintelman|GK|Vitoria|0|0|0|0
+Francis Amuzu|FW,MF|Gremio|22|1145|4|2
+Francisco da Costa|FW|Mirassol|20|1190|6|0
+Franco Cristaldo|MF,FW|Gremio|30|1259|1|3
+Fredi Gomes|DF|Bahia|1|90|0|0
+Fábio|GK|Fluminense|38|3420|0|0
+Félix Torres Caicedo|DF|Corinthians|10|647|0|0
+Gabriel|DF|Bahia|13|948|0|0
+Gabriel|GK|Vitoria|1|90|0|0
+Gabriel|MF,FW|Mirassol|25|1592|5|2
+Gabriel Abdias|DF|Botafogo|0|0|0|0
+Gabriel Bahia|DF|Botafogo|4|236|0|0
+Gabriel Baralhas|MF|Vitoria|28|2276|2|1
+Gabriel Barbosa|FW,MF|Cruzeiro|30|1083|6|2
+Gabriel Bontempo|MF|Santos|25|997|2|1
+Gabriel Brazão|GK|Santos|38|3397|0|0
+Gabriel Caipira|DF|Corinthians|0|0|0|0
+Gabriel Carvalho|MF|Internacional|3|72|0|0
+Gabriel Chapecó|GK|Gremio|6|540|0|0
+Gabriel Delfim|GK|Atletico-MG|2|180|0|0
+Gabriel Fuentes|DF|Fluminense|11|825|0|0
+Gabriel Justino|MF|Botafogo|0|0|0|0
+Gabriel Knesowitsch|DF|Mirassol|4|360|0|0
+Gabriel Lacerda|DF|Ceara|0|0|0|0
+Gabriel Mec|FW|Gremio|0|0|0|0
+Gabriel Menino|MF,DF|Atletico-MG|23|889|1|1
+Gabriel Mercado|DF|Internacional|14|1195|1|0
+Gabriel Silva|MF|Ceara|0|0|0|0
+Gabriel Souza|MF|Vasco|12|136|2|0
+Gabriel Veron|MF|Santos|6|122|0|0
+Gabriel Werneck|GK|Flamengo|0|0|0|0
+Ganso|MF|Fluminense|17|644|1|0
+Gastón Ávila|DF|Fortaleza|27|2321|0|0
+Germán Cano|FW|Fluminense|22|1498|6|0
+Gerson|MF|Flamengo|9|711|0|2
+Gil|DF|Santos|8|720|0|0
+Gilberto|DF|Bahia|23|1777|1|0
+Gilberto|DF|Palmeiras|0|0|0|0
+Giorgian De Arrascaeta|MF|Flamengo|33|2350|18|14
+Gonzalo Escobar|DF|Santos|30|2008|0|0
+Gonzalo Mastriani|FW|Botafogo|12|288|1|0
+Gonzalo Plata|MF,FW|Flamengo|28|1350|4|1
+Gregore|MF|Botafogo|12|982|0|0
+Guga|DF,MF|Fluminense|17|992|1|1
+Gui Negão|FW,MF|Corinthians|22|945|3|1
+Guilherme|MF|Santos|32|2250|4|7
+Guilherme|MF,FW|Mirassol|12|539|2|0
+Guilherme|MF|Flamengo|1|62|2|0
+Guilherme Amorim||Corinthians|0|0|0|0
+Guilherme Arana|DF,MF|Atletico-MG|25|1748|1|1
+Guilherme Estrella|MF|Vasco|1|19|0|0
+Guilherme Luiz|FW|Ceara|7|148|0|1
+Guilherme Santos|DF|Fortaleza|0|0|0|0
+Guilherme Tinga|DF|Fortaleza|11|752|1|0
+Guillermo Matías Fernández|MF|Fortaleza|7|286|0|2
+Guillermo Varela|DF|Flamengo|20|1325|0|4
+Gustavo Caballero|MF|Santos|12|332|1|1
+Gustavo Cuellar|MF|Gremio|17|881|0|0
+Gustavo Gómez|DF|Palmeiras|27|2310|2|1
+Gustavo Henrique|MF|Santos|0|0|0|0
+Gustavo Henrique|DF|Corinthians|23|2070|3|0
+Gustavo Lacerda|GK|Mirassol|0|0|0|0
+Gustavo Mancha|DF|Fortaleza|13|1029|0|0
+Gustavo Martins Santos|DF|Gremio|19|1320|2|0
+Gustavo Mosquito|FW,MF|Vitoria|10|480|0|2
+Gustavo Nunes|MF|Mirassol|0|0|0|0
+Gustavo Prado|MF|Internacional|18|559|1|0
+Gustavo Scarpa|MF|Atletico-MG|36|2302|1|3
+Heittor Vinicius|FW|Palmeiras|0|0|0|0
+Helton Leite|GK|Fortaleza|4|360|0|0
+Hugo|DF|Vitoria|0|0|0|0
+Hugo|MF,DF|Corinthians|10|457|0|0
+Hugo Moura|MF,DF|Vasco|33|2411|0|1
+Hugo Souza|GK|Corinthians|26|2340|0|0
+Huguinho|DF|Botafogo|1|24|0|0
+Hulk|FW,MF|Atletico-MG|33|2438|8|6
+Hyan|MF|Santos|2|18|0|0
+Héctor|FW,MF|Corinthians|9|246|1|0
+Hércules|MF|Fluminense|34|2160|3|1
+Iago|DF,MF|Bahia|15|626|1|0
+Iago|DF|Flamengo|1|90|0|0
+Ignácio|DF|Fluminense|19|1147|0|0
+Igor Coronado|MF|Corinthians|6|342|1|0
+Igor Gomes|MF|Atletico-MG|34|1824|4|3
+Igor Jesus|FW,MF|Botafogo|10|875|3|1
+Igor Rabello|DF|Atletico-MG|4|189|0|0
+Igor Rabello|DF|Fluminense|4|144|0|0
+Igor Serrote|DF|Gremio|7|512|0|0
+Igor Vinícius de Souza|DF|Santos|20|1302|0|2
+Isaac|FW|Atletico-MG|1|6|0|0
+Isaque|MF|Fluminense|1|22|0|0
+Ismael|MF|Vitoria|1|18|0|0
+Iury de Castilho|FW,MF|Mirassol|9|499|1|0
+Ivan|GK|Internacional|7|585|0|0
+Iván Román|DF|Atletico-MG|12|701|0|0
+Jacaré||Corinthians|0|0|0|0
+Jair|MF|Vasco|11|559|0|0
+Jair Cunha|DF|Botafogo|11|990|0|1
+Jamerson|DF|Vitoria|12|1026|0|2
+Janderson|FW,MF|Vitoria|11|729|1|0
+Jardiel|FW|Gremio|5|41|0|0
+Jean Lucas|MF|Bahia|34|2674|3|1
+Jean Meneses|FW,MF|Vasco|1|1|0|0
+Jefferson Savarino|MF|Botafogo|27|1917|4|3
+Jeffinho|MF|Botafogo|17|685|2|4
+Jefté|MF,DF|Palmeiras|12|765|0|3
+Jemerson|DF|Gremio|9|770|1|0
+Jemmes|DF|Mirassol|37|3273|2|0
+Jhon Arias|MF,FW|Fluminense|12|1079|1|4
+Joaquín Correa|MF,FW|Botafogo|18|898|2|0
+Joaquín Lavega|FW|Fluminense|2|67|0|0
+Joaquín Piquerez|DF,MF|Palmeiras|30|2456|3|1
+Johan Carbonero|MF,FW|Internacional|23|1457|5|2
+John|GK|Botafogo|17|1530|0|0
+John Kennedy|FW|Fluminense|17|626|2|1
+Johnny Góes|DF|Flamengo|1|90|0|1
+Jonathan|DF|Cruzeiro|13|798|0|1
+Jordan Barrera|MF|Botafogo|6|307|1|0
+Jorge|GK|Gremio|0|0|0|0
+Jorge Carrascal|MF|Flamengo|16|821|2|5
+Jorginho|MF|Flamengo|18|1357|3|1
+Josef de Souza|MF|Vasco|0|0|0|0
+Joshua|MF|Flamengo|1|28|0|0
+José|MF|Cruzeiro|1|1|0|0
+José Aldo|MF|Mirassol|30|1369|0|1
+José Andrés Martínez|MF|Corinthians|24|1396|1|1
+José Herrera|MF|Fortaleza|19|1046|2|3
+José Luis Rodríguez Bebanz|DF|Vasco|25|1446|2|2
+José Manuel López|FW,MF|Palmeiras|33|1999|12|2
+José Welison|MF|Fortaleza|9|437|0|0
+Jota|MF|Bahia|0|0|0|0
+João Alencar|DF|Santos|0|0|0|0
+João Alves|MF|Flamengo|0|0|0|0
+João Ananias|DF|Santos|0|0|0|0
+João Camargo|FW|Flamengo|1|18|0|0
+João Coni|MF|Bahia|0|0|0|0
+João Gabriel Santos|FW|Atletico-MG|0|0|0|0
+João Loiola|DF|Fluminense|0|0|0|0
+João Lucas|DF|Gremio|10|506|0|0
+João Marcelo|DF|Cruzeiro|4|226|0|0
+João Marcelo|FW|Atletico-MG|7|68|1|1
+João Othavio Basso|DF|Santos|6|518|1|0
+João Paulo|GK|Bahia|0|0|0|0
+João Paulo|GK|Santos|0|0|0|0
+João Pedro|DF|Corinthians|16|1242|0|1
+João Pedro|DF|Gremio|7|454|0|0
+João Pedro Chermont|DF|Santos|5|249|0|0
+João Pedro Pepê|MF|Vitoria|14|654|0|0
+João Ricardo Riedi|GK|Fortaleza|14|1260|0|0
+João Schmidt|MF|Santos|31|2153|2|2
+João Victor|DF|Mirassol|34|3059|2|1
+João Victor|FW|Ceara|1|6|0|0
+João Victor|DF|Vasco|16|1435|1|0
+João Victor|DF|Flamengo|4|194|0|0
+João Wellington|MF|Cruzeiro|5|139|0|0
+Juan Freytes|DF|Fluminense|33|2924|0|0
+Juan Ignacio Dinenno|FW|Cruzeiro|1|12|0|0
+Juan Martín Lucero|FW|Fortaleza|27|1409|3|1
+Juan Sforza|MF|Vasco|2|71|0|0
+Julio Cesar|DF|Fluminense|3|176|0|1
+Juninho|DF|Internacional|20|1505|0|0
+Juninho|FW|Flamengo|15|378|1|0
+Júnior Alonso|DF|Atletico-MG|31|2610|1|1
+Júnior Santos|FW|Atletico-MG|16|361|2|0
+Kadir Barría|FW|Botafogo|6|174|2|0
+Kaiki|DF|Cruzeiro|34|2993|1|5
+Kaiky Naves|DF|Palmeiras|1|19|0|0
+Kaio Jorge|FW|Cruzeiro|33|2588|21|8
+Kaio Pantaleão|DF|Botafogo|11|933|0|0
+Kaique Rocha|DF|Internacional|0|0|0|0
+Kanu|DF|Bahia|7|513|0|0
+Kauan|GK|Internacional|0|0|0|0
+Kauan|DF|Vitoria|0|0|0|0
+Kauan Cunha|GK|Palmeiras|0|0|0|0
+Kauan Lindes|MF|Botafogo|1|31|0|0
+Kauan Toledo|FW|Botafogo|2|7|0|1
+Kauan Vitor|FW|Vitoria|0|0|0|0
+Kauã|DF|Bahia|0|0|0|0
+Kauã Branco|DF|Botafogo|0|0|0|0
+Kauã Moraes|DF|Cruzeiro|5|197|0|0
+Kauã Prates|DF|Cruzeiro|8|341|0|0
+Kauê|GK|Corinthians|1|90|0|0
+Kauê|MF|Botafogo|0|0|0|0
+Kauê Junior|FW|Bahia|1|4|0|0
+Kauê Junior|FW|Corinthians|0|0|0|0
+Kayke|MF,FW|Corinthians|8|358|0|1
+Kayke|FW|Fortaleza|2|31|0|0
+Kayke|FW|Botafogo|0|0|0|0
+Kayky Chagas|FW,MF|Bahia|26|890|1|2
+Keiller|GK|Ceara|0|0|0|0
+Kenji|FW|Cruzeiro|3|39|0|0
+Keno|MF|Fluminense|18|509|1|2
+Keny Arroyo|MF|Cruzeiro|13|646|2|1
+Kervin Andrade|MF|Fortaleza|7|163|0|1
+Kevin Serna|MF|Fluminense|33|2086|7|5
+Kevyson|MF|Santos|1|16|0|0
+Khellven|DF,MF|Palmeiras|13|975|0|2
+Kike Saverio|MF,FW|Vitoria|2|33|0|0
+Larson|MF|Palmeiras|2|73|0|0
+Lautaro Díaz|FW|Santos|15|1020|3|2
+Lautaro Díaz|FW|Cruzeiro|6|85|0|0
+Leandrinho|DF|Vasco|2|57|0|0
+Leandro Emmanuel Martínez|MF|Fortaleza|14|741|1|1
+Lelê|FW|Ceara|7|110|0|0
+Leo Augusto Pereira|FW,MF|Vitoria|6|166|0|0
+Leo Jacó|FW|Vasco|2|16|0|0
+Leo Ortiz|DF|Flamengo|26|2203|1|2
+Leonan|DF|Mirassol|0|0|0|0
+Leonardo Godoy|DF|Santos|6|416|0|0
+Leonardo Linck|GK|Botafogo|17|1486|0|0
+Leonardo Nannetti Lopes|GK|Flamengo|0|0|0|0
+Lima|MF|Fluminense|28|1094|2|1
+Loide Augusto|MF|Vasco|10|192|0|0
+Lorran|FW|Flamengo|0|0|0|0
+Lourenço|MF|Ceara|33|1386|2|1
+Luan Cândido|DF|Gremio|0|0|0|0
+Luan Peres Petroni|DF|Santos|24|2051|0|0
+Luca Meirelles|DF|Santos|7|89|0|0
+Lucas Arcanjo|GK|Vitoria|29|2545|0|0
+Lucas Braga|FW,DF|Vitoria|21|968|1|0
+Lucas Crispim|MF|Fortaleza|10|424|1|1
+Lucas Emanoel|MF|Fortaleza|0|0|0|0
+Lucas Esteves|DF|Gremio|10|671|0|0
+Lucas Evangelista|MF|Palmeiras|19|1046|2|1
+Lucas Freitas|DF|Vasco|21|1552|1|0
+Lucas Gazal|DF|Fortaleza|7|546|0|1
+Lucas Halter|DF|Vitoria|33|2904|4|1
+Lucas Lima|MF|Ceara|11|127|0|0
+Lucas Lohan|MF|Vitoria|0|0|0|0
+Lucas Mugni|MF|Ceara|33|1714|2|6
+Lucas Oliveira|DF|Vasco|8|259|0|0
+Lucas Piton|DF|Vasco|30|2545|1|7
+Lucas Ramon|DF|Mirassol|31|2604|2|3
+Lucas Romero|MF|Cruzeiro|33|2832|1|3
+Lucas Sasha|MF|Fortaleza|31|2612|1|0
+Lucas Silva|MF|Cruzeiro|34|2751|2|2
+Lucas Vieira|MF|Flamengo|1|22|0|0
+Lucas Villalba|DF|Cruzeiro|32|2864|1|0
+Lucca Holanda|FW|Internacional|4|161|0|0
+Lucca Holanda|FW|Ceara|1|12|0|0
+Lucca Prior|MF,FW|Fortaleza|12|656|2|0
+Luciano Acosta|MF|Fluminense|16|1199|3|2
+Luciano Juba|DF|Bahia|35|2877|6|4
+Luciano Rodríguez|FW|Bahia|18|791|2|0
+Lucio|MF|Flamengo|1|68|0|0
+Luighi|MF,FW|Palmeiras|11|339|1|0
+Luis Benedetti|DF|Palmeiras|5|377|1|0
+Luis Eduardo|DF|Gremio|0|0|0|0
+Luis Otávio|MF|Internacional|20|770|0|0
+Luis Pacheco|MF|Palmeiras|2|18|0|0
+Luis Sinisterra|MF|Cruzeiro|11|326|2|1
+Luisão|DF|Santos|6|438|0|0
+Luiz Araújo|MF|Flamengo|35|1765|7|3
+Luiz Filipe|FW|Mirassol|1|14|0|0
+Luiz Gustavo|DF|Bahia|0|0|0|0
+Luiz Gustavo|DF|Vasco|5|288|0|0
+Luiz Otávio|DF|Mirassol|5|165|0|0
+Lukas Zuccarello|MF|Vasco|2|24|0|0
+Lyan Araujo|FW|Bahia|0|0|0|0
+Lyanco|DF|Atletico-MG|17|1410|0|0
+Léo Aragão|GK|Cruzeiro|4|334|0|0
+Léo Jance|DF|Fluminense|0|0|0|0
+Léo Jardim|GK|Vasco|36|3235|0|0
+Léo Mana|DF|Corinthians|4|225|0|0
+Léo Pereira|DF|Flamengo|34|2953|4|0
+Magrão|GK|Fortaleza|3|270|0|0
+Manoel|DF|Fluminense|5|345|0|0
+Marcelo|DF|Fortaleza|0|0|0|0
+Marcelo|GK|Cruzeiro|0|0|0|0
+Marcelo Lomba|GK|Palmeiras|3|270|0|0
+Marcelo Pitaluga|GK|Fluminense|0|0|0|0
+Marcos Felipe|GK|Bahia|11|972|0|0
+Marcos Rocha|DF|Palmeiras|1|90|0|0
+Marcos Rocha|DF|Gremio|12|959|0|0
+Marcos Victor|DF|Ceara|15|1343|0|1
+Marinho|FW,MF|Fortaleza|17|710|1|2
+Marllon Borges|DF|Ceara|25|2083|2|0
+Marlon|DF|Cruzeiro|1|6|0|0
+Marlon|DF|Gremio|31|2765|1|2
+Marlon Freitas|MF|Botafogo|35|2924|1|4
+Marquinhos|MF|Cruzeiro|17|384|0|0
+Marquinhos|DF|Botafogo|1|2|0|0
+Martin Braithwaite|FW|Gremio|18|1456|6|1
+Martinelli|MF|Fluminense|33|2721|3|2
+Mateo Gamarra|DF|Cruzeiro|2|154|0|0
+Mateo Ponte|DF|Botafogo|21|676|2|0
+Mateo Sanabria|FW,MF|Bahia|10|569|1|0
+Mateus Cocão|MF|Vasco|19|593|0|0
+Mateus Iseppe|MF|Atletico-MG|1|3|0|0
+Mateus Xavier|MF|Santos|3|39|0|0
+Matheus Araújo|MF|Ceara|11|270|1|1
+Matheus Bahia|DF|Ceara|28|2462|0|1
+Matheus Bianqui|MF|Mirassol|13|147|0|0
+Matheus Bidu|DF,MF|Corinthians|26|1965|0|2
+Matheus Cunha|GK|Flamengo|0|0|0|0
+Matheus Davó|FW|Mirassol|2|35|0|1
+Matheus Donelli|GK|Corinthians|5|450|0|0
+Matheus França|MF,FW|Vasco|15|386|0|0
+Matheus Gonçalves|FW|Flamengo|4|69|0|0
+Matheus Henrique|MF|Cruzeiro|17|723|0|0
+Matheus Martins|MF|Botafogo|15|654|1|0
+Matheus Pereira|MF|Cruzeiro|34|2793|7|7
+Matheus Pereira da Silva|MF|Fortaleza|19|1285|1|3
+Matheus Rossetto|MF|Fortaleza|20|924|0|0
+Matheusinho|MF,FW|Vitoria|29|1768|4|1
+Matheuzinho|DF,MF|Corinthians|31|2632|2|3
+Mathías Villasanti|MF|Gremio|16|1150|0|0
+Matias Arezo|FW|Gremio|8|268|1|1
+Matías Viña|DF|Flamengo|8|281|0|0
+Mauricio|MF,FW|Palmeiras|29|1598|3|7
+Mauricio Lemos|DF|Vasco|4|243|0|0
+Maycon|MF|Corinthians|25|1491|3|0
+Mayke|DF|Santos|12|821|0|0
+Mayke|DF,MF|Palmeiras|3|211|0|0
+Maykon Jesus|DF|Vitoria|9|766|0|0
+Memphis|FW|Corinthians|23|1544|6|3
+Micael|DF|Palmeiras|16|1295|0|1
+Michael|MF|Flamengo|15|621|1|3
+Michel Araujo|MF,FW|Bahia|24|852|4|1
+Miguel Monsalve|FW,MF|Gremio|9|297|0|1
+Moises|MF,FW|Fortaleza|12|385|0|1
+Murilo Cerqueira|DF|Palmeiras|20|1660|1|1
+Murilo Rhikman|MF|Cruzeiro|2|8|0|0
+Natanael|DF,MF|Atletico-MG|34|2142|1|0
+Nathan|DF|Internacional|1|90|0|0
+Nathan|MF,FW|Gremio|2|90|0|0
+Nathan Fernandes|MF,FW|Botafogo|10|330|1|2
+Negueba|FW,MF|Mirassol|33|2157|7|3
+Neris|DF|Vitoria|10|534|0|0
+Neto|GK|Botafogo|3|224|0|0
+Neto Moura|MF|Mirassol|34|2428|1|0
+Newton|MF|Botafogo|25|1494|1|0
+Neymar|FW,MF|Santos|20|1528|8|1
+Nicolas|DF|Ceara|13|593|0|0
+Nicolás Acevedo|MF|Bahia|32|1690|0|1
+Nicolás De La Cruz|MF|Flamengo|19|1018|0|0
+Nonato|MF|Fluminense|20|914|2|1
+Nuno Gonçalo Moreira|MF,FW|Vasco|36|2549|7|5
+Ogundana Shola|FW|Flamengo|0|0|0|0
+Osvaldo|FW,MF|Vitoria|27|996|0|2
+Otávio|GK|Cruzeiro|0|0|0|0
+Otávio|MF|Fluminense|6|217|0|0
+Pablo|DF|Internacional|1|20|0|0
+Pablo|GK|Vasco|0|0|0|0
+Pablo Roberto|MF|Fortaleza|5|116|0|0
+Pablo Vegetti|FW|Vasco|35|2335|14|1
+Patrick de Paula|MF|Botafogo|6|284|0|0
+Patrick Silva|MF|Atletico-MG|3|224|0|0
+Paulinho|MF|Palmeiras|7|224|0|0
+Paulinho|MF|Vasco|11|310|0|0
+Paulinho|DF|Vasco|0|0|0|0
+Paulo Baya|MF,FW|Ceara|15|436|0|0
+Paulo Baya|MF|Fluminense|4|38|1|1
+Paulo Henrique|DF|Vasco|28|2490|1|8
+Paulo Roberto|DF|Vitoria|2|96|0|0
+Pedro|FW|Flamengo|21|1047|12|6
+Pedro Ataíde|FW|Atletico-MG|0|0|0|0
+Pedro Borges|MF|Fortaleza|1|37|0|0
+Pedro Fachinetti|DF|Flamengo|0|0|0|0
+Pedro Henrique|MF,FW|Ceara|28|1380|4|3
+Pedro Kauã|DF|Internacional|0|0|0|0
+Pedro Raul|FW|Ceara|34|2896|11|1
+Philippe Coutinho|MF|Vasco|30|2403|5|3
+Phillipe Gabriel|GK|Vasco|0|0|0|0
+Pierre|MF|Fortaleza|13|839|0|0
+Rafael Borré|FW|Internacional|30|1809|5|2
+Rafael Coutinho|MF|Palmeiras|0|0|0|0
+Rafael Ramos|DF,MF|Ceara|20|904|0|0
+Ramon|DF|Internacional|5|329|0|0
+Ramon|DF|Vitoria|18|1620|0|0
+Ramon Menezes Roma|DF,MF|Ceara|0|0|0|0
+Ramón Sosa|MF,FW|Palmeiras|23|876|3|3
+Raniele|MF,DF|Corinthians|30|2013|2|1
+Raphael Veiga|MF|Palmeiras|25|1067|2|4
+Raul Steffens|GK|Botafogo|2|180|0|0
+Rayan Passaglia Lelis|MF|Cruzeiro|1|64|0|0
+Rayan Vitor|MF,FW|Vasco|34|2835|14|1
+Raykkonen|FW|Internacional|7|124|0|0
+Raúl Cáceres|DF|Vitoria|20|1685|2|2
+Reinaldo|DF|Mirassol|34|2892|13|6
+Reinier|FW,MF|Atletico-MG|13|333|0|0
+Renato Augusto|MF|Fluminense|2|20|0|0
+Renato Kayser|FW|Vitoria|30|2083|9|0
+Renato Marques|FW|Mirassol|7|261|1|0
+Renzo López|FW|Vitoria|23|651|1|0
+Renzo Saravia|DF,MF|Atletico-MG|19|1065|0|0
+Renê|DF|Fluminense|28|2362|2|0
+Rezende|MF,DF|Bahia|11|580|0|0
+Rhuan Gabriel|MF|Cruzeiro|0|0|0|0
+Rhyan|GK|Botafogo|0|0|0|0
+Ricardo|MF|Vitoria|20|882|0|0
+Ricardo Mathias|FW|Internacional|22|809|5|1
+Richard|MF|Internacional|7|275|0|0
+Richard|GK|Ceara|0|0|0|0
+Richard Ríos|MF|Palmeiras|10|733|0|2
+Richardson|MF|Ceara|16|790|0|0
+Riquelme|MF|Fluminense|6|99|0|0
+Riquelme Fillipi|FW|Palmeiras|2|28|0|0
+Riquelme Freitas|FW,MF|Gremio|10|388|0|0
+Robert|GK|Atletico-MG|0|0|0|0
+Robert Renan|DF|Vasco|15|1287|0|0
+Robinho Junior|MF,FW|Santos|15|352|0|1
+Rodrigo Ely|DF|Gremio|2|40|0|0
+Rodrigo Garro|MF,FW|Corinthians|19|1410|0|3
+Rodrigo Nestor|MF|Bahia|22|875|5|0
+Rodrigo Santos|MF|Fortaleza|8|225|0|0
+Rodriguinho|MF|Ceara|4|33|0|0
+Rodriguinho|MF|Cruzeiro|1|15|0|0
+Roger|MF|Bahia|0|0|0|0
+Romarinho|MF,FW|Vitoria|5|124|0|0
+Romulo|MF|Ceara|9|133|0|0
+Ronald|MF|Vitoria|29|1871|0|2
+Ronald|DF,MF|Gremio|6|233|0|0
+Ronaldo|MF|Internacional|15|774|0|0
+Ronaldo|GK|Bahia|28|2448|0|1
+Rony|FW,MF|Atletico-MG|35|2500|6|5
+Ruan|DF|Atletico-MG|11|811|1|0
+Ruan Pablo|FW,MF|Bahia|5|51|0|0
+Ruben Rodrigues|MF|Vitoria|4|26|0|0
+Rubens|MF,DF|Atletico-MG|13|1033|1|0
+Rubén Lezcano|MF|Fluminense|4|57|0|0
+Rwan|FW|Botafogo|5|176|0|0
+Ryan Guilherme|MF|Fortaleza|0|0|0|0
+Ryan Guilherme|MF|Cruzeiro|3|56|0|0
+Ryan Gustavo|MF|Corinthians|16|527|0|0
+Rômulo|DF|Atletico-MG|3|209|0|0
+Samuel Lino|MF|Flamengo|21|1394|4|5
+Samuel Xavier|DF|Fluminense|29|2385|4|1
+Santi Ramos Mingo|DF|Bahia|33|2926|0|0
+Santiago Arias|DF|Bahia|21|1419|0|0
+Santiago Moreno|MF|Fluminense|5|154|0|0
+Santiago Rodríguez|MF|Botafogo|26|1328|2|5
+Saúl Ñíguez|MF|Flamengo|16|1156|0|2
+Serafim|DF|Botafogo|0|0|0|0
+Sergio Rochet|GK|Internacional|15|1305|0|0
+Shaylon|MF|Mirassol|13|439|0|0
+Sidney|MF|Bahia|0|0|0|0
+Souza|DF|Santos|24|1639|1|2
+Talles Magno|MF,FW|Corinthians|24|961|1|1
+Tchê Tchê|MF|Vasco|29|2000|1|0
+Thaciano|MF,FW|Santos|19|614|3|0
+Thalys|FW|Palmeiras|2|88|0|0
+Thiago|GK|Vitoria|9|785|0|0
+Thiago Beltrame|GK|Gremio|0|0|0|0
+Thiago dos Santos|MF,DF|Fluminense|10|287|0|0
+Thiago Maia|MF|Internacional|31|1980|2|1
+Thiago Mendes|MF|Vasco|8|300|0|0
+Thiago Silva|DF|Fluminense|25|2157|2|0
+Thiaguinho|MF|Vitoria|0|0|0|0
+Thomazella|GK|Mirassol|0|0|0|0
+Tiago|FW,MF|Bahia|25|902|3|2
+Tiago|MF|Gremio|0|0|0|0
+Tiago Volpi|GK|Gremio|32|2880|2|0
+Tiquinho Soares|FW|Santos|27|1252|2|3
+Titi|DF|Fortaleza|3|269|0|0
+Tomas Pochettino|MF,FW|Fortaleza|26|1537|3|4
+Tomás Cuello|MF,FW|Atletico-MG|16|1203|1|1
+Tomás Rincón|MF|Santos|17|922|0|0
+Vagno|MF|Fluminense|0|0|0|0
+Vanderlan|DF,MF|Palmeiras|3|198|0|0
+Victor Gabriel|DF|Internacional|14|1109|2|0
+Victor Hugo|MF|Santos|9|443|0|0
+Victor Hugo|MF|Flamengo|1|6|0|0
+Victor Luis|MF,DF|Vasco|7|273|0|0
+Viery|DF|Gremio|3|50|0|0
+Vinicius Lira|DF|Santos|0|0|0|0
+Vinicius Silvestre|GK|Fortaleza|2|180|0|0
+Vinícius|MF|Ceara|16|567|0|1
+Vinícius Zanocelo|MF|Ceara|15|1087|1|0
+Vitinho|MF,FW|Internacional|27|1679|5|1
+Vitinho|MF|Bahia|0|0|0|0
+Vitinho|FW|Corinthians|12|479|0|3
+Vitinho|DF|Botafogo|36|2831|1|2
+Vitor Eudes|GK|Fluminense|0|0|0|0
+Vitor Hugo|DF|Atletico-MG|23|1639|3|0
+Vitor Lamounier|GK|Cruzeiro|0|0|0|0
+Vitor Roque|FW|Palmeiras|33|2117|16|3
+Vitão|DF|Internacional|31|2719|0|2
+Vitão|DF|Atletico-MG|0|0|0|0
+Wagner|DF|Gremio|29|2369|0|2
+Walace|MF|Cruzeiro|17|384|0|0
+Wallace|FW|Flamengo|17|443|1|2
+Wallace|DF|Fluminense|0|0|0|0
+Wallysson|FW|Atletico-MG|0|0|0|0
+Walter|GK|Mirassol|31|2790|0|0
+Walter Kannemann|DF|Gremio|20|1723|0|0
+Wanderson|MF|Cruzeiro|27|1792|0|2
+Wanderson Junior|DF|Flamengo|1|22|0|0
+Wellington Rato|FW,MF|Vitoria|5|212|1|0
+Wendell|MF|Vitoria|1|66|0|0
+Wesley|MF,FW|Internacional|18|1233|0|3
+Wesley|DF|Flamengo|11|982|1|2
+Wesley Santos|DF|Mirassol|0|0|0|0
+Weverson|DF|Fortaleza|4|219|0|0
+William|DF|Cruzeiro|30|2281|0|6
+Willian|MF|Vitoria|20|1411|1|0
+Willian|MF,FW|Gremio|6|308|1|2
+Willian Arão|MF|Santos|13|779|0|0
+Willian José|FW|Bahia|33|2115|11|6
+Willian Machado|DF|Ceara|36|3219|0|1
+Wéverton|GK|Palmeiras|26|2340|0|0
+Yago|FW|Internacional|2|73|0|0
+Yago|MF|Mirassol|19|630|0|1
+Yago Pikachu|MF,FW|Fortaleza|31|1389|2|1
+Yago Veloso|DF|Flamengo|0|0|0|0
+Yan Henrique|DF|Internacional|0|0|0|0
+Yannick Bolasie|FW,MF|Cruzeiro|18|177|0|1
+Yeferson Soteldo|MF|Santos|5|326|0|0
+Yeferson Soteldo|MF|Fluminense|17|496|2|2
+Yeison Guzmán|MF|Fortaleza|5|188|0|0
+Yuri Alberto|FW|Corinthians|26|2005|10|2
+Yuri Sena|GK|Vitoria|0|0|0|0
+Zé Guilherme|DF,FW|Bahia|3|86|0|0
+Zé Ivaldo|DF|Santos|21|1799|1|0
+Zé Marcos|DF|Vitoria|28|2426|1|1
+Zé Phelipe|MF|Atletico-MG|0|0|0|0
+Zé Rafael|MF|Santos|27|1854|1|0
+Zé Vitor|MF|Mirassol|2|25|0|0
+Álvaro Barreal|MF,FW|Santos|34|2239|9|1
+Álvaro Montoro|MF|Botafogo|16|936|3|3
+Ángel Romero|FW,MF|Corinthians|27|1068|0|1
+Éverson|GK|Atletico-MG|36|3240|0|0
+Índio|MF|Atletico-MG|0|0|0|0
+Óscar Romero|MF|Internacional|17|505|0|1
+Lucas Barbosa|MF,FW|Bragantino|4|360|0|0
+Juninho Capixaba|DF|Bragantino|4|360|2|0
+Cleiton Schwengber|GK|Bragantino|4|360|0|0
+Henry Mosquera|MF,FW|Bragantino|4|337|0|0
+José Hurtado|DF|Bragantino|4|329|0|0
+Gustavinho|MF|Bragantino|4|304|1|0
+Gustavo Marques|DF|Bragantino|3|270|0|0
+Eduardo Sasha|FW|Bragantino|3|235|0|0
+Alix Vinicius|DF|Bragantino|3|201|0|0
+Gabriel|MF|Bragantino|3|169|0|0
+Pedro Henrique|DF|Bragantino|4|245|0|0
+Matheus Fernandes|MF|Bragantino|3|170|0|0
+Isidro Pitta|FW|Bragantino|3|160|0|0
+Fabinho|MF|Bragantino|3|157|0|0
+Eric Ramires|MF|Bragantino|3|64|0|0
+Ignacio Sosa|MF|Bragantino|3|55|0|0
+Marcelinho|FW|Bragantino|1|45|0|1
+José Herrera|FW,MF|Bragantino|2|33|0|0
+Agustín Sant'Anna|DF|Bragantino|1|21|0|0
+Fernando|FW|Bragantino|2|18|0|0
+Vinicius Mendonça|FW|Bragantino|2|13|0|0
+Eduardo Santos|DF|Bragantino|1|10|0|0
+Caue|DF|Bragantino|0|0|0|0
+Davi Gomes|FW|Bragantino|0|0|0|0
+Yuri Leles|MF|Bragantino|0|0|0|0
+Gustavo Reis|GK|Bragantino|0|0|0|0
+Rodrigo|MF|Bragantino|0|0|0|0
+Tiago Volpi|GK|Bragantino|0|0|0|0
+Jadson|MF|Juventude|35|2831|0|2
+Luis Mandaca|MF,FW|Juventude|32|2445|2|1
+Gabriel Taliari|FW,MF|Juventude|34|2296|8|4
+Caíque de Jesus Gonçalves|MF|Juventude|28|2049|0|1
+Marcelo Hermes|DF,MF|Juventude|22|1858|2|5
+Jandrei|GK|Juventude|19|1710|0|0
+Enmerson Batalla|MF,FW|Juventude|22|1318|4|2
+Rodrigo Sam|DF|Juventude|18|1457|1|0
+Wilker Ángel|DF|Juventude|18|1423|1|0
+Marcos Paulo|DF|Juventude|19|1367|0|0
+Igor Marques|MF,DF|Juventude|19|1424|2|2
+Gilberto|FW|Juventude|23|1099|2|2
+Alan Ruschel|DF|Juventude|21|1230|0|0
+Reginaldo|DF|Juventude|18|1170|0|2
+Abner|DF|Juventude|19|1318|0|1
+Ewerton|DF|Juventude|18|1155|1|0
+Luan Freitas|DF|Juventude|14|1124|0|1
+Nenê|FW,MF|Juventude|25|1009|3|4
+Gustavo|GK|Juventude|10|855|0|0
+Rafael Bilu|MF,FW|Juventude|15|688|1|0
+Ênio|MF,FW|Juventude|26|1108|3|0
+Peixoto|MF,DF|Juventude|13|733|1|0
+Daniel Giraldo|MF|Juventude|15|681|0|0
+Gabriel Veron|FW,MF|Juventude|13|639|0|0
+Giovanny|FW,MF|Juventude|19|653|0|2
+Marcão|GK|Juventude|6|495|0|0
+Adriano Martins|DF|Juventude|5|360|0|0
+Lucas Fernandes|MF|Juventude|7|397|0|0
+Ruan Carneiro|GK|Juventude|4|360|0|0
+André Filipinho|DF|Juventude|5|303|0|0
+Hudson|MF|Juventude|4|233|0|0
+Cipriano|DF|Juventude|3|189|0|0
+Matheus Babi|FW|Juventude|20|478|2|0
+Juan Sforza|MF|Juventude|8|272|0|0
+Jean Carlos Vicente|MF|Juventude|7|203|0|0
+Nata|DF|Juventude|2|94|0|0
+Petterson|MF|Juventude|2|80|0|0
+Davi Goes|MF|Juventude|2|64|0|0
+Bernardo|DF|Juventude|1|45|0|0
+Edison Negueba|FW|Juventude|5|107|1|0
+Maurício Garcez|FW,MF|Juventude|3|61|0|0
+Pernambuco|MF|Juventude|3|57|0|0
+Emerson Galego|FW|Juventude|2|27|0|0
+João Scatolin|MF|Juventude|1|25|0|0
+Marlon|FW|Juventude|1|8|0|0
+Gastón Guruceaga|GK|Juventude|0|0|0|0
+Zé Henrique|GK|Juventude|0|0|0|0
+Kelvi|MF|Juventude|0|0|0|0
+Rafael Pinna|FW|Juventude|0|0|0|0
+Gabriel Souza|DF|Juventude|0|0|0|0
+Christian Rivera|MF|Sport|33|2729|0|0
+Lucas Lima|MF|Sport|33|2550|3|7
+Rafael Thyere|DF|Sport|24|2106|1|0
+Gabriel|GK|Sport|23|2070|0|0
+Ramon Menezes Roma|DF|Sport|23|1876|1|0
+Matheusinho|MF,FW|Sport|25|1653|2|2
+Igor Cariús|DF,MF|Sport|28|1726|1|0
+Zé Lucas|MF|Sport|24|1596|0|0
+Matheus Alexandre|DF|Sport|26|1779|0|1
+Chrystian Barletta|MF|Sport|34|1499|2|0
+Derik Lacerda|FW|Sport|17|1446|6|0
+Caíque França|GK|Sport|15|1350|0|0
+Luan Cândido|DF|Sport|16|1318|1|0
+Leo Augusto Pereira|MF,FW|Sport|16|1108|3|1
+Pablo|FW|Sport|21|1055|3|1
+Chico|DF|Sport|13|1060|0|0
+Lucas Kal|MF,DF|Sport|13|861|0|0
+Sérgio Oliveira|MF|Sport|19|997|1|1
+João Silva|DF|Sport|14|990|0|0
+Aderlan Silva|DF,MF|Sport|14|920|0|0
+Diogo Hereda|DF,MF|Sport|11|848|0|1
+Du Queiroz|MF|Sport|11|615|0|0
+Romarinho|MF,FW|Sport|26|912|2|0
+Lucas Cunha|DF|Sport|6|428|0|0
+Pedro Borges|MF|Sport|13|508|0|0
+Hyoran|MF,FW|Sport|12|402|0|1
+Carlos Alberto|MF,FW|Sport|9|330|0|0
+Juan Ignacio Ramírez|FW|Sport|8|291|0|0
+Antonio Carlos|DF|Sport|3|270|0|0
+Gonçalo Paciência|FW|Sport|6|196|0|0
+Rodrigo Atencio|MF|Sport|19|544|0|0
+Lenny Lobato|MF,FW|Sport|7|244|0|0
+Kevyson|DF|Sport|9|268|0|0
+Arthur|FW|Sport|6|200|0|0
+Adriel|MF|Sport|5|148|0|0
+Fabricio Domínguez|MF|Sport|4|100|0|0
+Victor Hugo|DF|Sport|1|61|0|0
+Christian Ortiz|FW,MF|Sport|6|178|0|0
+Dalbert Henrique|DF,MF|Sport|5|110|0|0
+Rafinha|DF|Sport|1|45|0|0
+Jefinho|MF|Sport|1|23|0|0
+Riquelme|MF|Sport|2|23|0|0
+Gustavo Maia|FW|Sport|1|17|0|0
+Antônio Adriano|GK|Sport|0|0|0|0
+Cauã Berrío|DF|Sport|0|0|0|0
+Davi|GK|Sport|0|0|0|0
+Dedé|MF|Sport|0|0|0|0
+Leonel Di Plácido|DF|Sport|0|0|0|0
+Felype Gabriel|DF|Sport|0|0|0|0
+Luiz Henrique|MF|Sport|0|0|0|0
+Renzo|DF|Sport|0|0|0|0
+Thiago|GK|Sport|0|0|0|0
+Rafael Pires|GK|SaoPaulo|35|3150|0|0
+Alan Franco|DF|SaoPaulo|29|2282|0|0
+José Sabino|DF|SaoPaulo|30|2299|2|0
+Luciano|FW,MF|SaoPaulo|32|2105|9|4
+Marcos Antônio|MF|SaoPaulo|28|1896|0|4
+Damián Bobadilla|MF|SaoPaulo|31|2100|4|2
+Robert Arboleda|DF|SaoPaulo|24|2057|3|0
+Cédric Soares|MF,DF|SaoPaulo|25|1889|0|3
+Alisson|MF|SaoPaulo|31|1960|0|1
+Enzo Díaz|MF,DF|SaoPaulo|27|1877|0|5
+Ferreira|MF,FW|SaoPaulo|28|1580|5|4
+Nahuel Ferraresi|DF|SaoPaulo|24|1797|0|3
+Pablo Maia|MF|SaoPaulo|25|1471|1|0
+André Silva|FW|SaoPaulo|20|1357|5|2
+Gonzalo Tapia|FW|SaoPaulo|20|1117|5|0
+Wendell|MF,DF|SaoPaulo|16|838|0|1
+Luiz Gustavo|MF,DF|SaoPaulo|12|780|1|0
+Lucas Ferreira|MF|SaoPaulo|13|761|0|0
+Rodrigo|MF|SaoPaulo|18|724|0|0
+Maik|MF,DF|SaoPaulo|9|607|2|2
+Rafael Tolói|DF|SaoPaulo|7|499|0|0
+Oscar|MF,FW|SaoPaulo|6|345|0|0
+Lucas Moura|FW,MF|SaoPaulo|11|451|2|0
+Matheus Alves|MF|SaoPaulo|8|371|0|1
+Ruan|DF|SaoPaulo|5|361|0|0
+Mailton dos Santos|MF|SaoPaulo|8|388|0|0
+Patryck|MF,DF|SaoPaulo|5|309|0|0
+Young|GK|SaoPaulo|3|270|0|0
+Juan Ignacio Dinenno|FW|SaoPaulo|7|262|1|0
+Lucca Marques|MF|SaoPaulo|8|318|0|0
+Emiliano Rigoni|FW|SaoPaulo|10|294|1|0
+Felipe Negrucci|DF|SaoPaulo|5|226|0|0
+Ryan Francisco|FW|SaoPaulo|8|205|2|0
+Luan Silva|MF|SaoPaulo|6|173|0|0
+Igor Vinícius de Souza|MF,DF|SaoPaulo|3|164|0|0
+Jonathan Calleri|FW|SaoPaulo|3|121|0|0
+Nicolas|DF|SaoPaulo|1|45|0|0
+Henrique|MF|SaoPaulo|3|43|0|1
+Pedrinho|MF|SaoPaulo|2|26|0|0
+Paulo Sérgio|FW|SaoPaulo|3|26|0|0
+Igor|DF|SaoPaulo|0|0|0|0
+Isac|DF|SaoPaulo|0|0|0|0
+Jandrei|GK|SaoPaulo|0|0|0|0
+Leandro Mathias|GK|SaoPaulo|0|0|0|0
+Felipe Preis|GK|SaoPaulo|0|0|0|0
