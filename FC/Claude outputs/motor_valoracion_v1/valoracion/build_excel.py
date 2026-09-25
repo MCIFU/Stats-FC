@@ -18,11 +18,11 @@ import engine
 FONT = "Arial"
 F_BASE = Font(name=FONT, size=10)
 F_BOLD = Font(name=FONT, size=10, bold=True)
-F_HDR = Font(name=FONT, size=10, bold=True, color="FFFFFF")
-F_TITLE = Font(name=FONT, size=14, bold=True)
+F_HDR = Font(name=FONT, size=9, bold=True, color="FFFFFF")
+F_TITLE = Font(name=FONT, size=14, bold=True, color="0F2340")
 F_INPUT = Font(name=FONT, size=10, color="0000FF")
 F_GREY = Font(name=FONT, size=9, italic=True, color="666666")
-FILL_HDR = PatternFill("solid", fgColor="1F3864")
+FILL_HDR = PatternFill("solid", fgColor="0F2340")
 FILL_SUB = PatternFill("solid", fgColor="D9E1F2")
 FILL_INPUT = PatternFill("solid", fgColor="FFF2CC")
 FILL_UNK = PatternFill("solid", fgColor="EDEDED")
@@ -364,7 +364,11 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
             if c in mx:
                 mx[c] = pd.to_numeric(mx[c], errors="coerce").round(3 if c in ("expected", "score") else 1)
         mx = mx.sort_values(["name", "date"])
-        write_df(wm, mx[[c for c in mcols if c in mx]], freeze="C2")
+        es = {"name": "Jugador", "season": "Temporada", "date": "Fecha", "block": "Bloque", "club": "Club", "opponent": "Rival",
+              "home": "Local", "gf": "GF", "ga": "GC", "Min": "Min", "G": "G", "A": "A", "GC": "GC portero", "sofa_rating": "Nota SofaScore",
+              "match_rating": "Nota partido", "opp_elo": "Elo rival", "elo_before": "Elo antes", "expected": "Esperado",
+              "score": "Puntuación", "elo_delta": "Δ Elo"}
+        write_df(wm, mx[[c for c in mcols if c in mx]].rename(columns=es), freeze="C2")
     else:
         hdr(wm, 1, mcols)
         wm["A3"] = "SIN DATOS POR PARTIDO EN ESTA PRUEBA → ELO, FORM y CONSISTENCY = UNKNOWN (no se inventan ni se derivan del CA)."
@@ -461,6 +465,7 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
     build_ficha(ficha, b, val_cols, attrs, roles, pm, metrics, n)
     build_comparador(comp, b, val_cols, attrs, n)
     build_leeme(leeme, cfg, b, source_note)
+    pulir(wb)
     wb.save(out_path)
     return b
 
@@ -661,3 +666,106 @@ def build_leeme(ws, cfg, b, source_note):
             c.font = f
         c.alignment = Alignment(wrap_text=True, vertical="top")
     ws.column_dimensions["A"].width = 160
+
+
+# ------------------------------------------------------------------ pasada final de estilo (misma paleta que los Excel de temporada)
+NAVY, LINE = "0F2340", "E2E8F0"
+TABS = {"LEEME": NAVY, "FICHA": NAVY, "COMPARADOR": NAVY, "BUSCADOR_TALENTO": NAVY, "VALORACION": "1D4ED8", "ATRIBUTOS": "1D4ED8",
+        "ROLES": "1D4ED8", "PERCENTILES": "1D4ED8", "DESGLOSE_CA": "1D4ED8", "SIMILARES": "1D4ED8", "HISTORIAL": "1D4ED8",
+        "ELO_PARTIDOS": "047857", "EQUIPOS": "047857", "PARAMETROS": "B45309", "COMPETICIONES": "B45309", "CONFIG_PESOS": "B45309",
+        "CORRELACIONES": "64748B", "DATOS_ORIGEN": "64748B"}
+PORTADAS = {"LEEME", "FICHA", "COMPARADOR", "PARAMETROS", "BUSCADOR_TALENTO", "CONFIG_PESOS"}
+MAX_CELLS_STYLED = 900_000  # por encima (ELO_PARTIDOS, DESGLOSE_CA) solo cabecera, anchos y rayado: el archivo no se dispara
+
+
+def _band_title(ws, ncol):
+    c = ws["A1"]
+    txt = c.value
+    for j in range(1, ncol + 1):
+        cell = ws.cell(row=1, column=j)
+        cell.fill = PatternFill("solid", fgColor=NAVY)
+        cell.font = Font(name=FONT, size=14, bold=True, color="FFFFFF")
+        cell.alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws["A1"] = txt
+    ws.row_dimensions[1].height = 30
+
+
+def _tabla(ws):
+    """Hoja de datos con cabecera en la fila 1: cabecera, alineación por tipo, formatos, anchos y rayado."""
+    ncol, nrow = ws.max_column, ws.max_row
+    hdr_cells = ws[1]
+    for cell in hdr_cells:
+        cell.fill, cell.font = PatternFill("solid", fgColor=NAVY), Font(name=FONT, size=9, bold=True, color="FFFFFF")
+        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        cell.border = Border(bottom=Side(style="medium", color=NAVY))
+    ws.row_dimensions[1].height = 36
+    sample = list(ws.iter_rows(min_row=2, max_row=min(nrow, 300), values_only=True))
+    kinds = []
+    for j in range(ncol):
+        vals = [r[j] for r in sample if r[j] is not None and r[j] != ""]
+        num = vals and sum(isinstance(v, (int, float)) and not isinstance(v, bool) for v in vals) >= 0.8 * len(vals)
+        big = num and max(abs(v) for v in vals if isinstance(v, (int, float))) >= 1000
+        dec = num and any(isinstance(v, float) and v != int(v) for v in vals)
+        kinds.append("big" if big else "dec" if dec else "int" if num else "txt")
+        head = str(hdr_cells[j].value or "")
+        if kinds[-1] == "txt":
+            w = max([len(str(v)) for v in vals[:200]] + [len(head) * 0.6, 8])
+            w = min(30, w + 2)
+        else:
+            w = max(8, min(14, len(head) * 0.55 + 3))
+        if not ws.column_dimensions[get_column_letter(j + 1)].hidden:
+            ws.column_dimensions[get_column_letter(j + 1)].width = w
+    styled = nrow * ncol <= MAX_CELLS_STYLED
+    if styled:
+        left = Alignment(horizontal="left", vertical="center", indent=1)
+        center = Alignment(horizontal="center", vertical="center")
+        for row in ws.iter_rows(min_row=2, max_row=nrow):
+            for j, cell in enumerate(row):
+                k = kinds[j]
+                cell.alignment = left if k == "txt" else center
+                if k == "big" and cell.number_format == "General":
+                    cell.number_format = "#,##0"
+                elif k == "dec" and cell.number_format == "General":
+                    cell.number_format = "0.0#"
+    last = get_column_letter(ncol)
+    ws.conditional_formatting.add(f"A2:{last}{nrow}", FormulaRule(formula=["MOD(ROW(),2)=0"], fill=PatternFill("solid", fgColor="F8FAFC")))
+    ws.sheet_view.showGridLines = False
+
+
+def pulir(wb):
+    for ws in wb.worksheets:
+        ws.sheet_properties.tabColor = TABS.get(ws.title, "64748B")
+        if ws.title in PORTADAS:
+            _band_title(ws, max(ws.max_column, 6 if ws.title != "LEEME" else 1))
+            ws.sheet_view.showGridLines = False
+        else:
+            _tabla(ws)
+    v = wb["VALORACION"]
+    for cell in v[1]:
+        if cell.value == "ID":
+            v.column_dimensions[cell.column_letter].hidden = True
+        elif isinstance(cell.value, str) and "_" in cell.value:
+            cell.value = cell.value.replace("_", " ")  # solo texto visible: las fórmulas usan letras de columna
+    p = wb["PARAMETROS"]
+    for row in p.iter_rows(min_row=5):
+        for cell in row:
+            if cell.column in (2, 5, 6, 7, 8, 9):
+                cell.alignment = Alignment(horizontal="center", vertical="center")
+            elif cell.column == 3:
+                cell.alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    p.column_dimensions["B"].width = 20
+    # FICHA y COMPARADOR: valores centrados y en negrita, etiquetas en gris oscuro
+    for name in ("FICHA", "COMPARADOR"):
+        ws = wb[name]
+        for row in ws.iter_rows(min_row=3):
+            for cell in row:
+                if cell.fill.fgColor.rgb in ("00" + NAVY, NAVY):
+                    cell.alignment = Alignment(horizontal="left", vertical="center", indent=1)
+                    continue
+                if isinstance(cell.value, str) and cell.value.startswith("="):
+                    cell.alignment = Alignment(horizontal="center", vertical="center")
+                    if cell.font.color is None or cell.font.color.rgb in (None, "FF000000"):
+                        cell.font = Font(name=FONT, size=10, bold=True, color="0F172A")
+        for r in range(2, ws.max_row + 1):
+            ws.row_dimensions[r].height = 18
+    wb["LEEME"].column_dimensions["A"].width = 150
