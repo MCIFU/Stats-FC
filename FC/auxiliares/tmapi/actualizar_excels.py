@@ -50,6 +50,9 @@ def excel_rows():
                 by_name[n].add(k)
         extra = {n: next(iter(ids)) for n, ids in by_name.items() if len(ids) == 1 and n not in cm}
         cm = {**extra, **cm}
+    ce = HERE / "clubmap_extra.json"  # clubes añadidos por ampliar_ligas.py (nombre corto TM resuelto dentro de su liga)
+    if ce.exists():
+        cm = {**cm, **{k: v for k, v in json.loads(ce.read_text(encoding="utf-8")).items() if k not in cm}}
     out = []
     for season, fname in FILES.items():
         wb = openpyxl.load_workbook(FC / fname, read_only=True)
@@ -69,20 +72,11 @@ def excel_rows():
     return out
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--corte", default=(dt.date.today() - dt.timedelta(days=1)).isoformat())
-    ap.add_argument("--escribir", action="store_true")
-    ap.add_argument("--filas", help="solo estas filas 'temporada|HOJA|fila' separadas por comas (las revisadas a mano)")
-    ap.add_argument("--offline", action="store_true")
-    ap.add_argument("--workers", type=int, default=6)
-    a = ap.parse_args()
-    rows = excel_rows()
-    sin_club = [r for r in rows if r["club_id"] is None]
-    print(f"{len(rows)} filas; {len(sin_club)} con club fuera de clubmap.json (se dejan igual)")
-    rows = D.map_ids([r for r in rows if r["club_id"]])
-    pids = sorted({r["tm_id"] for r in rows if r.get("tm_id")})
-    print(f"{len(pids)} jugadores TM; performance-game…")
+def construir(pids, offline=False, workers=6, corte=None, extra_clubs=()):
+    """Descarga (o lee de caché) performance-game de `pids` y devuelve el contexto: partidos válidos por jugador con su
+    temporada/bloque/confederación, metadatos de clubes y competiciones."""
+    a = argparse.Namespace(offline=offline, workers=workers, corte=corte or (dt.date.today() - dt.timedelta(days=1)).isoformat())
+    rows = [dict(club_id=c) for c in extra_clubs]
     perf, t0 = {}, time.time()
 
     def compact(p):
@@ -170,8 +164,14 @@ def main():
             opp_goals = e
             v = [1, g["Min"] or 0, g["G"] or 0, g["A"] or 0, g["GC"] or 0, 1 if opp_goals == 0 else 0]
             valid[pid].append(dict(tag=tag, blk=blk, club=g["club_id"], conf=CLUB.get(g["club_id"], {}).get("conf"),
-                                   comp=str(g["comp"]), date=d, v=v))
+                                   comp=str(g["comp"]), date=d, v=v, g=g))
 
+    return dict(games=games, valid=valid, CLUB=CLUB, COMP=COMP, CM=CM, KM=KM, cal_clubs=cal_clubs)
+
+
+def agregar(rows, ctx):
+    """Bloques LIGA/COPA/CONT/FIFA/SEL de cada fila (reglas del método) + partidos usados. rows: dicts con tm_id."""
+    valid, CLUB = ctx["valid"], ctx["CLUB"]
     by_pid = collections.defaultdict(list)
     for r in rows:
         if r.get("tm_id"):
@@ -189,6 +189,7 @@ def main():
         for i, r in enumerate(L):
             conf = confs[i]
             out = {b: [0] * 6 for b in BLOCKS}
+            used = []
             cont = collections.Counter()
             for x in G:
                 if x["blk"] == "SEL":
@@ -198,6 +199,7 @@ def main():
                     continue  # regla de continentes: cada fila solo con clubes de su confederación
                 for j in range(6):
                     out[x["blk"]][j] += x["v"][j]
+                used.append(x)
                 if x["blk"] == "CONT":
                     cont[CONT_CODE.get(x["comp"], x["comp"])] += 1
             idx = (0, 1, 4, 5) if r["gk"] else (0, 1, 2, 3)
@@ -210,7 +212,7 @@ def main():
                         mx = max(cont.values())
                         code = sorted([c for c, n in cont.items() if n == mx], key=lambda c: PRIO.index(c) if c in PRIO else 99)[0]
                     new.append(code)
-            old = r["old"]
+            old = r.get("old") or [0] * 8 + [None] + [0] * 12
             num_old = [x if isinstance(x, (int, float)) else 0 for i2, x in enumerate(old) if i2 != 8]
             num_new = [x for i2, x in enumerate(new) if i2 != 8]
             diff = [BLOCKS[k // 4] + " " + ["PJ", "Min", "G/GC", "A/CS"][k % 4] for k in range(20) if num_old[k] != num_new[k]]
@@ -219,7 +221,58 @@ def main():
             stats["cambian" if diff else "iguales"] += 1
             res.append(dict(season=season, sheet=r["sheet"], row=r["row"], name=r["name"], club=r["club"], liga=r["liga"],
                             tm_id=pid, cambios=", ".join(diff), cont_old=old[8], cont_new=new[8], cont_cambia=bool(cont_diff),
-                            old=old, new=new))
+                            old=old, new=new, used=used, excel_club=r["club"], gk=r["gk"]))
+    return res, stats
+
+
+def exportar_partidos(res, ligas, out_path):
+    """Una fila por jugador y partido (sin selección) para el motor: ELO/FORM/CONSISTENCY/OPPONENT_STRENGTH."""
+    out = []
+    for r in res:
+        if ligas and r["liga"] not in ligas:
+            continue
+        for x in r["used"]:
+            if x["blk"] == "SEL":
+                continue
+            g = x["g"]
+            out.append(dict(season=r["season"], source_sheet=r["sheet"], name=r["name"], excel_club=r["excel_club"], liga=r["liga"],
+                            tm_id=r["tm_id"], date=x["date"].strftime("%Y-%m-%d %H:%M"), block=x["blk"], comp=x["comp"],
+                            game_id=g["game_id"], club_id=g["club_id"], club=CTX_CLUB.get(g["club_id"], {}).get("name"),
+                            opponent_id=g["opp_id"], opponent=CTX_CLUB.get(g["opp_id"] or "", {}).get("name") or g["opp_id"],
+                            home=g["home"], gf=g["gf"], ga=g["ga"], Min=g["Min"], G=g["G"], A=g["A"],
+                            GC=g["GC"] if r["gk"] else None))
+    df = pd.DataFrame(out).sort_values(["season", "date", "tm_id"])
+    df.to_csv(out_path, index=False, encoding="utf-8-sig")
+    print(f"{len(df)} filas jugador-partido ({df.name.nunique()} jugadores) -> {out_path}")
+    return df
+
+
+CTX_CLUB = {}
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--corte", default=(dt.date.today() - dt.timedelta(days=1)).isoformat())
+    ap.add_argument("--escribir", action="store_true")
+    ap.add_argument("--filas", help="solo estas filas 'temporada|HOJA|fila' separadas por comas (las revisadas a mano)")
+    ap.add_argument("--nuevas", action="store_true", help="con --escribir: solo filas sin ningún dato todavía (añadidas por ampliar_ligas.py)")
+    ap.add_argument("--partidos", help="ligas (separadas por comas, o 'todas') para exportar partidos_TM.csv")
+    ap.add_argument("--offline", action="store_true")
+    ap.add_argument("--workers", type=int, default=6)
+    a = ap.parse_args()
+    rows = excel_rows()
+    sin_club = [r for r in rows if r["club_id"] is None]
+    print(f"{len(rows)} filas; {len(sin_club)} con club fuera de clubmap.json (se dejan igual)")
+    rows = D.map_ids([r for r in rows if r["club_id"]])
+    pids = sorted({r["tm_id"] for r in rows if r.get("tm_id")})
+    print(f"{len(pids)} jugadores TM; performance-game…")
+    ctx = construir(pids, a.offline, a.workers, a.corte, {r["club_id"] for r in rows})
+    CTX_CLUB.update(ctx["CLUB"])
+    res, stats = agregar(rows, ctx)
+    if a.partidos:
+        ligas = None if a.partidos == "todas" else set(a.partidos.split(","))
+        exportar_partidos(res, ligas, FC / "Claude outputs" / "partidos_TM.csv")
+    res = [{k: v for k, v in r.items() if k != "used"} for r in res]
     df = pd.DataFrame(res)
     rep = df[(df.cambios != "") | df.cont_cambia].copy()
     rep["antes"] = rep.old.map(lambda o: " | ".join("/".join(str(x) for x in o[i:i + 4]) for i in (0, 4, 9, 13, 17)))
@@ -234,7 +287,12 @@ def main():
             ok = set(a.filas.split(","))
             df = df[(df.season + "|" + df.sheet + "|" + df.row.astype(str)).isin(ok)]
             print(f"escribiendo solo {len(df)} filas revisadas")
+        if a.nuevas:
+            df = df[df.old.map(lambda o: all(not isinstance(x, (int, float)) or x == 0 for x in o))]
+            print(f"escribiendo solo {len(df)} filas nuevas (sin datos previos)")
         escribir(df, a.corte)
+
+
 
 
 def escribir(df, corte):

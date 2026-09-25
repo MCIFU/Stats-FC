@@ -13,7 +13,7 @@ Fuentes (sin navegador ni clave):
 No existen en estas fuentes (quedan UNKNOWN): duelos aéreos, centros, pérdidas, errores, pases progresivos,
 conducciones, SCA, toques en el área, centros detenidos y salidas del portero.
 """
-import argparse, gzip, json, sys, time
+import argparse, collections, gzip, json, sys, time
 from pathlib import Path
 
 import numpy as np
@@ -28,29 +28,37 @@ from descargar_avanzadas import excel_rows, match_players  # noqa: E402  (mismo 
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
       "Chrome/128.0 Safari/537.36")
-# liga Excel -> (id FotMob, liga Understat)
-LEAGUES = {"Premier": (47, "EPL"), "LaLiga": (87, "La_liga"), "Bundesliga": (54, "Bundesliga"),
-           "Serie A": (55, "Serie_A"), "Ligue 1": (53, "Ligue_1")}
-SEASONS = {"2025-26": ("2025/2026", 2025), "2026-27": ("2026/2027", 2026)}
-# lista FotMob -> {columna: "stat" (valor principal) | "sub" (valor secundario)}
+# liga Excel -> (id FotMob, liga Understat o None, año natural)
+LEAGUES = {"Premier": (47, "EPL", False), "LaLiga": (87, "La_liga", False), "Bundesliga": (54, "Bundesliga", False),
+           "Serie A": (55, "Serie_A", False), "Ligue 1": (53, "Ligue_1", False), "Eredivisie": (57, None, False),
+           "Portugal": (61, None, False), "Scottish Premiership": (64, None, False), "Süper Lig": (71, None, False),
+           "Liga Belga": (40, None, False), "Saudi Pro": (536, None, False), "Ekstraklasa": (196, None, False),
+           "Liga MX": (230, None, False), "MLS": (130, None, True), "Brasileirão": (268, None, True),
+           "Liga Argentina": (112, None, True)}
+SEASONS = {"2025-26": ("2025/2026", "2025", 2025), "2026-27": ("2026/2027", "2026", 2026)}
+# lista FotMob -> {columna: (valor "stat"|"sub", tipo "p90"|"pct"|"tot")}. Al unir Apertura+Clausura: p90/pct se
+# promedian ponderando por minutos y tot se suma.
 FOTMOB = {
-    "accurate_pass": {"fm_acc_passes_p90": "stat", "pass_cmp_pct": "sub"},
-    "accurate_long_balls": {"fm_long_balls_p90": "stat", "long_cmp_pct": "sub"},
-    "won_contest": {"take_ons_won_p90": "stat", "take_on_pct": "sub"},
-    "total_tackle": {"fm_tackles_p90": "stat"},
-    "won_tackle": {"tackles_won_p90": "stat", "tackle_pct": "sub"},
-    "interception": {"interceptions_p90": "stat"},
-    "effective_clearance": {"fm_clearances_p90": "stat"},
-    "outfielder_block": {"fm_blocks_p90": "stat"},
-    "ball_recovery": {"recoveries_p90": "stat"},
-    "poss_won_att_3rd": {"pressures_att3_p90": "stat"},
-    "ontarget_scoring_att": {"fm_sot_p90": "stat"},
-    "total_scoring_att": {"fm_shots_p90": "stat"},
-    "big_chance_created": {"fm_big_chances_created": "stat"},
-    "_save_percentage": {"gk_save_pct": "stat"},
-    "saves": {"fm_saves_p90": "stat"},
-    "_goals_prevented": {"fm_goals_prevented": "stat"},
-    "rating": {"fotmob_rating": "stat"},
+    "accurate_pass": {"fm_acc_passes_p90": ("stat", "p90"), "pass_cmp_pct": ("sub", "pct")},
+    "accurate_long_balls": {"fm_long_balls_p90": ("stat", "p90"), "long_cmp_pct": ("sub", "pct")},
+    "won_contest": {"take_ons_won_p90": ("stat", "p90"), "take_on_pct": ("sub", "pct")},
+    "total_tackle": {"fm_tackles_p90": ("stat", "p90")},
+    "won_tackle": {"tackles_won_p90": ("stat", "p90"), "tackle_pct": ("sub", "pct")},
+    "interception": {"interceptions_p90": ("stat", "p90")},
+    "effective_clearance": {"fm_clearances_p90": ("stat", "p90")},
+    "outfielder_block": {"fm_blocks_p90": ("stat", "p90")},
+    "ball_recovery": {"recoveries_p90": ("stat", "p90")},
+    "poss_won_att_3rd": {"pressures_att3_p90": ("stat", "p90")},
+    "ontarget_scoring_att": {"fm_sot_p90": ("stat", "p90")},
+    "total_scoring_att": {"fm_shots_p90": ("stat", "p90")},
+    "expected_goals_per_90": {"fm_xg_p90": ("stat", "p90")},
+    "expected_assists_per_90": {"fm_xa_p90": ("stat", "p90")},
+    "total_att_assist": {"fm_chances_p90": ("sub", "p90")},
+    "big_chance_created": {"fm_big_chances_created": ("stat", "tot")},
+    "_save_percentage": {"gk_save_pct": ("stat", "pct")},
+    "saves": {"fm_saves_p90": ("stat", "p90")},
+    "_goals_prevented": {"fm_goals_prevented": ("stat", "tot")},
+    "rating": {"fotmob_rating": ("stat", "pct")},
 }
 
 S = requests.Session()
@@ -83,20 +91,38 @@ def cached(name, fn, refresh=False):
 
 def fotmob_table(lid, season_name, refresh):
     info = cached(f"fm_league_{lid}.json.gz", lambda: get(f"https://www.fotmob.com/api/data/leagues?id={lid}"), refresh=True)
-    sid = next((x["TournamentId"] for x in info["stats"]["seasonStatLinks"] if x["Name"] == season_name), None)
-    if sid is None:
+    # una temporada puede tener varias fases con ruta propia (Liga MX: .../Apertura/, .../Clausura/)
+    bases = sorted({x["RelativePath"].rsplit("/", 1)[0] for x in info["stats"]["seasonStatLinks"] if x["Name"] == season_name})
+    if not bases:
         raise RuntimeError(f"FotMob {lid}: temporada {season_name} no encontrada")
-    rows = {}
-    for stat, cols in FOTMOB.items():
-        d = cached(f"fm_{lid}_{sid}_{stat}.json.gz",
-                   lambda: get(f"https://data.fotmob.com/stats/{lid}/season/{sid}/{stat}.json"), refresh)
-        for x in ((d or {}).get("TopLists") or [{}])[0].get("StatList", []):
-            r = rows.setdefault(x["ParticiantId"], {"sofa_id": x["ParticiantId"], "sofa_name": x["ParticipantName"],
-                                                    "sofa_team_id": x["TeamId"], "sofa_team": x["TeamName"]})
-            r["fm_minutes"] = max(r.get("fm_minutes", 0), x.get("MinutesPlayed") or 0)
-            for c, which in cols.items():
-                r[c] = x.get("StatValue" if which == "stat" else "SubStatValue")
-    df = pd.DataFrame(rows.values())
+    acc = {}
+    stage_min = collections.defaultdict(dict)
+    for base in bases:
+        for stat, cols in FOTMOB.items():
+            d = cached(f"fm_{base.replace('/', '_')}_{stat}.json.gz", lambda: get(f"https://data.fotmob.com/{base}/{stat}.json"), refresh)
+            for x in ((d or {}).get("TopLists") or [{}])[0].get("StatList", []):
+                pid = x["ParticiantId"]
+                r = acc.setdefault(pid, {"sofa_id": pid, "sofa_name": x["ParticipantName"], "sofa_team_id": x["TeamId"],
+                                         "sofa_team": x.get("TeamName", str(x["TeamId"])), "_v": collections.defaultdict(list)})
+                r["sofa_team_id"], r["sofa_team"] = x["TeamId"], x.get("TeamName", r["sofa_team"])  # último club
+                m = x.get("MinutesPlayed") or 0
+                stage_min[pid][base] = max(stage_min[pid].get(base, 0), m)
+                for c, (which, kind) in cols.items():
+                    v = x.get("StatValue" if which == "stat" else "SubStatValue")
+                    if v is not None:
+                        r["_v"][c].append((v, m, kind))
+    rows = []
+    for pid, r in acc.items():
+        out = {k: v for k, v in r.items() if k != "_v"}
+        out["fm_minutes"] = sum(stage_min[pid].values())
+        for c, L in r["_v"].items():
+            if L[0][2] == "tot":
+                out[c] = sum(v for v, _, _ in L)
+            else:
+                w = sum(m for _, m, _ in L)
+                out[c] = sum(v * m for v, m, _ in L) / w if w else L[-1][0]
+        rows.append(out)
+    df = pd.DataFrame(rows)
     for c in [c for cols in FOTMOB.values() for c in cols]:
         if c not in df:
             df[c] = np.nan
@@ -105,6 +131,12 @@ def fotmob_table(lid, season_name, refresh):
     df["sot_pct"] = (100 * df.fm_sot_p90 / df.fm_shots_p90).where(df.fm_shots_p90 > 0)
     df["gk_psxg_minus_ga_p90"] = df.fm_goals_prevented / n90
     df["gk_launch_cmp_pct"] = df.long_cmp_pct
+    # disparo y creación desde FotMob (en las 5 grandes los sustituye Understat, que tiene npxG y a todos los jugadores)
+    df["npxg_p90"] = df.fm_xg_p90  # xG de FotMob incluye penaltis
+    df["shots_p90"] = df.fm_shots_p90
+    df["npxg_per_shot"] = (df.fm_xg_p90 / df.fm_shots_p90).where(df.fm_shots_p90 > 0)
+    df["xa_p90"] = df.fm_xa_p90
+    df["key_passes_p90"] = df.fm_chances_p90
     return df
 
 
@@ -129,24 +161,45 @@ def understat_table(league, year, refresh):
     return out.reset_index(drop=True).replace([np.inf, -np.inf], np.nan)
 
 
+def excel_rows_todas():
+    import openpyxl
+    out = []
+    for season, fname in (("2025-26", "Temporada 2025-26.xlsx"), ("2026-27", "Temporada 2026-27.xlsx")):
+        wb = openpyxl.load_workbook(FC / fname, read_only=True)
+        for sh in ["DELANTEROS", "EXTREMOS", "MEDIAPUNTAS", "MEDIOCENTROS", "DEFENSAS", "PORTEROS"]:
+            rows = list(wb[sh].iter_rows(values_only=True))
+            hi = next(i for i, r in enumerate(rows[:10]) if r and r[0] == "Jugador")
+            for k, r in enumerate(rows[hi + 1:], hi + 2):
+                d = dict(zip(rows[hi], r))
+                if r and r[0] and d.get("Liga") in LEAGUES:
+                    out.append(dict(season=season, source_sheet=sh, source_row=k, name=d["Jugador"], club=d["Club"],
+                                    liga=d["Liga"], liga_min=d.get("LIGA Min")))
+    return pd.DataFrame(out)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--refresh", action="store_true", help="vuelve a descargar (si no, usa la caché)")
-    ap.add_argument("--out", default=str(FC / "Claude outputs" / "avanzadas_big5.csv"))
+    ap.add_argument("--ligas", help="solo estas ligas del Excel, separadas por comas (por defecto todas las configuradas)")
+    ap.add_argument("--out", default=str(FC / "Claude outputs" / "avanzadas.csv"))
     a = ap.parse_args()
-    ex = excel_rows()
-    print(f"{len(ex)} filas de las 5 grandes en los Excel")
+    ex = excel_rows_todas()
+    ligas = [l for l in LEAGUES if not a.ligas or l in a.ligas.split(",")]
+    print(f"{len(ex)} filas de {len(LEAGUES)} ligas en los Excel")
     res = []
-    for season, (fm_season, us_year) in SEASONS.items():
-        for liga, (lid, us_league) in LEAGUES.items():
+    for season, (fm_season, fm_cal, us_year) in SEASONS.items():
+        for liga in ligas:
+            lid, us_league, cal = LEAGUES[liga]
             e = ex[(ex.season == season) & (ex.liga == liga)]
-            fm = fotmob_table(lid, fm_season, a.refresh)
-            us = understat_table(us_league, us_year, a.refresh)
+            if e.empty:
+                continue
+            fm = fotmob_table(lid, fm_cal if cal else fm_season, a.refresh)
+            us = understat_table(us_league, us_year, a.refresh) if us_league else pd.DataFrame(columns=["sofa_id", "sofa_name", "sofa_team_id", "sofa_team", "us_minutes"])
             mf = {i: (s, h) for i, s, h in match_players(e, fm, "fm_minutes")}
-            mu = {i: (s, h) for i, s, h in match_players(e, us, "us_minutes")}
+            mu = {i: (s, h) for i, s, h in match_players(e, us, "us_minutes")} if len(us) else {i: (None, "") for i in e.index}
             nf = sum(1 for s, _ in mf.values() if s is not None)
             nu = sum(1 for s, _ in mu.values() if s is not None)
-            print(f"  {season} {liga}: {len(e)} filas · FotMob {len(fm)} jugadores, cruzados {nf} · Understat {len(us)}, cruzados {nu}")
+            print(f"  {season} {liga}: {len(e)} filas · FotMob {len(fm)} jugadores, cruzados {nf}" + (f" · Understat {len(us)}, cruzados {nu}" if us_league else ""))
             for i in e.index:
                 row = e.loc[i, ["season", "source_sheet", "source_row", "name", "club", "liga", "liga_min"]].to_dict()
                 sf, hf = mf[i]
@@ -155,14 +208,18 @@ def main():
                 if sf is not None:
                     row.update({k: v for k, v in fm.loc[sf].items() if k not in ("n", "sofa_id", "sofa_team_id")})
                     row["fotmob_id"] = fm.loc[sf, "sofa_id"]
-                if su is not None:
+                if su is not None:  # Understat manda en disparo/creación (npxG real y todos los jugadores)
                     row.update({k: v for k, v in us.loc[su].items() if k not in ("n", "sofa_name", "sofa_team", "sofa_id", "sofa_team_id")})
                     row["understat_id"] = us.loc[su, "sofa_id"]
+                row["fuente_xg"] = "Understat (npxG)" if su is not None else ("FotMob (xG con penaltis)" if sf is not None else None)
                 res.append(row)
     df = pd.DataFrame(res)
+    for c in ("fotmob_id", "understat_id"):
+        if c not in df:
+            df[c] = np.nan
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(a.out, index=False, encoding="utf-8-sig")
-    print(f"avanzadas_big5.csv: {len(df)} filas, con FotMob {df.fotmob_id.notna().sum()}, con Understat {df.understat_id.notna().sum()}")
+    print(f"{Path(a.out).name}: {len(df)} filas, con FotMob {df.fotmob_id.notna().sum()}, con Understat {df.understat_id.notna().sum()}")
 
 
 if __name__ == "__main__":

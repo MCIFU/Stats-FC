@@ -53,12 +53,13 @@ def read_season(path, season):
 
 
 # ---------------------------------------------------------------- datos externos (5 grandes ligas)
-def _key(df):
-    return df.source_sheet.astype(str) + "|" + pd.to_numeric(df.source_row, errors="coerce").astype("Int64").astype(str)
+def _key(df, club_col="club"):
+    """Enlace por hoja + nombre + club (no por número de fila: las hojas se reordenan)."""
+    return df.source_sheet.astype(str) + "|" + df["name"].astype(str) + "|" + df[club_col].astype(str)
 
 
 def _pid_map(w):
-    return dict(zip(w._sheet.astype(str) + "|" + w._row.astype(str), w.player_id))
+    return dict(zip(w._sheet.astype(str) + "|" + w.Jugador.astype(str) + "|" + w.Club.astype(str), w.player_id))
 
 
 def read_matches(path, w, season, club_strength=None, notes_path=None):
@@ -67,7 +68,7 @@ def read_matches(path, w, season, club_strength=None, notes_path=None):
     notes_path: notas_big5.csv (SofaScore) -> columna sofa_rating por jugador y día."""
     m = pd.read_csv(path, dtype={"club_id": str, "opponent_id": str, "tm_id": str})
     m = m[m.season == season].copy()
-    m["player_id"] = _key(m).map(_pid_map(w))
+    m["player_id"] = _key(m, "excel_club").map(_pid_map(w))
     m = m[m.player_id.notna()]
     m["date"] = pd.to_datetime(m.date)
     m["club_key"] = m.club_id.fillna(m.club)
@@ -81,7 +82,7 @@ def read_matches(path, w, season, club_strength=None, notes_path=None):
     if notes_path:
         n = pd.read_csv(notes_path)
         n = n[n.season == season].copy()
-        n["player_id"] = _key(n).map(_pid_map(w))
+        n["player_id"] = _key(n, "club" if "club" in n else "team").map(_pid_map(w))
         n["day"] = pd.to_datetime(n.date).dt.normalize()
         n = n.dropna(subset=["player_id", "rating"]).drop_duplicates(["player_id", "day"])
         m["day"] = m.date.dt.normalize()

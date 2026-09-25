@@ -364,6 +364,8 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
             if c in mx:
                 mx[c] = pd.to_numeric(mx[c], errors="coerce").round(3 if c in ("expected", "score") else 1)
         mx = mx.sort_values(["name", "date"])
+        # en el Excel solo los últimos 10 partidos de cada jugador y temporada (el detalle completo está en partidos_TM.csv)
+        mx = mx.groupby(["player_id", "season"] if "season" in mx else ["player_id"], group_keys=False).tail(10)
         es = {"name": "Jugador", "season": "Temporada", "date": "Fecha", "block": "Bloque", "club": "Club", "opponent": "Rival",
               "home": "Local", "gf": "GF", "ga": "GC", "Min": "Min", "G": "G", "A": "A", "GC": "GC portero", "sofa_rating": "Nota SofaScore",
               "match_rating": "Nota partido", "opp_elo": "Elo rival", "elo_before": "Elo antes", "expected": "Esperado",
@@ -636,8 +638,10 @@ def build_leeme(ws, cfg, b, source_note):
     has_elo = "ELO" in b and b.ELO.notna().any()
     if has_adv:
         n_adv = int(b.npxg_p90.notna().sum()) if "npxg_p90" in b else 0
-        lines += [("1. Métricas avanzadas (npxG, xA, tiros, pases, regates, entradas, intercepciones, paradas…) de Understat y FotMob (Opta) SOLO para las 5 grandes ligas "
-                   f"({n_adv} jugadores-temporada). Resto de ligas: UNKNOWN (gris), no 0.", F_BASE),
+        ligas_adv = sorted(b.loc[b.npxg_p90.notna(), "league"].value_counts().loc[lambda s: s >= 50].index) if "npxg_p90" in b else []
+        lines += [(f"1. Métricas avanzadas (xG, xA, tiros, pases, regates, entradas, intercepciones, paradas…) en {len(ligas_adv)} ligas: "
+                   f"{', '.join(ligas_adv)} ({n_adv} jugadores-temporada). Understat (npxG) en las 5 grandes; FotMob (Opta, xG con penaltis) en el resto. "
+                   "FotMob solo lista a quien supera ~9 % de los minutos de liga. Resto: UNKNOWN (gris), no 0.", F_BASE),
                   ("2. Siguen UNKNOWN (las fuentes no las dan): duelos aéreos, centros, pérdidas, errores, pases progresivos, conducciones, SCA y toques en el área. FotMob solo lista a quien supera ~9 % de los minutos de liga (porteros ~50 %).", F_BASE),
                   ("3. Fuera de las 5 grandes el CA se apoya en goles/asistencias por 90, minutos, rendimiento continental y goles encajados: su 'Cobertura datos' es menor y la confianza también.", F_BASE)]
     else:
@@ -645,8 +649,9 @@ def build_leeme(ws, cfg, b, source_note):
                   ("2. FBref perdió sus estadísticas avanzadas de Opta en enero de 2026. Fuente preparada: auxiliares/avanzadas/descargar_fotmob_understat.py (FotMob + Understat).", F_BASE),
                   ("3. Por eso el CA se apoya en: producción de goles/asistencias por 90, peso en el equipo (minutos), rendimiento continental y, en defensas/porteros, goles encajados. La 'Cobertura datos' dice qué parte del modelo de cada posición tiene dato.", F_BASE)]
     if has_elo:
-        lines += [(f"4. ELO, FORM, CONSISTENCY y OPPONENT_STRENGTH: partido a partido de Transfermarkt SOLO en las 5 grandes ({int(b.ELO.notna().sum())} jugadores-temporada). "
-                   "Resto: UNKNOWN. La fuerza del rival sale de un Elo de equipos calculado con los resultados (arranca según la liga y se arrastra de 25-26 a 26-27).", F_BASE)]
+        lines += [(f"4. ELO, FORM, CONSISTENCY y OPPONENT_STRENGTH: partido a partido de Transfermarkt en todas las filas enlazadas con Transfermarkt "
+                   f"({int(b.ELO.notna().sum())} jugadores-temporada). La fuerza del rival sale de un Elo de equipos calculado con los resultados "
+                   "(arranca según la liga y se arrastra de 25-26 a 26-27).", F_BASE)]
     else:
         lines += [("4. Sin datos por partido: ELO, FORM, CONSISTENCY y OPPONENT_STRENGTH = UNKNOWN. Descarga preparada: auxiliares/tmapi/descargar_partidos.py.", F_BASE)]
     lines += [

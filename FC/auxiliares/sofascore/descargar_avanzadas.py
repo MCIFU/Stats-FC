@@ -309,7 +309,7 @@ def main():
                             if r is None or not st.get("minutesPlayed"):
                                 continue
                             notes.append(dict(season=season, source_sheet=r.source_sheet, source_row=r.source_row,
-                                              name=r["name"], date=when, sofa_event=x["id"],
+                                              name=r["name"], club=r["club"], date=when, sofa_event=x["id"],
                                               home=side == "home", team=x[f"{side}Team"]["name"],
                                               opponent=x["awayTeam" if side == "home" else "homeTeam"]["name"],
                                               Min=st.get("minutesPlayed"), rating=st.get("rating"),

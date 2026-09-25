@@ -42,9 +42,17 @@ S.headers.update({"User-Agent": UA, "Accept": "application/json, text/html, */*"
                   "Referer": TMWEB + "/"})
 
 
-def get(url, as_json=True, tries=6):
+_LAST_WEB = [0.0]
+
+
+def get(url, as_json=True, tries=8):
     for k in range(tries):
         try:
+            if url.startswith(TMWEB):  # la web (no la API) corta con 405 si se le pide rápido: ≥ 2,5 s entre peticiones
+                wait = _LAST_WEB[0] + 2.5 - time.time()
+                if wait > 0:
+                    time.sleep(wait)
+                _LAST_WEB[0] = time.time()
             r = S.get(url, timeout=30)
             if r.status_code in (405, 429, 500, 502, 503, 504):  # 405 = límite de peticiones de la web de TM
                 raise requests.HTTPError(str(r.status_code))
@@ -53,7 +61,7 @@ def get(url, as_json=True, tries=6):
         except Exception as e:  # noqa: BLE001
             if k == tries - 1:
                 raise RuntimeError(f"{url}: {e}") from e
-            time.sleep(3 * 2 ** k)
+            time.sleep(min(300, 5 * 2 ** k))
 
 
 def cached(name, fn):
@@ -149,7 +157,7 @@ def squad(club_id, tmseason):
 def map_ids(rows):
     from rapidfuzz import fuzz, process
     manual = {}
-    mf = HERE / "pidmap_manual.json"  # {"2025-26|DEFENSAS|123": "tmid"} para corregir a mano
+    mf = HERE / "pidmap_manual.json"  # {"2025-26|DEFENSAS|Nombre|Club": "tmid"} para corregir a mano
     if mf.exists():
         manual = json.loads(mf.read_text(encoding="utf-8"))
     sq = {}
@@ -167,7 +175,7 @@ def map_ids(rows):
             glob[norm(nm)].add(pid)
     stats, bad = collections.Counter(), []
     for r in rows:
-        key = f"{r['season']}|{r['sheet']}|{r['row']}"
+        key = f"{r['season']}|{r['sheet']}|{r['name']}|{r['club']}"  # por nombre y club: las hojas se reordenan
         if key in manual:
             r["tm_id"], how = str(manual[key]), "manual"
         else:

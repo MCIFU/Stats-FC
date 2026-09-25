@@ -11,19 +11,28 @@ python -m playwright install chromium      # solo si SofaScore devuelve 403 con 
 Salida a internet hacia: `www.transfermarkt.es`, `tmapi.transfermarkt.technology`, `understat.com`, `www.fotmob.com`, `data.fotmob.com` (y `www.sofascore.com`, `api.sofascore.com` si usas SofaScore).
 En un entorno de Claude Code en la nube hay que añadir esos dominios en *Network access* del entorno; en tu PC no hace falta nada.
 
-## 1. Partidos de Transfermarkt (≈10-15 min la primera vez; después usa la caché)
+## 0. Completar ligas (añadir a todos los jugadores con minutos de liga)
 ```
 cd FC
-python auxiliares/tmapi/descargar_partidos.py
+python auxiliares/tmapi/ampliar_ligas.py --ligas "Süper Lig,Liga Belga"               # informe, no escribe
+python auxiliares/tmapi/ampliar_ligas.py --ligas "Süper Lig,Liga Belga" --escribir    # añade las filas
+python auxiliares/estilo/estilo_temporadas.py                                          # orden + formato
 ```
-- Lee las filas de LaLiga, Premier, Bundesliga, Serie A y Ligue 1 de los dos Excel.
-- Plantillas por club (`/x/leistungsdaten/verein/{id}/plus/1?reldata=%26{temporada}`) → ID TM de cada fila (mismo cruce que `match.py`).
-  Filas sin ID → `auxiliares/tmapi/sin_id_tm.csv`; se corrigen en `pidmap_manual.json` (`{"2025-26|DEFENSAS|123": "tmid"}`).
-- `performance-game` de cada jugador + metadatos de competiciones y clubes. Mismas reglas de bloque que `LEEME_METODO_TM_API.md`.
-  La selección se descarta (no cuenta para ELO/FORM).
-- Salida: `Claude outputs/partidos_big5.csv` (una fila por jugador y partido: fecha, bloque, club, rival, local, GF, GC, Min, G, A, GC portero).
-- Si al final avisa de que faltan rival/resultado: `python auxiliares/tmapi/descargar_partidos.py --inspect 8198`
-  muestra una entrada cruda para ajustar `parse_game()`.
+- Clubes de la liga (página de competición TM) → plantillas → entra quien jugó minutos de LIGA con un club de esa liga
+  y no tiene ya fila del mismo continente esa temporada. Ficha TM: edad, posición/hoja, NAC, valor, contrato.
+- Ligas configuradas: Eredivisie, Süper Lig, Liga Belga, Saudi Pro, Liga MX, Scottish Premiership, Liga Argentina,
+  Brasileirão, Ekstraklasa, MLS, Portugal (añadir otra = una línea en `LIGAS`).
+- 25/09/2026: +3.795 filas en 25-26 y +2.836 en 26-27. Todas esas ligas quedan con el 92-100 % de los jugadores con ≥450'
+  (contraste con las listas de FotMob).
+
+## 1. Partidos de Transfermarkt (todas las filas de los dos Excel)
+```
+python auxiliares/tmapi/actualizar_excels.py --partidos todas        # también compara el Excel con TM (no escribe)
+```
+- Mismas reglas de temporada/bloque/continente que el recálculo de los Excel (`LEEME_METODO_TM_API.md`, apartado 4).
+- Salida: `Claude outputs/partidos_TM.csv` (una fila por jugador y partido, sin selección: fecha, bloque, club, rival,
+  local, GF, GC, Min, G, A, GC portero). Enlace con el Excel por hoja + nombre + club (no por fila).
+- `descargar_partidos.py` queda como versión anterior (solo 5 grandes).
 
 ## 2. Estadísticas avanzadas: FotMob + Understat (principal) o SofaScore (alternativa)
 ```
@@ -39,7 +48,9 @@ python auxiliares/avanzadas/descargar_fotmob_understat.py     # ≈2 min, sin na
   con minutos incompatibles se descartan.
 - Siguen UNKNOWN (ninguna de las dos fuentes los da): duelos aéreos, centros, pérdidas, errores, pases progresivos,
   conducciones, SCA, toques en el área, centros detenidos y salidas del portero.
-- Salida: `Claude outputs/avanzadas_big5.csv`.
+- Ligas: las 5 grandes (FotMob + Understat) y Eredivisie, Portugal, Escocia, Süper Lig, Bélgica, Arabia, Ekstraklasa, Liga MX,
+  MLS, Brasileirão y Argentina (solo FotMob: xG con penaltis, xA y ocasiones creadas de FotMob). Liga MX = Apertura + Clausura.
+- Salida: `Claude outputs/avanzadas.csv` (columna `fuente_xg` indica de dónde sale el xG).
 
 Alternativa (desde tu PC; SofaScore bloquea IPs de servidores en la nube):
 ```
@@ -51,8 +62,8 @@ SofaScore añade duelos aéreos, centros, pérdidas y errores, y con `--notas` l
 ## 3. Recalcular la valoración
 ```
 cd "Claude outputs/motor_valoracion_v1/valoracion"
-python run_all.py "../../../Temporada 2025-26.xlsx" "../../../Temporada 2026-27.xlsx" "../../Valoracion_FC_v1.1.xlsx" \
-    --partidos ../../partidos_big5.csv --notas ../../notas_big5.csv --avanzadas ../../avanzadas_big5.csv
+python run_all.py "../../../Temporada 2025-26.xlsx" "../../../Temporada 2026-27.xlsx" "../../Valoracion_FC_v1.2.xlsx" \
+    --partidos ../../partidos_TM.csv --avanzadas ../../avanzadas.csv   [--notas ../../notas_big5.csv]
 ```
 Cada opción es independiente: sin `--notas` la nota de partido se calcula con G+A y goles encajados; sin `--avanzadas`
 las métricas avanzadas siguen UNKNOWN.
