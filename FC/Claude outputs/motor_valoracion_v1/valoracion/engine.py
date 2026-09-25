@@ -187,7 +187,8 @@ def add_percentiles(base, cfg):
     metrics = cfg["metrics"]["metrics"]
     base["sample_conf"] = 1 - np.exp(-base.LIGA_Min.fillna(0) / S["confidence_k_minutes"])
     rel = S.get("pool_relative_to_league_max", 1.0)
-    lg_max = base.groupby(["season", "league"]).LIGA_Min.transform("max").fillna(0)
+    # referencia = percentil 95 de minutos de liga (no el máximo: una fila mal etiquetada lo dispara)
+    lg_max = base.groupby(["season", "league"]).LIGA_Min.transform(lambda s: s.quantile(0.95)).fillna(0)
     base["pool_threshold"] = np.minimum(pool_min, rel * lg_max)
     base["in_pool"] = (base.LIGA_Min.fillna(0) >= base.pool_threshold) & (base.LIGA_Min.fillna(0) > 0)
     base["league_pool_small"] = False
@@ -280,7 +281,10 @@ def add_ca(base, cfg):
         base.loc[idx, "score_global"] = 50 + (sG - 50) * fac
         base.loc[idx, "score_league"] = 50 + (sL - 50) * fac
         base.loc[idx, "pos_coverage"] = cov
-    rated = base.LIGA_Min.fillna(0) >= cfg["model"]["sample"]["min_minutes_rated"]
+    S = cfg["model"]["sample"]
+    base["league_max_min"] = base.groupby(["season", "league"]).LIGA_Min.transform(lambda s: s.quantile(0.95))
+    # umbral relativo (como el pool de percentiles): a principio de temporada 300' no los tiene casi nadie
+    rated = base.LIGA_Min.fillna(0) >= np.minimum(S["min_minutes_rated"], S.get("pool_relative_to_league_max", 1.0) * base.league_max_min.fillna(0))
     base["league_base"] = CA["league_base_factor"] * base.context_score
     base["CA_CONTEXT"] = (base.league_base + CA["context_slope"] * (base.score_league - 50)).clip(0, 100)
     base["CA_RAW"] = (CA["raw_scale_center"] + CA["raw_scale_slope"] * (base.score_global - 50)).clip(0, 100)
@@ -314,15 +318,16 @@ def add_relperf_pa(base, cfg, prev=None):
         base.loc[idx, "REL_PERF"] = R["w_league_score"] * p1 + R["w_context_score"] * p2
     base.loc[base.CA_FINAL.isna(), "REL_PERF"] = np.nan
 
-    base["growth_age"] = base.age.map(lambda a: interp_age(P["growth_by_age"], a))
+    delay = base.pos_group.map(P.get("growth_age_delay_by_group", {})).fillna(0)
+    base["growth_age"] = (base.age - delay).map(lambda a: interp_age(P["growth_by_age"], a))
     mult = P["relperf_multiplier_min"] + (P["relperf_multiplier_max"] - P["relperf_multiplier_min"]) * base.REL_PERF / 100
     headroom = ((100 - base.CA_FINAL) / P["headroom_ref"]).clip(0, 1)
     base["growth_effective"] = base.growth_age * mult * headroom
     base["trend_ca"] = np.nan
     if prev is not None:
-        pv = prev[["player_id", "CA_FINAL"]].rename(columns={"CA_FINAL": "CA_prev"})
+        pv = prev[["player_id", "CA_FINAL", "LIGA_Min"]].rename(columns={"CA_FINAL": "CA_prev", "LIGA_Min": "LIGA_Min_prev"})
         base = base.merge(pv, on="player_id", how="left")
-        ok = base.LIGA_Min.fillna(0) >= P["min_minutes_trend"]
+        ok = (base.LIGA_Min.fillna(0) >= P["min_minutes_trend"]) & (base.LIGA_Min_prev.fillna(0) >= P["min_minutes_trend"])
         base["trend_ca"] = np.where(ok, (base.CA_FINAL - base.CA_prev).clip(-5, 5), np.nan)
     trend = base.trend_ca.fillna(0) * P["trend_weight"]
     base["PA_ESTIMATE"] = (base.CA_FINAL + (base.growth_effective + trend).clip(lower=0)).clip(upper=99)

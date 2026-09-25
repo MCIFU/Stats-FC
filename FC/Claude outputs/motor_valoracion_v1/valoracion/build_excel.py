@@ -86,7 +86,8 @@ def params_sheet(wb, cfg):
     rows = [
         ("model_version", M["model_version"], "Versión del modelo. Cada valoración guarda la suya."),
         ("k_min_confianza", M["sample"]["confidence_k_minutes"], "Confianza de muestra = 1 - EXP(-Min/k)"),
-        ("min_minutos_valorar", M["sample"]["min_minutes_rated"], "Por debajo: sin CA (UNKNOWN)"),
+        ("min_minutos_valorar", M["sample"]["min_minutes_rated"], "Por debajo: sin CA (UNKNOWN). Umbral real = MIN(este valor, umbral_relativo × p95 de minutos de su liga)"),
+        ("umbral_relativo_liga", M["sample"].get("pool_relative_to_league_max", 1.0), "A principio de temporada: 0,4 × percentil 95 de minutos de su liga (6 jornadas → ~200-240')"),
         ("factor_base_liga", M["current_ability"]["league_base_factor"], "Nivel del jugador mediano de una liga = factor × CONTEXT_SCORE"),
         ("pendiente_contexto", M["current_ability"]["context_slope"], "CA_CONTEXT = base + pendiente × (score en su liga − 50)"),
         ("centro_raw", M["current_ability"]["raw_scale_center"], "CA_RAW = centro + pendiente_raw × (score global − 50)"),
@@ -99,10 +100,12 @@ def params_sheet(wb, cfg):
         ("pa_mult_min", M["potential"]["relperf_multiplier_min"], "Crecimiento efectivo = crecimiento_edad × (min + (max−min)×REL_PERF/100) × margen"),
         ("pa_mult_max", M["potential"]["relperf_multiplier_max"], ""),
         ("pa_margen_ref", M["potential"]["headroom_ref"], "margen = MIN(1, (100−CA)/margen_ref)"),
-        ("pa_peso_tendencia", M["potential"]["trend_weight"], "Suma peso × (CA 26-27 − CA 25-26), acotado ±5"),
+        ("pa_peso_tendencia", M["potential"]["trend_weight"], f"Suma peso × (CA 26-27 − CA 25-26), acotado ±5; solo con ≥{M['potential']['min_minutes_trend']}' de liga en las dos temporadas"),
+        ("pa_retraso_porteros", M["potential"].get("growth_age_delay_by_group", {}).get("GK", 0), "Años que se retrasa la curva de crecimiento en porteros (un portero de 26 usa la fila de 24)"),
+        ("pa_retraso_centrales", M["potential"].get("growth_age_delay_by_group", {}).get("CB", 0), "Ídem en centrales"),
     ]
     for k, v in M["scout_score"]["weights"].items():
-        rows.append((f"scout_{k}", v, "Peso en SCOUT SCORE (si FORM es UNKNOWN se reparte su peso)"))
+        rows.append((f"scout_{k}", v, "Peso en SCOUT SCORE (FORM a 0 en v1.2: solo hay partidos de las 5 grandes; si un componente es UNKNOWN su peso se reparte)"))
     hdr(ws, 4, ["Parámetro", "Valor", "Explicación"])
     names = {}
     for i, (k, v, e) in enumerate(rows, 5):
@@ -165,7 +168,7 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
     ws = wb.create_sheet("VALORACION")
     cols = [("KEY", "KEY"), ("ID", "player_id"), ("Jugador", "name"), ("Temporada", "season"), ("Edad", "age"), ("NAC", "nat"),
             ("POS", "pos"), ("Grupo", "pos_group"), ("Club", "club"), ("Liga", "league"),
-            ("PJ Liga", "LIGA_PJ"), ("Min Liga", "LIGA_Min"), ("Min Total", "TOT_Min"),
+            ("PJ Liga", "LIGA_PJ"), ("Min Liga", "LIGA_Min"), ("Ref. min liga (p95)", "league_max_min"), ("Min Total", "TOT_Min"),
             ("Score en su liga", "score_league"), ("Score global posición", "score_global"),
             ("Cobertura datos", "pos_coverage"), ("Pool liga pequeño", "league_pool_small"),
             ("Calidad datos liga", "competition_data_quality"),
@@ -186,7 +189,7 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
         g = lambda h: f"{C[h]}{i}"
         mins, sl, sg, ctx = g("Min Liga"), g("Score en su liga"), g("Score global posición"), g("CONTEXT_SCORE")
         f = {}
-        f["CONF_MUESTRA"] = f'=IF(AND(ISNUMBER({mins}),{mins}>={P["min_minutos_valorar"]},ISNUMBER({ctx}),ISNUMBER({sl})),1-EXP(-{mins}/{P["k_min_confianza"]}),"")'
+        f["CONF_MUESTRA"] = f'=IF(AND(ISNUMBER({mins}),{mins}>=MIN({P["min_minutos_valorar"]},{P["umbral_relativo_liga"]}*N({g("Ref. min liga (p95)")})),ISNUMBER({ctx}),ISNUMBER({sl})),1-EXP(-{mins}/{P["k_min_confianza"]}),"")'
         cm = g("CONF_MUESTRA")
         f["BASE_LIGA"] = f'=IF(ISNUMBER({cm}),{P["factor_base_liga"]}*{ctx},"")'
         bl = g("BASE_LIGA")
@@ -199,7 +202,7 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
                               f'+{P["conf_peso_calidad_liga"]}*N({g("Calidad datos liga")})*IF({g("Pool liga pequeño")}=TRUE,0.5,1)),"")')
         age, rp, tr = g("Edad"), g("REL_PERF"), g("Tendencia CA")
         tab = P["tabla_edad"]
-        f["CRECIMIENTO"] = (f'=IF(AND(ISNUMBER({ca}),ISNUMBER({age}),ISNUMBER({rp})),MAX(0,VLOOKUP(MAX(15,MIN(45,{age})),{tab},2,TRUE)'
+        f["CRECIMIENTO"] = (f'=IF(AND(ISNUMBER({ca}),ISNUMBER({age}),ISNUMBER({rp})),MAX(0,VLOOKUP(MAX(15,MIN(45,{age}-IF({g("Grupo")}="GK",{P["pa_retraso_porteros"]},IF({g("Grupo")}="CB",{P["pa_retraso_centrales"]},0)))),{tab},2,TRUE)'
                             f'*({P["pa_mult_min"]}+({P["pa_mult_max"]}-{P["pa_mult_min"]})*{rp}/100)*MAX(0,MIN(1,(100-{ca})/{P["pa_margen_ref"]}))'
                             f'+{P["pa_peso_tendencia"]}*N({tr})),"")')
         gr = g("CRECIMIENTO")
@@ -649,7 +652,7 @@ def build_leeme(ws, cfg, b, source_note):
         ("8. Columna 'Aviso': clubes con menos de 5 jugadores dentro de una liga grande (Coventry/Ipswich/Hull en 'Premier', clubes austriacos en 'Bundesliga', tunecinos en 'Ligue 1'…). Su columna Liga no parece ser la liga donde jugaron esos minutos, así que no se les da CA hasta verificarlo.", F_BASE),
         ("9. En posiciones con poca cobertura de datos (centrales, medios) la nota se acerca a la media en proporción a lo que falta: jugar todos los minutos no basta para llegar a élite sin más datos.", F_BASE),
         ("", None),
-        (f"Jugadores en el archivo: {len(b)} · con CA (≥{M['sample']['min_minutes_rated']}' en liga): {rated}", F_GREY),
+        (f"Jugadores en el archivo: {len(b)} · con CA (≥{M['sample']['min_minutes_rated']}' en liga, o el 40 % del p95 de minutos de su liga a principio de temporada): {rated}", F_GREY),
         ("Leyenda: gris/UNKNOWN = sin dato · amarillo = editable · cabecera verde oscuro = columna con fórmula · verde→rojo = escala 0-100.", F_GREY),
     ]
     for i, (t, f) in enumerate(lines, 1):

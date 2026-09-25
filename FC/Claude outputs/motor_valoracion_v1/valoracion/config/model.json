@@ -1,5 +1,5 @@
 {
-  "model_version": "rating_model_v1.1",
+  "model_version": "rating_model_v1.2",
   "model_date": "2026-09-25",
   "notes": "Primera versión de prueba. Todos los valores son parámetros propios del modelo, no oficiales.",
   "rating_blocks": {
@@ -46,13 +46,14 @@
     "comment_shrinkage": "per90 ajustado = (per90*min + media_grupo*k)/(min+k). Reduce extremos de muestras pequeñas.",
     "min_minutes_reference_pool": 450,
     "comment_pool": "Solo jugadores con >= estos minutos forman la distribución de referencia de percentiles. Todos reciben percentil.",
-    "min_minutes_rated": 90,
+    "min_minutes_rated": 300,
     "min_pool_league": 10,
     "comment_pool_league": "Si una liga tiene menos jugadores de referencia en una posición, se usa el percentil global de la posición y se marca.",
     "pool_relative_to_league_max": 0.4,
-    "comment_pool_relative": "Umbral del pool = MIN(min_minutes_reference_pool, 0.4 × máx. minutos de liga en esa liga-temporada). Así sirve a principio de temporada (26-27 europeo).",
+    "comment_pool_relative": "Umbral del pool = MIN(min_minutes_reference_pool, 0.4 × percentil 95 de minutos de liga en esa liga-temporada). Así sirve a principio de temporada (26-27 europeo).",
     "min_players_team_proxy": 14,
-    "comment_team_proxy": "Los proxies de equipo (% minutos, fuerza, GC del equipo) solo se calculan si el club tiene al menos este nº de jugadores en tu Excel."
+    "comment_team_proxy": "Los proxies de equipo (% minutos, fuerza, GC del equipo) solo se calculan si el club tiene al menos este nº de jugadores en tu Excel.",
+    "comment_min_rated": "v1.2: 90->300. Umbral real = MIN(300, 0.4 × percentil 95 de minutos de esa liga-temporada), como el pool de percentiles: a principio de temporada no se pierde a casi todos. p95 y no máximo: filas con minutos erróneos (Robbie Ure 1743' en 7 jornadas) lo disparaban."
   },
   "coverage": {
     "attribute_min_coverage": 0.5,
@@ -106,9 +107,9 @@
     "relperf_multiplier_min": 0.25,
     "relperf_multiplier_max": 1.15,
     "comment_mult": "growth_efectivo = growth_edad * (min + (max-min)*REL_PERF/100). Un joven con rendimiento relativo bajo apenas proyecta.",
-    "trend_weight": 0.5,
-    "comment_trend": "Si hay dos temporadas, se suma trend_weight*(CA_nueva - CA_anterior) acotado a +-5, solo si la temporada nueva ya tiene >= 1350 min de liga (con menos, la diferencia es sobre todo ruido y regresión a la media).",
-    "min_minutes_trend": 1350,
+    "trend_weight": 0.25,
+    "comment_trend": "Si hay dos temporadas, se suma trend_weight*(CA_nueva - CA_anterior) acotado a ±5, solo si AMBAS temporadas tienen >= 1800 min de liga. v1.2: peso 0.5->0.25 y 1350->1800 en las dos (en v1.1 el 37 % de las tendencias chocaba con el tope: era sobre todo ruido).",
+    "min_minutes_trend": 1800,
     "range_base": {
       "16": 12,
       "18": 10,
@@ -130,7 +131,12 @@
       "30": 0.95
     },
     "headroom_ref": 25,
-    "comment_headroom": "growth_efectivo *= min(1, (100-CA)/headroom_ref): cuanto más cerca del techo, menos margen."
+    "comment_headroom": "growth_efectivo *= min(1, (100-CA)/headroom_ref): cuanto más cerca del techo, menos margen.",
+    "growth_age_delay_by_group": {
+      "GK": 2,
+      "CB": 1
+    },
+    "comment_delay": "v1.2: la curva de crecimiento se retrasa estos años por posición (un portero de 26 usa la fila de 24). Pico real: porteros ~28-31, centrales ~27-29; en tus datos la mediana de edad del top-50 de CA es 28 en porteros frente a 25-27 en el resto."
   },
   "relative_performance": {
     "age_bands": [
@@ -168,9 +174,9 @@
     "weights": {
       "PA_ESTIMATE": 0.3,
       "CA_FINAL": 0.25,
-      "REL_PERF": 0.15,
+      "REL_PERF": 0.25,
       "AGE_SCORE": 0.1,
-      "FORM": 0.1,
+      "FORM": 0.0,
       "CONFIDENCE": 0.1
     },
     "age_score": {
@@ -189,7 +195,8 @@
       "29": 6,
       "30": 0
     },
-    "comment": "Si un componente es UNKNOWN (p.ej. FORM sin datos por partido) se reparte su peso entre los demás y se indica."
+    "comment": "Si un componente es UNKNOWN (p.ej. FORM sin datos por partido) se reparte su peso entre los demás y se indica.",
+    "comment_v12": "v1.2: FORM 0.10->0 y REL_PERF 0.15->0.25. FORM solo existe en las 5 grandes (41 % de jugadores) y su peso se repartía distinto según la liga; así el SCOUT se calcula igual para todos. Vuelve a subirlo cuando haya partidos de todas las ligas."
   },
   "elo": {
     "initial": 1500,
