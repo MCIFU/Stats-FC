@@ -417,10 +417,15 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
     for c in ("club_key", "opp_key"):
         if c not in tg:
             tg = tg.assign(**{c: tg["club" if c == "club_key" else "opponent"]})
-    before, team_elo, _ = team_elo_history(tg, cfg)
+    before, team_elo, init = team_elo_history(tg, cfg)
+    # Elo medio final de cada liga (equipos agrupados por su fuerza de liga) para situar a cada rival dentro de su liga
+    unk = E.get("unknown_team_strength", 65)
+    t_s = pd.Series({t: init.get(t, unk) for t in team_elo})
+    league_mean = pd.Series(team_elo).groupby(t_s).mean()
     pos = base.drop_duplicates("player_id").set_index("player_id").pos_group
     m["pos_group"] = m.player_id.map(pos)
     m["match_rating"] = match_ratings(m, cfg)
+    m["good"] = (m.match_rating >= m.groupby("pos_group").match_rating.transform("median")).astype(float)
     comp = base.drop_duplicates("player_id").set_index("player_id").competition_strength
     elo, rows = {}, []
     for r in m.itertuples(index=False):
@@ -430,13 +435,16 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
         opp = before.get((r.date, r.club_key, r.opp_key), (None, team_elo.get(r.opp_key)))[1]
         if opp is None:
             opp = _elo_init(getattr(r, "opp_strength", np.nan), E)
+        s_opp = init.get(r.opp_key, getattr(r, "opp_strength", np.nan))
+        s_opp = unk if pd.isna(s_opp) else s_opp
+        opp_str = float(np.clip(s_opp + (opp - league_mean.get(s_opp, opp)) / E.get("opponent_elo_per_point", 10), 0, 100))
         h = 0 if pd.isna(r.home) else (E["home_advantage"] if r.home else -E["home_advantage"])
         exp = 1 / (1 + 10 ** ((opp - elo[p] - h) / 400))
         res = np.nan if pd.isna(r.gf) or pd.isna(r.ga) else 1.0 if r.gf > r.ga else 0.5 if r.gf == r.ga else 0.0
         score = r.match_rating / 100 if pd.isna(res) else E["w_individual"] * r.match_rating / 100 + E["w_result"] * res
         k = E["k_base"] * min(r.Min / E["minutes_full"], 1) * E["importance"].get(r.block, 1.0)
         delta = k * (score - exp)
-        rows.append({**r._asdict(), "opp_elo": opp, "elo_before": elo[p], "expected": exp, "score": score, "elo_delta": delta})
+        rows.append({**r._asdict(), "opp_elo": opp, "opp_strength_match": opp_str, "elo_before": elo[p], "expected": exp, "score": score, "elo_delta": delta})
         elo[p] += delta
     mm = pd.DataFrame(rows)
     sc = E["scale_to_100"]
@@ -447,7 +455,7 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
         opp_avg = np.average(g.opp_elo, weights=w_min)
         d = {"player_id": p, "ELO_POINTS": elo[p], "ELO": np.clip(sc["center_value"] + (elo[p] - sc["center"]) / sc["points_per_unit"], 0, 100),
              "n_matches": len(g), "opponent_strength_elo": opp_avg,
-             "opponent_strength_raw": float(np.clip(80 + (opp_avg - E["initial"]) / E["initial_competition_factor"], 0, 100)),
+             "opponent_strength_raw": float(np.average(g.opp_strength_match, weights=w_min)),
              "last_match": g.date.max()}
         hl = F["decay_half_life_matches"]
         g_form = g[g.date >= g.date.max() - pd.Timedelta(days=F.get("days_window_365", 365))]
@@ -456,16 +464,21 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
             w = 0.5 ** (np.arange(len(t))[::-1] / hl) * (t.Min.clip(lower=1) / 90)
             d[f"FORM_{n}"] = np.average(t.match_rating, weights=w) if len(t) >= min(n, F.get("min_matches", 3)) else np.nan
         if len(g) >= Cn["min_matches"]:
-            mu = np.average(g.match_rating, weights=w_min)
-            sd = math.sqrt(np.average((g.match_rating - mu) ** 2, weights=w_min))
-            shrink = len(g) / (len(g) + Cn["min_matches"])
-            d["CONSISTENCY"] = float(np.clip(100 * (1 - sd / (2 * Cn["sd_reference"])), 0, 100) * shrink + 50 * (1 - shrink))
-        else:
-            d["CONSISTENCY"] = np.nan
+            d["good_share"] = float(np.average(g.good, weights=w_min))
+        d["pos_group"] = g.pos_group.iloc[0]
         out.append(d)
     res = pd.DataFrame(out)
-    # misma escala que competition_strength (inversa de la Elo inicial por liga), encogida hacia la fuerza de su liga
-    # con pocos partidos: n/(n+k)
+    # CONSISTENCY = % de partidos buenos (nota >= mediana de su posición en la temporada), ponderado por minutos y
+    # encogido hacia 50 con pocos partidos. Con la desviación típica salían "regulares" los que nunca destacan.
+    if "good_share" not in res:
+        res["good_share"] = np.nan
+    shrink = res.n_matches / (res.n_matches + Cn["min_matches"])
+    # centrado por posición (los empates en la nota hacen que la mediana no parta al 50 % en todas): mediana de la posición = 50
+    centered = (0.5 + res.good_share - res.groupby("pos_group").good_share.transform("median")).clip(0, 1)
+    res["CONSISTENCY"] = (100 * centered * shrink + 50 * (1 - shrink)).where(res.good_share.notna())
+    res = res.drop(columns="pos_group")
+    # OPPONENT_STRENGTH: fuerza de la liga del rival ± su nivel dentro de esa liga (Elo/10), media por minutos,
+    # encogida hacia la fuerza de la liga del jugador con pocos partidos: n/(n+k)
     k = E.get("opponent_shrink_matches", 10)
     cs = res.player_id.map(comp)
     sh = res.n_matches / (res.n_matches + k)

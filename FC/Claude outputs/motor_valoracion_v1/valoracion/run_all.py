@@ -82,7 +82,7 @@ def main(f1, f2, out, partidos=None, notas=None, avanzadas=None, clubmap=None):
     if notas:
         note += " Nota de partido: SofaScore."
     if avanzadas:
-        note += " Métricas avanzadas (5 grandes): SofaScore/Opta, temporada completa de liga."
+        note += " Métricas avanzadas (5 grandes, liga): Understat y FotMob (Opta)."
     b = build_excel.build(base, cfg, out, raw=src, sims=sims, corr=corr, matches=mm, history=h, source_note=note)
     return base, b
 

@@ -211,7 +211,7 @@ def excel_rows():
     return pd.DataFrame(out)
 
 
-def match_players(ex, sofa):
+def match_players(ex, sofa, mins_col=None):
     """Club del Excel -> equipo SofaScore por votación (nombres idénticos), luego jugador dentro del equipo."""
     from rapidfuzz import fuzz, process
     ex = ex.copy()
@@ -246,10 +246,22 @@ def match_players(ex, sofa):
                 sid, how = b[2], "fuzzy"
             elif b2 and b2[1] >= 88:
                 sid, how = b2[2], "wratio"
+        if sid is None and len(cand) and r.n:  # mismo apellido y único en el equipo (Matty/Matthew Cash)
+            last = r.n.split()[-1]
+            g = cand[cand.n.map(lambda x: x.split()[-1] if x else "") == last]
+            if len(g) == 1 and len(last) >= 4 and mins_col and pd.notna(r.get("liga_min")):
+                d = abs(float(g[mins_col].iloc[0] or 0) - float(r.liga_min))
+                if d <= max(200, 0.25 * float(r.liga_min)):  # y además minutos de liga parecidos
+                    sid, how = g.index[0], "apellido"
         if sid is None:
             g = sofa[sofa.n == r.n]
             if len(g) == 1:
                 sid, how = g.index[0], "global"
+        if sid is not None and how in ("fuzzy", "wratio", "global") and mins_col and pd.notna(r.get("liga_min")) \
+                and r.liga_min >= 300 and pd.notna(sofa.loc[sid, mins_col]):
+            d = abs(float(sofa.loc[sid, mins_col]) - float(r.liga_min))
+            if d > max(300, 0.5 * float(r.liga_min)):  # cruce por nombre aproximado con minutos incompatibles
+                sid, how = None, ""
         res.append((i, sid, how))
     return res
 
@@ -274,7 +286,7 @@ def main():
             raw[FIELDS] = raw[FIELDS].apply(pd.to_numeric, errors="coerce")
             sofa = pd.concat([raw, metrics(raw)], axis=1)
             e = ex[(ex.season == season) & (ex.liga == liga)]
-            mp = match_players(e, sofa)
+            mp = match_players(e, sofa, "minutesPlayed")
             ok = collections.Counter(h or "sin_cruce" for _, _, h in mp)
             print(f"  {season} {liga}: {len(sofa)} jugadores SofaScore, cruce {dict(ok)}")
             for i, sid_, how in mp:

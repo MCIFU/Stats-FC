@@ -628,13 +628,13 @@ def build_leeme(ws, cfg, b, source_note):
     has_elo = "ELO" in b and b.ELO.notna().any()
     if has_adv:
         n_adv = int(b.npxg_p90.notna().sum()) if "npxg_p90" in b else 0
-        lines += [("1. Métricas avanzadas (xG, tiros, pases, regates, entradas, duelos, paradas…) de SofaScore/Opta SOLO para las 5 grandes ligas "
+        lines += [("1. Métricas avanzadas (npxG, xA, tiros, pases, regates, entradas, intercepciones, paradas…) de Understat y FotMob (Opta) SOLO para las 5 grandes ligas "
                    f"({n_adv} jugadores-temporada). Resto de ligas: UNKNOWN (gris), no 0.", F_BASE),
-                  ("2. SofaScore no da pases progresivos, conducciones progresivas, SCA ni toques en el área: esas métricas siguen UNKNOWN. npxG = xG - 0.79 × penaltis lanzados (aprox.).", F_BASE),
+                  ("2. Siguen UNKNOWN (las fuentes no las dan): duelos aéreos, centros, pérdidas, errores, pases progresivos, conducciones, SCA y toques en el área. FotMob solo lista a quien supera ~9 % de los minutos de liga (porteros ~50 %).", F_BASE),
                   ("3. Fuera de las 5 grandes el CA se apoya en goles/asistencias por 90, minutos, rendimiento continental y goles encajados: su 'Cobertura datos' es menor y la confianza también.", F_BASE)]
     else:
         lines += [("1. Tus Excel tienen PJ, minutos, G, A (y GC/CS en porteros) por competición. NO tienen xG, pases, entradas, regates, etc. Esos atributos salen UNKNOWN (gris), no 0.", F_BASE),
-                  ("2. FBref perdió sus estadísticas avanzadas de Opta en enero de 2026. Fuente preparada: auxiliares/sofascore/descargar_avanzadas.py (SofaScore).", F_BASE),
+                  ("2. FBref perdió sus estadísticas avanzadas de Opta en enero de 2026. Fuente preparada: auxiliares/avanzadas/descargar_fotmob_understat.py (FotMob + Understat).", F_BASE),
                   ("3. Por eso el CA se apoya en: producción de goles/asistencias por 90, peso en el equipo (minutos), rendimiento continental y, en defensas/porteros, goles encajados. La 'Cobertura datos' dice qué parte del modelo de cada posición tiene dato.", F_BASE)]
     if has_elo:
         lines += [(f"4. ELO, FORM, CONSISTENCY y OPPONENT_STRENGTH: partido a partido de Transfermarkt SOLO en las 5 grandes ({int(b.ELO.notna().sum())} jugadores-temporada). "

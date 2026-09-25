@@ -32,24 +32,28 @@ SEASONS = {"2025-26": ("Temporada 2025-26.xlsx", 2025), "2026-27": ("Temporada 2
 YOUTH_T = {7, 15, 16, 17, 18, 20, 23}
 YOUTH_C = {'AJ', 'BK19', 'ITJE', 'P23Q', 'P23C', 'E21P', 'MNPP', '18GB', 'ITJP', 'F19F', 'IT18', 'ITJF', '7NP1', '7NP2',
            'BJ', 'T19Y', 'NLBA', 'PTPR', 'F17M', 'MNP3', 'UL2P'}
+# ligas/copas de otros continentes: sus clubes no se mezclan con la fila europea (regla de continentes de los Excel)
+NON_EU = {'MLS1', 'USL', 'BRA1', 'BRA2', 'ARG1', 'ARGC', 'MEXA', 'MEX1', 'POMX', 'POME', 'KR1', 'CSL', 'JAP1', 'SA1',
+          'UAE1', 'QSL', 'TUN1', 'CLPD', 'UZ1', 'AUS1', 'COLP', 'URU1', 'EGY1', 'MAR1'}
 CONTCODE = {'CL': 'UCL', 'CLQ': 'UCL', 'USC': 'UCL', 'EL': 'UEL', 'ELQ': 'UEL', 'UCOL': 'UECL', 'ECLQ': 'UECL'}
 
 S = requests.Session()
-S.headers.update({"User-Agent": UA, "Accept": "application/json, text/plain, */*", "Referer": TMWEB + "/"})
+S.headers.update({"User-Agent": UA, "Accept": "application/json, text/html, */*", "Accept-Language": "es-ES,es;q=0.9",
+                  "Referer": TMWEB + "/"})
 
 
-def get(url, as_json=True, tries=5):
+def get(url, as_json=True, tries=6):
     for k in range(tries):
         try:
             r = S.get(url, timeout=30)
-            if r.status_code in (429, 500, 502, 503, 504):
+            if r.status_code in (405, 429, 500, 502, 503, 504):  # 405 = límite de peticiones de la web de TM
                 raise requests.HTTPError(str(r.status_code))
             r.raise_for_status()
             return r.json() if as_json else r.text
         except Exception as e:  # noqa: BLE001
             if k == tries - 1:
                 raise RuntimeError(f"{url}: {e}") from e
-            time.sleep(2 ** k)
+            time.sleep(3 * 2 ** k)
 
 
 def cached(name, fn):
@@ -150,9 +154,13 @@ def map_ids(rows):
         manual = json.loads(mf.read_text(encoding="utf-8"))
     sq = {}
     keys = sorted({(r["club_id"], r["tmseason"]) for r in rows})
-    with cf.ThreadPoolExecutor(4) as ex:
-        for (k, v) in zip(keys, ex.map(lambda k: squad(*k), keys)):
-            sq[k] = v
+    for i, k in enumerate(keys, 1):  # la web de TM corta con 405 si se le pide en paralelo
+        fresh = not (CACHE / f"squads/{k[0]}_{k[1]}.json.gz").exists()
+        sq[k] = squad(*k)
+        if fresh:
+            time.sleep(1.5)
+        if i % 25 == 0:
+            print(f"  plantillas {i}/{len(keys)}")
     glob = collections.defaultdict(set)
     for v in sq.values():
         for pid, nm in v.items():
@@ -233,7 +241,7 @@ def parse_game(e):
         season_id=gi.get("seasonId"),
         comp=gi.get("competitionId") or find(e, ["competitionId"], 3),
         comp_type=find(e, ["competitionTypeId", "typeId"], 3),
-        live=bool(find(e, ["isLive", "live"], 3)),
+        live=bool(gi.get("isLiveGame")) or bool(gi.get("isGamePostponed")),
         club_id=str(club.get("clubId")) if club.get("clubId") is not None else None,
         opp_id=str(find(opp, ["clubId", "id"], 1)) if opp else None,
         nat=bool(find(e, ["isNationalTeam", "nationalTeam"], 3)),
@@ -245,7 +253,7 @@ def parse_game(e):
         gf=gf, ga=ga, home=home,
         yellow=dig(st, "cardStatistics", "yellowCardNet"),
         red=find(st, ["redCard", "redCards", "redCardNet"], 2),
-        starter=find(st, ["isStartingEleven", "startingEleven", "isStarter", "lineup"], 3),
+        starter=find(st, ["isStarting", "isStartingEleven"], 2),
     )
 
 
@@ -314,6 +322,7 @@ def main():
     CLUB = {k: {"nt": bool(find(v, ["isNationalTeam"], 2)), "main": str(find(v, ["mainClubId"], 2) or k),
                 "name": find(v, ["name", "shortName"], 1)} for k, v in kl_.items()}
 
+    non_eu_clubs = {g["club_id"] for L in games.values() for g in L if str(g["comp"]) in NON_EU}
     cut = pd.Timestamp(a.corte + " 20:55", tz="UTC")
     out, chk = [], collections.Counter()
     by_pid = collections.defaultdict(list)
@@ -334,7 +343,7 @@ def main():
                 b = block_of(g, COMP, CLUB)
                 if b is None or b == "SEL":
                     continue  # la selección no cuenta para ELO/FORM (model.json)
-                if multi and g["club_id"] != r["club_id"]:
+                if g["club_id"] != r["club_id"] and (multi or g["club_id"] in non_eu_clubs):
                     continue
                 chk["gf" if g["gf"] is not None else "gf_none"] += 1
                 chk["home" if g["home"] is not None else "home_none"] += 1

@@ -216,8 +216,9 @@
     "k_team": 20,
     "goal_margin": true,
     "comment_team": "Elo de EQUIPOS: arranca en 1500 + 4*(fuerza de su liga-80); rivales sin liga conocida (copas, ligas fuera de tus Excel) = fuerza 65. K=20 × (ln(|dif. goles|+1)+1). Se arrastra de 25-26 a 26-27.",
-    "comment_opponent": "OPPONENT_STRENGTH (0-100) = fuerza de su liga + (80 + (Elo medio del rival antes del partido, ponderado por minutos - 1500)/4 - fuerza de su liga) × n/(n+10). Misma escala que competition_strength; con pocos partidos se acerca a la de su liga.",
-    "opponent_shrink_matches": 10
+    "comment_opponent": "OPPONENT_STRENGTH (0-100): cada rival vale fuerza de su liga + (su Elo - Elo medio de su liga)/10; media ponderada por minutos, encogida hacia la fuerza de la liga del jugador × n/(n+10). Misma escala que competition_strength.",
+    "opponent_shrink_matches": 10,
+    "opponent_elo_per_point": 10
   },
   "form": {
     "windows": [
@@ -232,8 +233,7 @@
   },
   "consistency": {
     "min_matches": 8,
-    "sd_reference": 18,
-    "comment": "CONSISTENCY = 100*(1 - sd/(2*sd_reference)) acotado 0-100, ponderado por minutos y encogido según nº partidos"
+    "comment": "CONSISTENCY = % de partidos buenos (nota de partido >= mediana de su posición en la temporada), ponderado por minutos, centrado para que el jugador mediano de cada posición = 50, y encogido hacia 50 con pocos partidos (× n/(n+8)). Requiere 8 partidos."
   },
   "similarity": {
     "top_n": 5,

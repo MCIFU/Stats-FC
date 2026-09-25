@@ -1,4 +1,5 @@
-auxiliares/tmapi/cache/
-auxiliares/sofascore/cache/
-auxiliares/tmapi/sin_id_tm.csv
+FC/auxiliares/tmapi/cache/
+FC/auxiliares/sofascore/cache/
+FC/auxiliares/avanzadas/cache/
+FC/auxiliares/tmapi/sin_id_tm.csv
 __pycache__/
