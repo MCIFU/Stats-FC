@@ -25,3 +25,19 @@ Así se recalcularon ambos Excel. Una actualización nueva tarda unos 15-20 minu
 
 ## 3. Escritura (Python/openpyxl)
 Se ejecutan en este orden: match.py (fila → ID TM), finalize.py, writer.py (detalle, fórmulas TOT regeneradas, orden por G+A), ranking.py y texts.py.
+
+## 4. Comprobar / actualizar los Excel desde Python (sin navegador) — `actualizar_excels.py`
+```
+cd FC
+python auxiliares/tmapi/actualizar_excels.py                    # descarga + informe diferencias_TM.csv (no escribe)
+python auxiliares/tmapi/actualizar_excels.py --escribir --filas "2026-27|DELANTEROS|7,..."   # escribe solo las revisadas
+```
+- Mismas reglas que arriba; recalcula TODAS las filas (clubes de clubmap.json + nombres TM exactos) y compara celda a celda.
+- Temporada de cada partido de club: liga de año natural (MLS, Brasil, Argentina, Japón y cualquier liga cuya temporada TM
+  actual va un año por detrás de LaLiga, p.ej. Paraguay, Chile, Suecia) → año de la fecha; resto → seasonId TM.
+  Leagues Cup / Campeones Cup / Concachampions en clubes mexicanos → temporada julio-junio por fecha.
+- SEL: solo en la fila del continente del último club ANTES del 1 de agosto; si esa fila no existe, en ninguna.
+- Solo cambia PJ/Min/G/A (GC/CS) y CONT.; filas, orden, Club/Liga/NAC/POS/Edad/Valor no se tocan. Rehace RANKING_TOTAL/PORTEROS.
+- 25/09/2026: 10.881 filas idénticas a TM; 4 corregidas en 26-27 (Camilo Durán y Iron Gomis tenían sumados en 26-27 sus
+  partidos de ene-may 2026 en la liga azerí, que es de la temporada 25-26; Antonetti y De Rosario, Puerto Rico–Guyana del 24/09).
+  7 diferencias sin aplicar por cruce de ID/club dudoso: ver diferencias_TM.csv.
