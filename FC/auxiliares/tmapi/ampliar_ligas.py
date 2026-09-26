@@ -27,12 +27,25 @@ FC = D.FC
 # etiqueta de liga en el Excel -> (competición TM para la lista de clubes, año natural)
 LIGAS = {"Eredivisie": ("NL1", False), "Süper Lig": ("TR1", False), "Liga Belga": ("BE1", False), "Saudi Pro": ("SA1", False),
          "Liga MX": ("MEXA", False), "Scottish Premiership": ("SC1", False), "Liga Argentina": ("ARG1", True),
-         "Brasileirão": ("BRA1", True), "Ekstraklasa": ("PL1", False), "MLS": ("MLS1", True), "Portugal": ("PO1", False)}
+         "Brasileirão": ("BRA1", True), "Ekstraklasa": ("PL1", False), "MLS": ("MLS1", True), "Portugal": ("PO1", False),
+         "Championship": ("GB2", False), "LaLiga2": ("ES2", False), "Serie B": ("IT2", False), "2. Bundesliga": ("L2", False),
+         "Super League 1": ("GR1", False), "Superliga": ("DK1", False), "Super League": ("C1", False),
+         "Bundesliga Austria": ("A1", False), "J1 League": ("JAP1", True), "K League 1": ("RSK1", True)}
+# Japón pasa a temporada ago-may en 2026/27 (TM: saison_id 2026); el torneo corto feb-jun 2026 es otra competición
+SID = {("JAP1", "2026-27"): 2026}
 POSMAP = {"CF": "DC", "SS": "MCO", "LW": "EI", "RW": "ED", "LM": "EI", "RM": "ED", "AM": "MCO", "CM": "MC", "DM": "MCD",
           "CB": "DFC", "LB": "LI", "RB": "LD", "GK": "POR"}
 GROUPMAP = {"GOALKEEPER": "POR", "DEFENDER": "DFC", "MIDFIELD": "MC", "FORWARD": "DC"}
 SHEETOF = {"DC": "DELANTEROS", "EI": "EXTREMOS", "ED": "EXTREMOS", "MCO": "MEDIAPUNTAS", "MC": "MEDIOCENTROS",
            "MCD": "MEDIOCENTROS", "DFC": "DEFENSAS", "LI": "DEFENSAS", "LD": "DEFENSAS", "POR": "PORTEROS"}
+
+
+def hexcol(c, default):
+    """Color de TM a RRGGBB ('#fff' → 'FFFFFF'); lo que no sea hexadecimal vale el color por defecto."""
+    c = (c or "").strip().lstrip("#")
+    if re.fullmatch(r"[0-9A-Fa-f]{3}", c):
+        c = "".join(x * 2 for x in c)
+    return c[:6].upper() if re.fullmatch(r"[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?", c) else default
 
 
 def clubes_liga(comp, sid):
@@ -92,6 +105,7 @@ def main():
         comp, cal = LIGAS[liga]
         for season in ("2025-26", "2026-27"):
             sid = (2024 if season == "2025-26" else 2025) if cal else (2025 if season == "2025-26" else 2026)
+            sid = SID.get((comp, season), sid)
             clubs = clubes_liga(comp, sid)
             league_clubs[(season, liga)] = set(clubs)
             names = {}
@@ -111,6 +125,9 @@ def main():
     nuevos = []
     for (season, liga), names in cand.items():
         lc = league_clubs[(season, liga)]
+        if not lc:
+            print(f"  {season} {liga}: sin clubes en TM, se omite")
+            continue
         conf = collections.Counter(CLUB.get(c, {}).get("conf") for c in lc).most_common(1)[0][0]
         for pid, nm in names.items():
             G = [x for x in ctx["valid"].get(pid, []) if x["tag"] == season and x["blk"] == "LIGA" and x["club"] in lc]
@@ -203,8 +220,7 @@ def main():
                     ws.cell(r, c).fill, ws.cell(r, c).font = styles[(c, key)]
                 elif c == 5:  # club nuevo: sus colores de Transfermarkt
                     cols = (((ctx["KM"].get(n["club_id"]) or {}).get("baseDetails") or {}).get("superiorClub") or {}).get("colors") or {}
-                    bg = (cols.get("firstColor") or "#334155").lstrip("#")[:6] or "334155"
-                    fg = (cols.get("secondColor") or "#FFFFFF").lstrip("#")[:6] or "FFFFFF"
+                    bg, fg = hexcol(cols.get("firstColor"), "334155"), hexcol(cols.get("secondColor"), "FFFFFF")
                     if bg.upper() == fg.upper():
                         fg = "FFFFFF" if bg.upper() != "FFFFFF" else "0F172A"
                     ws.cell(r, c).fill = PatternFill("solid", fgColor=bg)

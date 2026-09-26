@@ -259,6 +259,8 @@ def main():
     ap.add_argument("--partidos", help="ligas (separadas por comas, o 'todas') para exportar partidos_TM.csv")
     ap.add_argument("--offline", action="store_true")
     ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--crecimiento", action="store_true",
+                    help="con --escribir: solo filas cuyos números solo suben (partidos nuevos); las que bajan quedan en el informe")
     a = ap.parse_args()
     rows = excel_rows()
     sin_club = [r for r in rows if r["club_id"] is None]
@@ -287,6 +289,11 @@ def main():
             ok = set(a.filas.split(","))
             df = df[(df.season + "|" + df.sheet + "|" + df.row.astype(str)).isin(ok)]
             print(f"escribiendo solo {len(df)} filas revisadas")
+        if a.crecimiento:
+            num = lambda x: x if isinstance(x, (int, float)) else 0
+            sube = df.apply(lambda r: all(num(n) >= num(o) for n, o in zip(r.new, r.old)), axis=1)
+            print(f"escribiendo {int(sube.sum())} filas que solo crecen; {int((~sube & (df.cambios != '')).sum())} con bajadas quedan en diferencias_TM.csv")
+            df = df[sube]
         if a.nuevas:
             df = df[df.old.map(lambda o: all(not isinstance(x, (int, float)) or x == 0 for x in o))]
             print(f"escribiendo solo {len(df)} filas nuevas (sin datos previos)")

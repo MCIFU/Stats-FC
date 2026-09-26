@@ -34,7 +34,12 @@ LEAGUES = {"Premier": (47, "EPL", False), "LaLiga": (87, "La_liga", False), "Bun
            "Portugal": (61, None, False), "Scottish Premiership": (64, None, False), "Süper Lig": (71, None, False),
            "Liga Belga": (40, None, False), "Saudi Pro": (536, None, False), "Ekstraklasa": (196, None, False),
            "Liga MX": (230, None, False), "MLS": (130, None, True), "Brasileirão": (268, None, True),
-           "Liga Argentina": (112, None, True)}
+           "Liga Argentina": (112, None, True), "Championship": (48, None, False), "LaLiga2": (140, None, False),
+           "Serie B": (86, None, False), "2. Bundesliga": (146, None, False), "Super League 1": (135, None, False),
+           "Superliga": (46, None, False), "Super League": (69, None, False), "Bundesliga Austria": (38, None, False),
+           "J1 League": (223, None, True), "K League 1": (9080, None, True)}
+SPECIAL = {("J1 League", "2026-27"): ("2026", "2026/2027")}
+PADJ = ["tackles_won_p90", "interceptions_p90", "recoveries_p90", "blocks_clear_p90", "fm_tackles_p90"]
 SEASONS = {"2025-26": ("2025/2026", "2025", 2025), "2026-27": ("2026/2027", "2026", 2026)}
 # lista FotMob -> {columna: (valor "stat"|"sub", tipo "p90"|"pct"|"tot")}. Al unir Apertura+Clausura: p90/pct se
 # promedian ponderando por minutos y tot se suma.
@@ -92,7 +97,8 @@ def cached(name, fn, refresh=False):
 def fotmob_table(lid, season_name, refresh):
     info = cached(f"fm_league_{lid}.json.gz", lambda: get(f"https://www.fotmob.com/api/data/leagues?id={lid}"), refresh=True)
     # una temporada puede tener varias fases con ruta propia (Liga MX: .../Apertura/, .../Clausura/)
-    bases = sorted({x["RelativePath"].rsplit("/", 1)[0] for x in info["stats"]["seasonStatLinks"] if x["Name"] == season_name})
+    names = season_name if isinstance(season_name, (tuple, list)) else (season_name,)
+    bases = sorted({x["RelativePath"].rsplit("/", 1)[0] for x in info["stats"]["seasonStatLinks"] if x["Name"] in names})
     if not bases:
         raise RuntimeError(f"FotMob {lid}: temporada {season_name} no encontrada")
     acc = {}
@@ -111,6 +117,15 @@ def fotmob_table(lid, season_name, refresh):
                     v = x.get("StatValue" if which == "stat" else "SubStatValue")
                     if v is not None:
                         r["_v"][c].append((v, m, kind))
+    # posesión media del equipo (ponderada por fases) para ajustar las acciones defensivas
+    poss = collections.defaultdict(list)
+    for base in bases:
+        d = cached(f"fm_{base.replace('/', '_')}_possession_team.json.gz",
+                   lambda: get(f"https://data.fotmob.com/{base}/possession_percentage_team.json"), refresh)
+        for x in ((d or {}).get("TopLists") or [{}])[0].get("StatList", []):
+            if x.get("StatValue") is not None:
+                poss[x.get("TeamId")].append(x["StatValue"])
+    poss = {k: float(np.mean(v)) for k, v in poss.items()}
     rows = []
     for pid, r in acc.items():
         out = {k: v for k, v in r.items() if k != "_v"}
@@ -128,6 +143,13 @@ def fotmob_table(lid, season_name, refresh):
             df[c] = np.nan
     n90 = (df.fm_minutes / 90).where(df.fm_minutes > 0)
     df["blocks_clear_p90"] = df.fm_clearances_p90 + df.fm_blocks_p90
+    # ajuste por posesión (PAdj): quien defiende más tiempo suma más entradas/intercepciones sin ser mejor defensor.
+    # × 50 / posesión del rival; con 42 % de posesión propia (58 % rival) el volumen baja un 14 %.
+    df["team_possession"] = df.sofa_team_id.map(poss)
+    fac = (50 / (100 - df.team_possession)).clip(0.7, 1.4).fillna(1.0)
+    for c in PADJ:
+        df[c + "_raw"] = df[c]
+        df[c] = df[c] * fac
     df["sot_pct"] = (100 * df.fm_sot_p90 / df.fm_shots_p90).where(df.fm_shots_p90 > 0)
     df["gk_psxg_minus_ga_p90"] = df.fm_goals_prevented / n90
     df["gk_launch_cmp_pct"] = df.long_cmp_pct
@@ -193,7 +215,9 @@ def main():
             e = ex[(ex.season == season) & (ex.liga == liga)]
             if e.empty:
                 continue
-            fm = fotmob_table(lid, fm_cal if cal else fm_season, a.refresh)
+            # Japón: 2025 = año natural; 26-27 = medio torneo feb-jun 2026 + temporada 2026/27 (así lo etiqueta el Excel)
+            name = SPECIAL.get((liga, season)) or (fm_cal if cal else fm_season)
+            fm = fotmob_table(lid, name, a.refresh)
             us = understat_table(us_league, us_year, a.refresh) if us_league else pd.DataFrame(columns=["sofa_id", "sofa_name", "sofa_team_id", "sofa_team", "us_minutes"])
             mf = {i: (s, h) for i, s, h in match_players(e, fm, "fm_minutes")}
             mu = {i: (s, h) for i, s, h in match_players(e, us, "us_minutes")} if len(us) else {i: (None, "") for i in e.index}

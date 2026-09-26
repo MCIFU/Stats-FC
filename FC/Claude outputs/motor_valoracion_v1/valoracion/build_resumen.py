@@ -102,6 +102,40 @@ def preparar(base, cfg):
     return b
 
 
+# declive medio por año de edad a partir de los 30 (porteros 2 años más tarde, centrales 1): estimación propia
+DECLIVE = {30: 0.5, 31: 0.8, 32: 1.2, 33: 1.6}
+
+
+def proyeccion(b, cfg, years=3):
+    """CA esperado dentro de 1..3 años. Crecimiento = parte del margen PA-CA que la curva growth_by_age reparte
+    entre este año y el siguiente (misma curva que el PA); declive fijo desde los 30. Banda con el rango del PA."""
+    P = cfg["model"]["potential"]
+    gba = {int(k): v for k, v in P["growth_by_age"].items()}
+    G = lambda a: gba.get(int(min(max(a, min(gba)), max(gba))), 0.0) if a <= max(gba) else 0.0
+    delay = P.get("growth_age_delay_by_group", {})
+    out = {f"PROJ_{t}": [] for t in range(1, years + 1)} | {"PROJ_LO": [], "PROJ_HI": []}
+    for ca, pa, lo, hi, age, g in zip(b.CA_FINAL, b.PA_ESTIMATE, b.PA_RANGE_LOW, b.PA_RANGE_HIGH, b.age, b.pos_group):
+        if pd.isna(ca) or pd.isna(age):
+            for k in out:
+                out[k].append(np.nan)
+            continue
+        a0 = age - delay.get(g, 0)
+        gap = (pa - ca) if pd.notna(pa) else 0.0
+        v = ca
+        for t in range(1, years + 1):
+            frac = 1 - G(a0 + t) / G(a0) if G(a0) > 0 else 1.0
+            dec = sum(DECLIVE.get(int(a0 + k), 2.0 if a0 + k > 33 else 0.0) for k in range(t))
+            v = ca + max(gap, 0) * frac - dec
+            out[f"PROJ_{t}"].append(v)
+        f3 = 1 - G(a0 + years) / G(a0) if G(a0) > 0 else 1.0
+        w = 1.0 * years
+        out["PROJ_LO"].append(v - w - (max(pa - lo, 0) * f3 if pd.notna(lo) and pd.notna(pa) else 0))
+        out["PROJ_HI"].append(v + w + (max(hi - pa, 0) * f3 if pd.notna(hi) and pd.notna(pa) else 0))
+    for k, v in out.items():
+        b[k] = np.clip(v, 0, 100)
+    return b
+
+
 def radar(b):
     out = np.full((len(b), 6), np.nan)
     gk = (b.pos_group == "GK").to_numpy()

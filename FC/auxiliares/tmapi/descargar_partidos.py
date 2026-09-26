@@ -10,7 +10,7 @@ Necesita salida a internet hacia www.transfermarkt.es y tmapi.transfermarkt.tech
 Mismas reglas que LEEME_METODO_TM_API.md (bloques por typeId, filiales fuera, KLUB 2024 fuera, corte 20:55 UTC).
 Todo lo descargado queda en auxiliares/tmapi/cache/ (se reutiliza en la siguiente ejecución).
 """
-import argparse, collections, concurrent.futures as cf, datetime as dt, gzip, json, re, sys, time
+import argparse, collections, os, concurrent.futures as cf, datetime as dt, gzip, json, re, sys, time
 from pathlib import Path
 
 import openpyxl
@@ -64,9 +64,14 @@ def get(url, as_json=True, tries=8):
             time.sleep(min(300, 5 * 2 ** k))
 
 
+# actualización semanal: TM_REFRESH_DAYS="perf/=5,squads/=27" vuelve a pedir lo cacheado con más de N días
+REFRESH = {k: float(v) for k, v in (x.split("=") for x in os.environ.get("TM_REFRESH_DAYS", "").split(",") if "=" in x)}
+
+
 def cached(name, fn):
     p = CACHE / name
-    if p.exists():
+    days = next((v for k, v in REFRESH.items() if name.startswith(k)), None)
+    if p.exists() and (days is None or time.time() - p.stat().st_mtime < days * 86400):
         return json.loads(gzip.decompress(p.read_bytes()))
     v = fn()
     p.parent.mkdir(parents=True, exist_ok=True)

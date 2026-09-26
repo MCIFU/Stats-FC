@@ -96,3 +96,15 @@ python auxiliares/media/descargar_media.py     # ≈2 min
 - Wikidata (P2446 = ID de Transfermarkt) → artículo de Wikipedia en español y categoría de Wikimedia Commons.
   El panel pide a Commons, al abrir la ficha, las fotos de libre uso del jugador y separa las fechadas en la temporada elegida.
 - Salida: `auxiliares/media/media_jugadores.json` (lo lee `build_web.py`).
+
+## 5. Novedades del 26/09/2026
+- **10 ligas más** (`ampliar_ligas.py`): Championship, LaLiga2, Serie B, 2. Bundesliga, Grecia (Super League 1), Dinamarca (Superliga),
+  Suiza (Super League), Austria (Bundesliga Austria, fuerza 70), J1 League y K League 1. +4.725 filas en 25-26 y +3.783 en 26-27.
+  Japón 26-27 = torneo corto feb-jun 2026 + temporada 2026/27 (TM saison_id 2026), igual que el resto de ligas de año natural.
+- **Ajuste por posesión** (FotMob `possession_percentage_team`): entradas, intercepciones, recuperaciones y despejes+bloqueos
+  × 50 / posesión del rival (acotado 0,7-1,4). Las columnas sin ajustar quedan como `*_raw` en avanzadas.csv.
+- **Proyección a 3 años** (`build_resumen.proyeccion`): parte del margen PA − CA según la misma curva `growth_by_age` del PA;
+  declive desde los 30 (0,5 · 0,8 · 1,2 · 1,6 y 2 puntos/año; porteros 2 años más tarde, centrales 1). Banda con el rango del PA ± 1 por año.
+- **Contrato, historial de valor y lesiones**: `python auxiliares/tmapi/descargar_valor_lesiones.py` (tmapi `market-value-history` e `injury`).
+- **Actualización semanal**: `python actualizar_semanal.py` (desde FC). Solo escribe en los Excel las filas que crecen
+  (partidos nuevos); las que bajan quedan en `auxiliares/tmapi/diferencias_TM.csv` para revisarlas a mano.
