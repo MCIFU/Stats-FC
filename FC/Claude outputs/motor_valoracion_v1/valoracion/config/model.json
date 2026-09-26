@@ -1,5 +1,5 @@
 {
-  "model_version": "rating_model_v1.2",
+  "model_version": "rating_model_v1.2.1",
   "model_date": "2026-09-25",
   "notes": "Primera versión de prueba. Todos los valores son parámetros propios del modelo, no oficiales.",
   "rating_blocks": {
@@ -76,6 +76,7 @@
     "comment_final": "CA_BLEND = w_context*CA_CONTEXT + w_raw*CA_RAW_ESCALADO; CA_FINAL = conf*CA_BLEND + (1-conf)*base_liga",
     "raw_scale_center": 62,
     "raw_scale_slope": 0.4,
+    "equalize_position_spread": true,
     "comment_raw": "CA_RAW_ESCALADO = center + slope*(score_global-50): misma escala que CA_CONTEXT pero sin contexto",
     "coverage_shrink_ref": 0.6,
     "comment_coverage": "score = 50 + (score_bruto-50) × MIN(1, RAIZ(cobertura/0.6)). Con poca cobertura (p.ej. centrales con solo minutos) la nota se acerca a la media: no afirmamos lo que no medimos."

@@ -81,3 +81,18 @@ las métricas avanzadas siguen UNKNOWN.
 - **FORM** = FORM_10: últimos 10 partidos (≤ 365 días), semivida 6 partidos, ponderado por minutos.
 - **CONSISTENCY** = % de partidos buenos (nota de partido ≥ mediana de su posición), ponderado por minutos, centrado para que el
   jugador mediano de cada posición = 50 y encogido hacia 50 con pocos partidos (× n/(n+8)); mínimo 8 partidos. (La desviación típica premiaba a quien nunca destaca.)
+
+## Porteros (v1.2.1, `current_ability.equalize_position_spread`)
+Con menos atributos, la puntuación de los porteros salía mucho más dispersa (desviación 16,7 frente a ~11 en centrales y medios)
+y el mejor portero de cada liga quedaba por encima de los mejores de campo (Donnarumma nº 1 de la Premier). Ahora la puntuación de
+cada posición se escala para que todas tengan la misma dispersión (la mediana de las seis), antes de calcular el CA.
+Porteros dentro del top 10 de su liga (25-26, ≥ 900'): 41 → 26.
+
+## 4. Fotos y media del panel web
+```
+python auxiliares/media/descargar_media.py     # ≈2 min
+```
+- Foto de perfil: Transfermarkt (`portraitUrl`; TM solo guarda la foto actual, no una por temporada).
+- Wikidata (P2446 = ID de Transfermarkt) → artículo de Wikipedia en español y categoría de Wikimedia Commons.
+  El panel pide a Commons, al abrir la ficha, las fotos de libre uso del jugador y separa las fechadas en la temporada elegida.
+- Salida: `auxiliares/media/media_jugadores.json` (lo lee `build_web.py`).

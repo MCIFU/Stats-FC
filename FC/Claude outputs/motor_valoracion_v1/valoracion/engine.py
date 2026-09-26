@@ -285,6 +285,19 @@ def add_ca(base, cfg):
     base["league_max_min"] = base.groupby(["season", "league"]).LIGA_Min.transform(lambda s: s.quantile(0.95))
     # umbral relativo (como el pool de percentiles): a principio de temporada 300' no los tiene casi nadie
     rated = base.LIGA_Min.fillna(0) >= np.minimum(S["min_minutes_rated"], S.get("pool_relative_to_league_max", 1.0) * base.league_max_min.fillna(0))
+    # misma dispersión en todas las posiciones: con menos atributos (porteros) la media ponderada sale más extrema
+    # y el mejor portero de cada liga acababa por encima de los mejores de campo (Donnarumma nº 1 de la Premier)
+    if CA.get("equalize_position_spread", False):
+        sd = {g: base.loc[(base.pos_group == g) & rated, "score_global"].std() for g in groups}
+        sd = {g: v for g, v in sd.items() if pd.notna(v) and v > 0}
+        target = float(np.median(list(sd.values()))) if sd else None
+        base["spread_factor"] = np.nan
+        for g, v in sd.items():
+            k = float(np.clip(target / v, 0.6, 1.4))
+            idx = base.pos_group == g
+            base.loc[idx, "spread_factor"] = k
+            for c in ("score_global", "score_league"):
+                base.loc[idx, c] = 50 + (base.loc[idx, c] - 50) * k
     base["league_base"] = CA["league_base_factor"] * base.context_score
     base["CA_CONTEXT"] = (base.league_base + CA["context_slope"] * (base.score_league - 50)).clip(0, 100)
     base["CA_RAW"] = (CA["raw_scale_center"] + CA["raw_scale_slope"] * (base.score_global - 50)).clip(0, 100)
