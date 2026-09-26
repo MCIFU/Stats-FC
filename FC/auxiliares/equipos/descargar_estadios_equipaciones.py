@@ -43,7 +43,7 @@ def get(url, binary=False, tries=6):
     host = urllib.parse.urlparse(url).netloc
     for k in range(tries):
         with _LOCK:
-            wait = _LAST.get(host, 0) + (0.2 if host.startswith("upload.") else 1.5) - time.time()
+            wait = _LAST.get(host, 0) + (0.1 if host.startswith(("upload.", "thumb.")) else 1.2) - time.time()
             if wait > 0:
                 time.sleep(wait)
             _LAST[host] = time.time()
@@ -235,7 +235,7 @@ def kits_for(title, days):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--refrescar", type=float, default=7)
-    ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--workers", type=int, default=6)
     a = ap.parse_args()
     E = json.loads(gzip.decompress((HERE / "equipos.json.gz").read_bytes()))["clubs"]
     tms = sorted({t["tm"] for t in E.values() if t.get("tm")})
