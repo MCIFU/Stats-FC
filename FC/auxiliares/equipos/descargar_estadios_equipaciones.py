@@ -52,7 +52,8 @@ def get(url, binary=False, tries=6):
             if r.status_code == 404:
                 return None
             if r.status_code == 429:
-                time.sleep(min(600, 60 * (k + 1)))
+                print("  429", host, flush=True)
+                time.sleep(min(120, 20 * (k + 1)))
                 continue
             if r.status_code in (500, 502, 503, 504):
                 raise requests.HTTPError(str(r.status_code))
@@ -254,7 +255,7 @@ def main():
                 st[tm] = [d.get("venue"), ph, d.get("img")]
             if ks:
                 kits[tm] = ks
-            if n % 50 == 0:
+            if n % 10 == 0:
                 print(f"  {n}/{len(tms)}", flush=True)
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":"))
     (FC / "Panel_FC" / "estadios.js").write_text("window.FC_STADIUMS=" + dump(st) + ";\n", encoding="utf-8")
