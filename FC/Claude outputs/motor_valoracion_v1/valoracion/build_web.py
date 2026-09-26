@@ -100,12 +100,40 @@ def build(base, cfg, out_dir, matches=None, sims=None):
 
     def comp_mv(h):  # [[aaaamm, valor en cientos de miles de €], ...]
         return [[int(d[:4] + d[5:7]), round(v / 1e5)] for d, v in h]
-    extra = {k: [v.get("c"), comp_mv(v.get("mv", [])), v.get("inj", [])] for k, v in vl_all.items() if k in usados}
+    # ficha TM: nacimiento, altura, pie (para cumpleaños y ficha)
+    import gzip as _gz
+    mp = mfile.parents[1] / "tmapi" / "cache" / "meta_players.json.gz"
+    metap = json.loads(_gz.decompress(mp.read_bytes())) if mp.exists() else {}
+
+    def ficha(k):
+        m = metap.get(k) or {}
+        at = m.get("attributes") or {}
+        return [(m.get("lifeDates") or {}).get("dateOfBirth"), at.get("height"), (at.get("preferredFoot") or {}).get("name")]
+    extra = {k: [(vl_all.get(k) or {}).get("c"), comp_mv((vl_all.get(k) or {}).get("mv", [])), (vl_all.get(k) or {}).get("inj", [])] + ficha(k)
+             for k in usados}
     meta["crest"] = [crest.get(c) for c in clubs]
     data = {"meta": meta, "media": media, "players": rows, "similar": sim}
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":"))
     (out_dir / "datos.js").write_text("window.FC_DATA=" + dump(data) + ";\n", encoding="utf-8")
     (out_dir / "extra.js").write_text("window.FC_EXTRA=" + dump(extra) + ";\n", encoding="utf-8")
+    # trayectoria completa: 64 paquetes que la página carga al abrir una ficha (carrera/c_NN.js)
+    cfile = mfile.parents[1] / "tmapi" / "carrera.json.gz"
+    if cfile.exists():
+        car = json.loads(_gz.decompress(cfile.read_bytes()))
+        cdir = out_dir / "carrera"
+        cdir.mkdir(exist_ok=True)
+        buckets = {}
+        for k, v in car["players"].items():
+            if k in usados:
+                buckets.setdefault(int(k) % 64, {})[k] = v
+        for n in range(64):
+            (cdir / f"c_{n:02d}.js").write_text("window.FC_CAR=Object.assign(window.FC_CAR||{}," + dump(buckets.get(n, {})) + ");\n", encoding="utf-8")
+        (out_dir / "nombres.js").write_text("window.FC_NAMES=" + dump({"clubs": car["clubs"], "comps": car["comps"]}) + ";\n", encoding="utf-8")
+    # equipos (FotMob + Wikidata + Wikipedia + noticias)
+    efile = mfile.parents[1] / "equipos" / "equipos.json.gz"
+    if efile.exists():
+        eq = json.loads(_gz.decompress(efile.read_bytes()))
+        (out_dir / "equipos.js").write_text("window.FC_TEAMS=" + dump(eq["clubs"]) + ";\n", encoding="utf-8")
     # partidos aparte: cada archivo por debajo de 16 MB
     (out_dir / "partidos.js").write_text("window.FC_GAMES=" + dump({"games": games, "opponents": opps}) + ";\n", encoding="utf-8")
     return out_dir / "datos.js"

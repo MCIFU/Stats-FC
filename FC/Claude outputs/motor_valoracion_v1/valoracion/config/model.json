@@ -1,5 +1,5 @@
 {
-  "model_version": "rating_model_v1.2.1",
+  "model_version": "rating_model_v1.3",
   "model_date": "2026-09-25",
   "notes": "Primera versión de prueba. Todos los valores son parámetros propios del modelo, no oficiales.",
   "rating_blocks": {
@@ -205,6 +205,7 @@
     "initial_competition_factor": 4.0,
     "comment_initial": "ELO inicial = 1500 + factor*(competition_strength-80). No se usa el CA.",
     "k_base": 24,
+    "season_carry": 0.85,
     "minutes_full": 90,
     "importance": {
       "LIGA": 1.0,

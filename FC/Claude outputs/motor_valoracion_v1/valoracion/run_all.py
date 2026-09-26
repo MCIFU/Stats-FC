@@ -52,7 +52,7 @@ def main(f1, f2, out, partidos=None, notas=None, avanzadas=None, clubmap=None):
     b1, mm1 = engine.run(raw1, cfg, matches=m1)
     # 26-27: el Elo de equipos arrastra los resultados de 25-26
     tg = None if m1 is None else pd.concat([m1, m2], ignore_index=True)
-    b2, mm2 = engine.run(raw2, cfg, matches=m2, prev=b1, team_games=tg)
+    b2, mm2 = engine.run(raw2, cfg, matches=m2, prev=b1, team_games=tg, prev_mm=mm1)
     base = pd.concat([b1, b2], ignore_index=True)
     mm = None
     if mm1 is not None or mm2 is not None:

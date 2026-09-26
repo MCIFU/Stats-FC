@@ -27,10 +27,19 @@ def _get(kind, pid, max_age):
     if p.exists() and (max_age is None or time.time() - p.stat().st_mtime < max_age * 86400):
         return json.loads(gzip.decompress(p.read_bytes()))
     url = {"mv": f"{dp.TMAPI}/player/{pid}/market-value-history", "inj": f"{dp.TMAPI}/player/{pid}/injury"}[kind]
-    try:
-        d = dp.dig(dp.get(url), "data", default={}) or {}
-    except Exception:
-        return {}
+    d = {}
+    for intento in range(4):  # 404 = sin datos (no se reintenta); 429/5xx = espera y reintenta
+        try:
+            r = dp.S.get(url, timeout=30)
+        except Exception:  # noqa: BLE001
+            time.sleep(5 * (intento + 1))
+            continue
+        if r.status_code == 404:
+            break
+        if r.status_code == 200:
+            d = (r.json() or {}).get("data") or {}
+            break
+        time.sleep(10 * (intento + 1))
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_bytes(gzip.compress(json.dumps(d, ensure_ascii=False).encode()))
     return d

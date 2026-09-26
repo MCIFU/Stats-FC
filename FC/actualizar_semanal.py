@@ -1,6 +1,7 @@
 """Actualización semanal completa: Excel de temporada, valoración, resumen y panel web.
 
 Uso (desde la carpeta FC):  python actualizar_semanal.py [--sin-ligas] [--sin-valor]
+                            python actualizar_semanal.py --diario   (solo partidos, noticias y clasificaciones; ~5 min)
 
 Pasos:
  1. Ligas completas: añade a quien haya debutado (plantillas TM renovadas cada 27 días).
@@ -9,7 +10,8 @@ Pasos:
     Exporta partidos_TM.csv.
  3. Orden y formato de los Excel.
  4. Estadísticas avanzadas (FotMob + Understat, descarga de nuevo).
- 5. Contrato, valor de mercado y lesiones (renovados si tienen > 6 días) y fotos/enlaces.
+ 5. Contrato, valor de mercado y lesiones (renovados si tienen > 6 días), fotos/enlaces, trayectorias,
+    equipos (FotMob, Wikidata, Wikipedia, noticias) y portada (partidos y noticias).
  6. Valoración + resumen + panel web (run_all.py).
 Tarda ~1-2 h (Transfermarkt limita la velocidad). Registro en auxiliares/actualizacion_semanal.log.
 """
@@ -45,7 +47,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sin-ligas", action="store_true", help="no busca debutantes (más rápido)")
     ap.add_argument("--sin-valor", action="store_true", help="no renueva contrato/valor/lesiones")
+    ap.add_argument("--diario", action="store_true", help="solo portada (partidos y noticias) y equipos (clasificación, racha, noticias)")
     a = ap.parse_args()
+    if a.diario:
+        run([AUX / "portada/descargar_portada.py"])
+        run([AUX / "equipos/descargar_equipos.py", "--refrescar", "0.5"])
+        print(f"\nListo (diario). Registro: {LOG}")
+        return
     env = {"TM_REFRESH_DAYS": "perf/=5,squads/=27,ligas/=27"}
     if not a.sin_ligas:
         run([AUX / "tmapi/ampliar_ligas.py", "--ligas", LIGAS, "--escribir"], env=env)
@@ -55,6 +63,9 @@ def main():
     if not a.sin_valor:
         run([AUX / "tmapi/descargar_valor_lesiones.py", "--refrescar", "6"])
     run([AUX / "media/descargar_media.py"])
+    run([AUX / "tmapi/descargar_carrera.py", "--refrescar", "6"])
+    run([AUX / "equipos/descargar_equipos.py", "--refrescar", "1"])
+    run([AUX / "portada/descargar_portada.py"])
     run(["run_all.py", "../../../Temporada 2025-26.xlsx", "../../../Temporada 2026-27.xlsx", "../../Valoracion_FC_v1.2.xlsx",
          "--partidos", "../../partidos_TM.csv", "--avanzadas", "../../avanzadas.csv"], cwd=VAL)
     print(f"\nListo. Registro: {LOG}")

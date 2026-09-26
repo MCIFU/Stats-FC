@@ -262,7 +262,7 @@ def add_roles(base, cfg):
 
 
 # ---------------------------------------------------------------- capa 8: Current Ability
-def add_ca(base, cfg):
+def add_ca(base, cfg, prev=None):
     CA = cfg["model"]["current_ability"]
     CF = cfg["model"]["confidence"]
     groups = cfg["positions"]["groups"]
@@ -302,12 +302,38 @@ def add_ca(base, cfg):
     base["CA_CONTEXT"] = (base.league_base + CA["context_slope"] * (base.score_league - 50)).clip(0, 100)
     base["CA_RAW"] = (CA["raw_scale_center"] + CA["raw_scale_slope"] * (base.score_global - 50)).clip(0, 100)
     blend = CA["w_context"] * base.CA_CONTEXT + CA["w_raw"] * base.CA_RAW
-    base["CA_FINAL"] = (base.sample_conf * blend + (1 - base.sample_conf) * base.league_base).clip(0, 100)
+    # v1.3: con pocos minutos la nota se acerca a SU nivel de la temporada anterior (si lo hay), no a la media de su liga.
+    # Así 26-27 con 6 jornadas no se hunde: con 540' pesa ~60 % lo del año pasado y ~40 % lo de este.
+    prior = base.league_base
+    if prev is not None and "CA_FINAL" in prev:
+        pv = prev.drop_duplicates("player_id").set_index("player_id")
+        ca_prev = base.player_id.map(pv.CA_FINAL)
+        min_prev = base.player_id.map(pv.LIGA_Min).fillna(0)
+        # un año con pocos minutos es un prior más débil: mezcla con la media de la liga según esos minutos
+        w_prev = (1 - np.exp(-min_prev / S["confidence_k_minutes"])).where(ca_prev.notna(), 0)
+        prior = (w_prev * ca_prev.fillna(0) + (1 - w_prev) * base.league_base).where(base.league_base.notna(), ca_prev)
+        base["CA_PRIOR"] = prior.where(ca_prev.notna())
+        base["prior_weight"] = w_prev
+    base["CA_FINAL"] = (base.sample_conf * blend + (1 - base.sample_conf) * prior).clip(0, 100)
     base["CA_CONFIDENCE"] = 100 * (CF["w_sample"] * base.sample_conf + CF["w_coverage"] * base.pos_coverage.fillna(0)
                                    + CF["w_competition_data"] * base.competition_data_quality.fillna(0.5)
                                    * np.where(base.league_pool_small, 0.5, 1.0))
+    # confianza: los minutos del año anterior cuentan a medias
+    if "prior_weight" in base:
+        eff = 1 - np.exp(-(base.LIGA_Min.fillna(0) + 0.5 * base.player_id.map(prev.drop_duplicates("player_id").set_index("player_id").LIGA_Min).fillna(0))
+                          / S["confidence_k_minutes"])
+        base["CA_CONFIDENCE"] = 100 * (CF["w_sample"] * eff + CF["w_coverage"] * base.pos_coverage.fillna(0)
+                                       + CF["w_competition_data"] * base.competition_data_quality.fillna(0.5) * np.where(base.league_pool_small, 0.5, 1.0))
+    keep_prior = base.get("CA_PRIOR", pd.Series(np.nan, index=base.index)).notna() & base.context_score.notna() & (base.LIGA_Min.fillna(0) > 0)
     for c in ["CA_CONTEXT", "CA_RAW", "CA_FINAL", "CA_CONFIDENCE"]:
-        base.loc[~rated | base.context_score.isna(), c] = np.nan
+        drop = ~rated | base.context_score.isna()
+        if c in ("CA_FINAL", "CA_CONFIDENCE"):
+            drop &= ~keep_prior
+        base.loc[drop, c] = np.nan
+    # sin minutos suficientes para puntuar este año pero con temporada anterior: nota = la del año pasado (+ lo poco de este)
+    if "CA_PRIOR" in base:
+        nr = keep_prior & ~rated
+        base.loc[nr, "CA_FINAL"] = base.loc[nr, "CA_PRIOR"]
     return base
 
 
@@ -412,7 +438,7 @@ def match_ratings(m: pd.DataFrame, cfg):
     return out.fillna(model)
 
 
-def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.DataFrame = None):
+def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.DataFrame = None, prev_elo=None, prev_mm=None):
     """matches: player_id, date, block, club, opponent, [club_key, opp_key, club_strength, opp_strength], home, gf, ga,
     Min, G, A, [GC], [sofa_rating]. team_games: partidos para el Elo de equipos (por defecto los mismos; se pueden
     pasar los de la temporada anterior para arrastrar el Elo).
@@ -450,6 +476,9 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
         p = r.player_id
         if p not in elo:
             elo[p] = _elo_init(comp.get(p, np.nan), E)
+            # v1.3: el Elo sigue de una temporada a otra (con una ligera vuelta a la media de su liga)
+            if prev_elo is not None and p in prev_elo and pd.notna(prev_elo[p]):
+                elo[p] += E.get("season_carry", 0.85) * (prev_elo[p] - elo[p])
         opp = before.get((r.date, r.club_key, r.opp_key), (None, team_elo.get(r.opp_key)))[1]
         if opp is None:
             opp = _elo_init(getattr(r, "opp_strength", np.nan), E)
@@ -467,8 +496,13 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
     mm = pd.DataFrame(rows)
     sc = E["scale_to_100"]
     out = []
+    # v1.3: FORMA y REGULARIDAD miran también el final de la temporada anterior (últimos 10 partidos reales)
+    prev_g = {}
+    if prev_mm is not None and len(prev_mm):
+        prev_g = {p: x[["date", "Min", "match_rating", "good"]] for p, x in prev_mm.groupby("player_id")}
     for p, g in mm.groupby("player_id"):
         g = g.sort_values("date")
+        g_hist = pd.concat([prev_g[p], g[["date", "Min", "match_rating", "good"]]]).sort_values("date") if p in prev_g else g
         w_min = g.Min.clip(lower=1)
         opp_avg = np.average(g.opp_elo, weights=w_min)
         d = {"player_id": p, "ELO_POINTS": elo[p], "ELO": np.clip(sc["center_value"] + (elo[p] - sc["center"]) / sc["points_per_unit"], 0, 100),
@@ -476,13 +510,16 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
              "opponent_strength_raw": float(np.average(g.opp_strength_match, weights=w_min)),
              "last_match": g.date.max()}
         hl = F["decay_half_life_matches"]
-        g_form = g[g.date >= g.date.max() - pd.Timedelta(days=F.get("days_window_365", 365))]
+        g_form = g_hist[g_hist.date >= g_hist.date.max() - pd.Timedelta(days=F.get("days_window_365", 365))]
         for n in F["windows"]:
             t = g_form.tail(n)
             w = 0.5 ** (np.arange(len(t))[::-1] / hl) * (t.Min.clip(lower=1) / 90)
             d[f"FORM_{n}"] = np.average(t.match_rating, weights=w) if len(t) >= min(n, F.get("min_matches", 3)) else np.nan
-        if len(g) >= Cn["min_matches"]:
-            d["good_share"] = float(np.average(g.good, weights=w_min))
+        # regularidad: partidos de esta temporada + los de la anterior hasta completar 20
+        g_c = g_hist.tail(max(len(g), 20))
+        d["n_cons"] = len(g_c)
+        if len(g_c) >= Cn["min_matches"]:
+            d["good_share"] = float(np.average(g_c.good, weights=g_c.Min.clip(lower=1)))
         d["pos_group"] = g.pos_group.iloc[0]
         out.append(d)
     res = pd.DataFrame(out)
@@ -490,11 +527,11 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
     # encogido hacia 50 con pocos partidos. Con la desviación típica salían "regulares" los que nunca destacan.
     if "good_share" not in res:
         res["good_share"] = np.nan
-    shrink = res.n_matches / (res.n_matches + Cn["min_matches"])
+    shrink = res.n_cons / (res.n_cons + Cn["min_matches"])
     # centrado por posición (los empates en la nota hacen que la mediana no parta al 50 % en todas): mediana de la posición = 50
     centered = (0.5 + res.good_share - res.groupby("pos_group").good_share.transform("median")).clip(0, 1)
     res["CONSISTENCY"] = (100 * centered * shrink + 50 * (1 - shrink)).where(res.good_share.notna())
-    res = res.drop(columns="pos_group")
+    res = res.drop(columns=["pos_group", "n_cons"])
     # OPPONENT_STRENGTH: fuerza de la liga del rival ± su nivel dentro de esa liga (Elo/10), media por minutos,
     # encogida hacia la fuerza de la liga del jugador con pocos partidos: n/(n+k)
     k = E.get("opponent_shrink_matches", 10)
@@ -560,11 +597,12 @@ def correlations(base, cfg):
     return pd.DataFrame(out)
 
 
-def run(raw: pd.DataFrame, cfg, matches=None, prev=None, team_games=None):
+def run(raw: pd.DataFrame, cfg, matches=None, prev=None, team_games=None, prev_mm=None):
     base = build_base(raw, cfg)
     comps = cfg.get("competitions", {}).get("leagues", {})
     base["competition_strength"] = base.league.map(lambda l: comps.get(l, {}).get("strength", np.nan))
-    per_player, mm = match_layer(matches, base, cfg, team_games)
+    prev_elo = prev.drop_duplicates("player_id").set_index("player_id").ELO_POINTS if prev is not None and "ELO_POINTS" in prev else None
+    per_player, mm = match_layer(matches, base, cfg, team_games, prev_elo=prev_elo, prev_mm=prev_mm)
     if per_player is not None:
         base = base.merge(per_player, on="player_id", how="left")
         base["FORM"] = base.get("FORM_10")
@@ -572,7 +610,7 @@ def run(raw: pd.DataFrame, cfg, matches=None, prev=None, team_games=None):
     base = add_percentiles(base, cfg)
     base = add_attributes(base, cfg)
     base = add_roles(base, cfg)
-    base = add_ca(base, cfg)
+    base = add_ca(base, cfg, prev)
     base = add_relperf_pa(base, cfg, prev)
     base = add_scout(base, cfg)
     base["model_version"] = cfg["model"]["model_version"]

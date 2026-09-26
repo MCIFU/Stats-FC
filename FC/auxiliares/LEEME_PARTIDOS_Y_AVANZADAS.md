@@ -108,3 +108,23 @@ python auxiliares/media/descargar_media.py     # ≈2 min
 - **Contrato, historial de valor y lesiones**: `python auxiliares/tmapi/descargar_valor_lesiones.py` (tmapi `market-value-history` e `injury`).
 - **Actualización semanal**: `python actualizar_semanal.py` (desde FC). Solo escribe en los Excel las filas que crecen
   (partidos nuevos); las que bajan quedan en `auxiliares/tmapi/diferencias_TM.csv` para revisarlas a mano.
+
+## 6. Motor v1.3 (26/09/2026): temporadas coherentes
+Antes, 2026-27 (6 jornadas) salía mucho peor que 2025-26 para el mismo jugador por dos motivos:
+- El ELO de cada jugador volvía a empezar en cada temporada desde el nivel de su liga. Ahora continúa
+  (`elo.season_carry` = 0,85: conserva el 85 % de su diferencia respecto al inicio de su liga).
+- Con pocos minutos la nota se encogía hacia la media de su liga. Ahora se encoge hacia **su nivel de la temporada anterior**
+  (mezclado con la media de la liga según los minutos que jugó ese año). FORMA y REGULARIDAD usan también el final de la temporada anterior
+  (últimos 10 partidos reales y hasta 20 partidos para la regularidad). Quien aún no llega al mínimo de minutos conserva su nota del año anterior.
+Resultado: correlación entre las notas de las dos temporadas 0,70 → 0,92; los titulares de 25-26 bajaban de media 2,05 puntos
+en 26-27 y ahora 0,57; jugadores con nota en 26-27: 6.978 → 9.504.
+
+## 7. Trayectorias, equipos y portada
+```
+python auxiliares/tmapi/descargar_carrera.py        # performance-season + traspasos de cada jugador (TM), ~15 min
+python auxiliares/equipos/descargar_equipos.py      # FotMob (clasificación, once, racha, calendario, títulos, historial,
+                                                    #   estilo de juego), Wikidata (fundación, apodos), Wikipedia (historia),
+                                                    #   Google News (noticias). ~10 min
+python auxiliares/portada/descargar_portada.py      # partidos ±7 días y noticias (AS, Marca, Mundo Deportivo, BBC). 1 min
+python actualizar_semanal.py --diario               # solo portada + equipos, para lanzarlo cada día
+```
