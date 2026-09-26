@@ -6,6 +6,7 @@ Solo valores (salvo la FICHA, que busca en JUGADORES): se abre rápido y pesa po
 import numpy as np
 import pandas as pd
 from openpyxl import Workbook
+from openpyxl.chart import RadarChart, Reference
 from openpyxl.formatting.rule import ColorScaleRule, DataBarRule, FormulaRule
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter as L
@@ -16,6 +17,14 @@ GRP = {"GK": ("Porteros", "7C3AED"), "CB": ("Centrales", "2563EB"), "FB": ("Late
        "MID": ("Mediocentros", "16A34A"), "AMW": ("Mediapuntas y extremos", "EA580C"), "ST": ("Delanteros", "DC2626")}
 MEDAL = {1: "FDE68A", 2: "E5E7EB", 3: "FED7AA"}
 THIN = Side(style="thin", color=LINE)
+# ejes del radar = media de los atributos disponibles (percentiles 0-100 frente a su posición, todas las ligas)
+RADAR = {
+    "campo": [("Gol", ["GOAL_OUTPUT", "SHOT_QUALITY", "FINISHING"]), ("Creación", ["ASSIST_OUTPUT", "CHANCE_CREATION"]),
+              ("Pase", ["PASSING", "LONG_PASSING"]), ("Regate", ["DRIBBLING"]),
+              ("Defensa", ["TACKLING", "INTERCEPTING", "BOX_DEFENDING", "PRESSING"]), ("Peso en el equipo", ["USAGE"])],
+    "GK": [("Paradas", ["SHOT_STOPPING"]), ("Resultados", ["GK_RESULTS"]), ("Distribución", ["DISTRIBUTION"]),
+           ("Peso en el equipo", ["USAGE"]), ("Forma", ["@FORM"]), ("Regularidad", ["@CONSISTENCY"])],
+}
 
 
 def f(size=10, bold=False, color=INK, italic=False):
@@ -93,13 +102,33 @@ def preparar(base, cfg):
     return b
 
 
+def radar(b):
+    out = np.full((len(b), 6), np.nan)
+    gk = (b.pos_group == "GK").to_numpy()
+    for key, axes in RADAR.items():
+        mask = gk if key == "GK" else ~gk
+        for k, (_, attrs) in enumerate(axes):
+            cols = []
+            for a in attrs:
+                if a.startswith("@"):  # percentil dentro de los porteros
+                    cols.append(b[a[1:]].where(b.pos_group == "GK").groupby(b.season).rank(pct=True) * 100)
+                elif f"attrG_{a}" in b:
+                    cols.append(b[f"attrG_{a}"])
+            if cols:
+                out[mask, k] = pd.concat(cols, axis=1).mean(axis=1).to_numpy()[mask]
+    return out
+
+
 def build(base, cfg, out_path):
     b = preparar(base, cfg)
+    rad = radar(b)
+    for k in range(6):
+        b[f"R{k + 1}"] = np.round(rad[:, k])
     wb = Workbook()
     wb._named_styles["Normal"].font = Font(name=FONT, size=10)
     wl = wb.active
     wl.title = "LEEME"
-    wf, wt, wp, wg, wj = (wb.create_sheet(n) for n in ("FICHA", "TOP", "PROMESAS", "LIGAS", "JUGADORES"))
+    wf, wc, wt, wp, wg, wj = (wb.create_sheet(n) for n in ("FICHA", "COMPARAR", "TOP", "PROMESAS", "LIGAS", "JUGADORES"))
 
     # ---------------- JUGADORES (tabla corta, base de la ficha)
     cols = [("KEY", "KEY", None), ("Jugador", "name", None), ("Temp.", "season", None), ("Edad", "age", "0"), ("POS", "pos", None),
@@ -107,8 +136,9 @@ def build(base, cfg, out_path):
             ("A", "TOT_A", "0"), ("NIVEL (CA)", "CA_FINAL", "0.0"), ("POTENCIAL (PA)", "PA_ESTIMATE", "0.0"), ("ELO", "ELO", "0.0"),
             ("FORMA", "FORM", "0.0"), ("REGULARIDAD", "CONSISTENCY", "0"), ("NIVEL RIVALES", "opponent_strength", "0"),
             ("INTERÉS SCOUT", "SCOUT_SCORE", "0.0"), ("Rol", "Rol", None), ("Fiabilidad", "CA_CONFIDENCE", "0\"%\"")]
+    cols += [(f"RADAR {k}", f"R{k}", "0") for k in range(1, 7)]  # ejes del radar (ocultos; los usan FICHA y COMPARAR)
     j = b.sort_values(["season", "CA_FINAL"], ascending=[False, False], na_position="last")
-    title(wj, "JUGADORES — resumen de la valoración", "Una fila por jugador y temporada. Filtra por liga, posición, edad… Todos los detalles y cálculos: Valoracion_FC_v1.2.xlsx", len(cols))
+    title(wj, "JUGADORES — resumen de la valoración", "Una fila por jugador y temporada. Filtra por liga, posición, edad… Todos los detalles y cálculos: Valoracion_FC_v1.2.xlsx", len(cols) - 6)
     header(wj, 3, [c[0] for c in cols])
     fm = [c[2] for c in cols]
     for i, row in enumerate(j[[c[1] for c in cols]].itertuples(index=False), 4):
@@ -124,6 +154,8 @@ def build(base, cfg, out_path):
     wj.conditional_formatting.add(f"A4:{L(len(cols))}{last}", FormulaRule(formula=["MOD(ROW(),2)=0"], fill=fill("F8FAFC")))
     for k, w in enumerate([2, 24, 8, 6, 6, 20, 18, 8, 6, 5, 5, 13, 13, 8, 8, 11, 10, 10, 24, 10], 1):
         wj.column_dimensions[L(k)].width = w
+    for k in range(21, 27):
+        wj.column_dimensions[L(k)].hidden = True
     wj.column_dimensions["A"].hidden = True
     wj.freeze_panes, wj.auto_filter.ref = "C4", f"A3:{L(len(cols))}{last}"
     wj.sheet_properties.tabColor = "64748B"
@@ -214,7 +246,7 @@ def build(base, cfg, out_path):
 
     # ---------------- FICHA (busca en JUGADORES)
     title(wf, "FICHA DEL JUGADOR", "Elige un jugador en la celda amarilla (lista desplegable o escribe 'Nombre | Club | Temporada').", 8)
-    ref = j[(j.season == "2025-26") & (j.LIGA_Min.fillna(0) >= 1500)].dropna(subset=["CA_FINAL"])
+    ref = j[(j.season == "2025-26") & (j.LIGA_Min.fillna(0) >= 1500) & (j.pos_group != "GK")].dropna(subset=["CA_FINAL"])
     top = ref.sort_values("CA_FINAL", ascending=False).iloc[0].KEY if len(ref) else j.iloc[0].KEY
     wf["B4"] = top
     wf["B4"].font, wf["B4"].fill = f(13, True, "1D4ED8"), fill("FEF3C7")
@@ -259,13 +291,122 @@ def build(base, cfg, out_path):
         wf.column_dimensions[L(k)].width = w
     wf.sheet_properties.tabColor = "1D4ED8"
 
+    # radar de la FICHA: datos en J7:L12 (etiqueta según portero/campo, valor del jugador, media = 50)
+    radar_col = {k: colx[f"RADAR {k}"] for k in range(1, 7)}
+
+    def radar_block(ws, top, col0, idx_cells, pos_cells):
+        """Escribe 6 filas (etiqueta, valor de cada jugador, media 50) a partir de (top, col0); devuelve las referencias."""
+        for k in range(6):
+            r = top + k
+            fl, gk = RADAR["campo"][k][0], RADAR["GK"][k][0]
+            ws.cell(r, col0, f'=IF({pos_cells[0]}="POR","{gk}","{fl}")')
+            for n, ic in enumerate(idx_cells, 1):
+                ws.cell(r, col0 + n, f'=IFERROR(N(INDEX(JUGADORES!${radar_col[k + 1]}$4:${radar_col[k + 1]}${last},{ic})),0)')
+            ws.cell(r, col0 + len(idx_cells) + 1, 50)
+            for n in range(len(idx_cells) + 2):
+                ws.cell(r, col0 + n).font = f(8, color="FFFFFF")
+
+    def radar_chart(ws, top, col0, names, colors, anchor, w=15.5, h=10.5):
+        ch = RadarChart()
+        ch.type, ch.style, ch.width, ch.height = "marker", 2, w, h
+        ch.y_axis.scaling.min, ch.y_axis.scaling.max, ch.y_axis.majorUnit = 0, 100, 25
+        ch.y_axis.delete = False
+        ch.y_axis.majorGridlines = None
+        for n, (nm, colr) in enumerate(zip(names, colors), 1):
+            ref = Reference(ws, min_col=col0 + n, min_row=top, max_row=top + 5)
+            ch.add_data(ref, titles_from_data=False)
+            se = ch.series[-1]
+            from openpyxl.chart.series import SeriesLabel
+            from openpyxl.chart.data_source import StrRef
+            se.tx = SeriesLabel(strRef=StrRef(nm)) if nm.startswith("'") else SeriesLabel(v=nm)
+            se.graphicalProperties.line.solidFill = colr
+            se.graphicalProperties.line.width = 28575 if colr != "94A3B8" else 12700
+            if colr == "94A3B8":
+                se.graphicalProperties.line.dashStyle = "dash"
+                se.marker.symbol = "none"
+            else:
+                se.marker.symbol, se.marker.size = "circle", 6
+                se.marker.graphicalProperties.solidFill = colr
+                se.marker.graphicalProperties.line.solidFill = colr
+        ch.set_categories(Reference(ws, min_col=col0, min_row=top, max_row=top + 5))
+        ch.legend.position = "b"
+        ws.add_chart(ch, anchor)
+
+    wf["A17"] = "ESTILO DE JUEGO"
+    wf["A17"].font, wf["A17"].fill = f(10, True, "FFFFFF"), fill(NAVY)
+    for c in ("B17", "C17", "D17", "E17", "F17"):
+        wf[c].fill = fill(NAVY)
+    wf["A18"] = "Percentil (0-100) frente a jugadores de su posición en todas las ligas, ajustado por nivel de liga. Línea gris = 50 (normal). Sin datos avanzados = 0."
+    wf["A18"].font = f(9, color=MUTED, italic=True)
+    radar_block(wf, 7, 10, ["$H$4"], ["$B$11"])
+    radar_chart(wf, 7, 10, ["'FICHA'!$B$4", "Media (50)"], ["2563EB", "94A3B8"], "A19")
+
+    # ---------------- COMPARAR (dos jugadores lado a lado)
+    GA, GB = "16A34A", "2563EB"
+    title(wc, "COMPARAR JUGADORES", "Elige dos jugadores en las celdas de color (lista o 'Nombre | Club | Temporada'). En negrita y con color, quien gana cada fila.", 5)
+    ref_st = j[(j.season == "2025-26") & (j.LIGA_Min.fillna(0) >= 1500) & (j.pos_group == "ST")].dropna(subset=["CA_FINAL"]).sort_values("CA_FINAL", ascending=False)
+    ka, kb = (ref_st.KEY.iloc[0], ref_st.KEY.iloc[1]) if len(ref_st) > 1 else (j.KEY.iloc[0], j.KEY.iloc[1])
+    wc["B4"], wc["D4"], wc["C4"] = ka, kb, "vs"
+    for c, colr, tint in (("B4", GA, "DCFCE7"), ("D4", GB, "DBEAFE")):
+        wc[c].font, wc[c].fill, wc[c].alignment = f(10, True, colr), fill(tint), C
+        wc[c].border = Border(bottom=Side(style="medium", color=colr))
+    wc["C4"].font, wc["C4"].alignment = f(12, True, MUTED), C
+    dv2 = DataValidation(type="list", formula1=f"=JUGADORES!$A$4:$A${last}", allow_blank=False)
+    wc.add_data_validation(dv2)
+    dv2.add("B4")
+    dv2.add("D4")
+    wc["F4"] = f'=IFERROR(MATCH(B4,JUGADORES!$A$4:$A${last},0),"")'
+    wc["G4"] = f'=IFERROR(MATCH(D4,JUGADORES!$A$4:$A${last},0),"")'
+    for c in ("F4", "G4"):
+        wc[c].font = f(8, color="FFFFFF")
+    wc.row_dimensions[4].height = 28
+
+    def lkc(h, ic):
+        x = f'INDEX(JUGADORES!${colx[h]}$4:${colx[h]}${last},{ic})'
+        return f'=IFERROR(IF({x}="","—",{x}),"—")'
+    cmp_rows = [("Jugador", None), ("Club", None), ("Liga", None), ("Temp.", None), ("Edad", "0"), ("POS", None), ("Rol", None),
+                ("Min", "#,##0"), ("PJ", "0"), ("G", "0"), ("A", "0"), ("NIVEL (CA)", "0.0"), ("POTENCIAL (PA)", "0.0"), ("ELO", "0.0"),
+                ("FORMA", "0.0"), ("REGULARIDAD", "0"), ("NIVEL RIVALES", "0"), ("INTERÉS SCOUT", "0.0"), ("Fiabilidad", "0\"%\"")]
+    r0 = 6
+    for n, (h, fm) in enumerate(cmp_rows):
+        r = r0 + n
+        lab = wc.cell(r, 3, "" if h == "Jugador" else h.title() if h in ("Club", "Liga", "Rol") else h)
+        lab.font, lab.alignment = f(9, True, MUTED), C
+        for c, ic, colr in ((2, "$F$4", GA), (4, "$G$4", GB)):
+            cc = wc.cell(r, c, lkc(h, ic))
+            cc.alignment, cc.border = C, Border(bottom=THIN)
+            cc.font = f(14, True, colr) if h == "Jugador" else f(11)
+            if fm:
+                cc.number_format = fm
+        lab.border = Border(bottom=THIN)
+        wc.row_dimensions[r].height = 30 if h == "Jugador" else 21
+    n0, n1 = r0 + 7, r0 + len(cmp_rows) - 1  # filas numéricas (Min … Fiabilidad)
+    wc.conditional_formatting.add(f"B{n0}:B{n1}", FormulaRule(formula=[f"AND(ISNUMBER(B{n0}),ISNUMBER(D{n0}),B{n0}>D{n0})"], fill=fill("DCFCE7"), font=Font(bold=True, color="166534")))
+    wc.conditional_formatting.add(f"D{n0}:D{n1}", FormulaRule(formula=[f"AND(ISNUMBER(B{n0}),ISNUMBER(D{n0}),D{n0}>B{n0})"], fill=fill("DBEAFE"), font=Font(bold=True, color="1E40AF")))
+    for k, w in enumerate([3, 42, 18, 42, 3], 1):
+        wc.column_dimensions[L(k)].width = w
+    wc.column_dimensions["F"].width = wc.column_dimensions["G"].width = 3
+    rr = n1 + 2
+    wc.cell(rr, 2, "ESTILO DE JUEGO").font = f(10, True, "FFFFFF")
+    for c in (2, 3, 4):
+        wc.cell(rr, c).fill = fill(NAVY)
+    radar_block(wc, 7, 10, ["$F$4", "$G$4"], [f"$B${r0 + 5}"])
+    radar_chart(wc, 7, 10, ["'COMPARAR'!$B$6", "'COMPARAR'!$D$6", "Media (50)"], [GA, GB, "94A3B8"], f"B{rr + 1}", w=19, h=11)
+    wc.cell(rr + 23, 2, "Si uno es portero y el otro de campo, los ejes son los del primero (verde).").font = f(9, color=MUTED, italic=True)
+    wc.sheet_properties.tabColor = GA
+    for ws, area in ((wf, "A1:G42"), (wc, f"A1:E{rr + 24}")):  # imprimir en una página
+        ws.print_area = area
+        ws.sheet_properties.pageSetUpPr.fitToPage = True
+        ws.page_setup.fitToWidth, ws.page_setup.fitToHeight = 1, 1
+
     # ---------------- LEEME
     wl.column_dimensions["A"].width = 120
     lines = [("CÓMO LEER ESTE RESUMEN", True),
              ("Es la versión corta de la valoración: solo las notas finales, sin cálculos intermedios. Todo sale del Excel extenso (Valoracion_FC_v1.2.xlsx).", False),
              ("", False),
              ("HOJAS", True),
-             ("FICHA — elige un jugador y ves sus datos y notas con barras.", False),
+             ("FICHA — elige un jugador y ves sus datos, sus notas con barras y su radar de estilo de juego.", False),
+             ("COMPARAR — dos jugadores lado a lado: gana cada fila quien sale en negrita y color, más el radar de los dos.", False),
              ("TOP — los 15 mejores por posición en 25-26 (temporada completa) y 26-27 (en curso).", False),
              ("PROMESAS — los 150 jugadores de 21 años o menos con más interés para ojear.", False),
              ("LIGAS — nivel de cada liga, su mejor jugador y su máximo goleador.", False),
@@ -292,5 +433,6 @@ def build(base, cfg, out_path):
     wl.sheet_view.showGridLines = False
     wl.sheet_properties.tabColor = NAVY
     wb.active = 1
+    wb.calculation.fullCalcOnLoad = True  # Excel calcula la FICHA y COMPARAR al abrir
     wb.save(out_path)
     return out_path

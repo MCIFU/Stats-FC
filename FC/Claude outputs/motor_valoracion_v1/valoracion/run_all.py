@@ -86,6 +86,8 @@ def main(f1, f2, out, partidos=None, notas=None, avanzadas=None, clubmap=None):
     b = build_excel.build(base, cfg, out, raw=src, sims=sims, corr=corr, matches=mm, history=h, source_note=note)
     import build_resumen  # versión corta y visual, junto al extenso
     build_resumen.build(base, cfg, str(Path(out).with_name("Resumen_FC.xlsx")))
+    import build_web  # panel web: FC/Panel_FC/index.html + datos.js
+    build_web.build(base, cfg, HERE.parents[2] / "Panel_FC", matches=mm, sims=sims)
     return base, b
 
 
