@@ -402,6 +402,10 @@ img.kit1{width:64px;height:auto;filter:drop-shadow(0 3px 6px rgba(0,0,0,.2))}
 .kpi-st img{display:block;width:calc(100% + 24px);margin:0 -12px 8px;height:96px;object-fit:cover}
 .tcard.has-st{flex-wrap:wrap;padding-top:0;overflow:hidden}
 .tcard img.st-ph{flex:1 0 100%;width:calc(100% + 24px);margin:0 -12px 2px;height:120px;object-fit:cover}
+.kitr{position:relative;display:inline-block;flex:none}
+.kitr>span{position:absolute;display:block;overflow:hidden}
+.kitr>span img{position:absolute;inset:0;width:100%;height:100%}
+.kit-f{background:#fff!important}.kit-f figcaption{color:#34463C!important}
 </style>
 </head>
 <body>
@@ -960,7 +964,7 @@ function openTeam(club){go(hrefT(club));}
     const fx2=f=>({id:f[7],date:f[0]?f[0]+"T12:00:00":null,home:f[2],hid:f[8],away:f[3],aid:f[9],hs:f[4]?+f[4].split(/\s*-\s*/)[0]:null,as:f[4]?+f[4].split(/\s*-\s*/)[1]:null,fin:!!f[4],comp:f[1]});
     const ef=efemerides(t,sq);
     let h=`<div class="card"><div class="club-h">${crest?imgOr(tmCrest(crest)):""}<div style="min-width:0;flex:1"><h2>${esc(club)}</h2>${t&&t.name&&norm(t.name)!==norm(club)?`<small class="muted">${esc(t.name)}</small>`:""}
-      <div class="muted">${t&&t.lid&&LG[t.lid]?aL(t.lid,esc(t.league||"")):esc(t&&t.league||[...new Set(sq.map(p=>p.leagueN))].join(" · "))}${t&&t.nick&&t.nick.length?` · «${esc(t.nick.join("», «"))}»`:""}</div></div>${KITS[crest]&&KITS[crest].length?`<a class="kitbox" href="#kits-card" onclick="event.preventDefault();document.getElementById('kits-card').scrollIntoView({behavior:'smooth'})"><img class="kit1" src="${KITS[crest][0][1]}" alt="Primera equipación"><small class="muted">${KITS[crest].filter(k=>k[2]==="actual").length} equipaciones actuales</small></a>`:t&&t.kit&&t.kit[0]?`<div class="kitbox">${kitSVG(t.kit)}<small class="muted">Colores del club</small></div>`:""}</div>
+      <div class="muted">${t&&t.lid&&LG[t.lid]?aL(t.lid,esc(t.league||"")):esc(t&&t.league||[...new Set(sq.map(p=>p.leagueN))].join(" · "))}${t&&t.nick&&t.nick.length?` · «${esc(t.nick.join("», «"))}»`:""}</div></div>${KITS[crest]&&KITS[crest].length?`<a class="kitbox" href="#kits-card" onclick="event.preventDefault();document.getElementById('kits-card').scrollIntoView({behavior:'smooth'})">${kitHTML(KITS[crest][0][2],0.6)}<small class="muted">${KITS[crest].filter(k=>k[1]==="actual").length} actuales · ${KITS[crest].filter(k=>k[1]!=="actual").length} históricas</small></a>`:t&&t.kit&&t.kit[0]?`<div class="kitbox">${kitSVG(t.kit)}<small class="muted">Colores del club</small></div>`:""}</div>
       <div class="kpis" style="margin-top:14px">${t&&t.founded?`<div><span class="lbl">Fundación</span><b>${t.founded.slice(0,4)}</b></div>`:""}${t&&t.venue&&t.venue[0]?`<div class="${STAD[crest]?"kpi-st":""}">${STAD[crest]?`<img src="${STAD[crest][1]}" alt="${esc(t.venue[0])}" loading="lazy">`:""}<span class="lbl">Estadio</span><b style="font-size:18px">${esc(t.venue[0])}</b><small class="muted">${esc(t.venue[1]||"")}${t.venue[2]?" · "+fi(t.venue[2])+" plazas":""}</small></div>`:""}${t&&t.coach&&t.coach[0]?`<div><span class="lbl">Entrenador</span><b style="font-size:18px">${esc(t.coach[0])}</b><small class="muted">${esc(t.coach[2]||"")}${t.coach[1]?" · "+t.coach[1]+" años":""}</small></div>`:""}
       <div><span class="lbl">Valor de la plantilla</span><b>${money(valTot)}</b></div><div><span class="lbl">Edad media</span><b>${sq.length?fx(sq.reduce((s,p)=>s+(p.age||0),0)/sq.length):"—"}</b></div></div>
       ${t&&t.form&&t.form.length?`<div class="row" style="margin-top:12px;gap:6px"><span class="lbl">Racha</span>${t.form.map(f=>`<span class="res ${f[0]}" data-tip="${esc(f[2])} ${esc(f[1])} ${esc(f[3])} · ${esc(f[5]||"")} · ${fdl(f[4])}">${f[0]==="W"?"V":f[0]==="L"?"D":"E"}</span>`).join("")}</div>`:""}
@@ -985,8 +989,12 @@ function openTeam(club){go(hrefT(club));}
   window.drawClub=draw;})();
 
 /* ---------- equipaciones y estadios (Wikipedia / Wikidata, licencias libres de Commons) */
-function kitsCard(tm){const K=KITS[tm];if(!K||!K.length)return"";const A=K.filter(k=>k[2]==="actual"),H=K.filter(k=>k[2]!=="actual");
-  const one=(k,big)=>`<figure class="kit-f ${big?"big":""}"><img src="${k[1]}" alt="${esc(k[0])}" loading="lazy"><figcaption>${esc(k[0])}</figcaption></figure>`;
+const WM="https://upload.wikimedia.org/wikipedia/commons/";
+// silueta de cada pieza (manga izq., cuerpo, manga der., pantalón, medias): se ve aunque no carguen los dibujos
+const KCLIP=(x,y)=>y>=95?"polygon(30% 0,46% 0,46% 100%,30% 100%,30% 0,54% 0,70% 0,70% 100%,54% 100%,54% 0)":y>=59?"polygon(31% 0,69% 0,72% 100%,53% 100%,50% 25%,47% 100%,28% 100%)":x===0?"polygon(100% 4%,100% 62%,32% 74%,0 42%,52% 8%)":x>=69?"polygon(0 4%,48% 8%,100% 42%,68% 74%,0 62%)":"polygon(0 4%,26% 0,38% 7%,62% 7%,74% 0,100% 4%,100% 100%,0 100%)";
+function kitHTML(spec,scale=1){return `<span class="kitr" style="width:${100*scale}px;height:${135*scale}px">${spec.map(([x,y,w,h,col,imgs])=>`<span style="left:${x*scale}px;top:${y*scale}px;width:${w*scale}px;height:${h*scale}px;${col?`background:${col};`:""}clip-path:${KCLIP(x,y)}">${imgs.map(u=>`<img src="${/^https?:/.test(u)?u:WM+u}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`).join("")}</span>`).join("")}</span>`;}
+function kitsCard(tm){const K=KITS[tm];if(!K||!K.length)return"";const A=K.filter(k=>k[1]==="actual"),H=K.filter(k=>k[1]!=="actual");
+  const one=(k,big)=>`<figure class="kit-f ${big?"big":""}">${kitHTML(k[2],big?1:0.72)}<figcaption>${esc(k[0])}</figcaption></figure>`;
   return `<div class="card" id="kits-card" style="margin-top:16px"><h3>Equipaciones</h3>${A.length?`<div class="kit-g">${A.map(k=>one(k,true)).join("")}</div>`:""}
     ${H.length?`<details class="kit-h" ${A.length?"":"open"}><summary>Históricas (${H.length})</summary><div class="kit-g">${H.map(k=>one(k,false)).join("")}</div></details>`:""}
     <p class="muted" style="font-size:12px;margin:8px 0 0">Dibujos de las fichas de Wikipedia (temporada actual y evolución histórica); pueden faltar las especiales más recientes.</p></div>`;}

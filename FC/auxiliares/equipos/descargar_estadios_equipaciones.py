@@ -203,11 +203,25 @@ CAP_ES = {"home": "Primera", "away": "Segunda", "third": "Tercera", "fourth": "C
 def cap_es(c):
     c = re.sub(r"\s*(colours|colors|kit)\s*$", "", c, flags=re.I).strip()
     m = CUR.match(c)
-    return (CAP_ES[m.group(1).lower()] + c[m.end():]) if m else c
+    if not m:
+        return c
+    rest = c[m.end():]
+    for en, es in (("alternate", "alternativa"), ("alternative", "alternativa"), ("goalkeeper", "de portero"), ("anniversary", "aniversario"),
+                   ("european", "europea"), ("cup", "de copa"), ("special", "especial"), ("kit", "")):
+        rest = re.sub(rf"\b{en}\b", es, rest, flags=re.I)
+    return re.sub(r"\s+", " ", CAP_ES[m.group(1).lower()] + rest).strip()
+
+
+def short(u):
+    """URL de Commons → ruta corta (el panel le pone delante https://upload.wikimedia.org/wikipedia/commons/)."""
+    u = re.sub(r"\?.*$", "", u)
+    m = re.search(r"wikimedia\.org/wikipedia/commons/(.+)$", u)
+    return m.group(1) if m else u
 
 
 def kits_for(title, days):
-    """[[rótulo, png, 'actual'|'historia']]: primero la ficha y la temporada actual, luego las históricas del artículo."""
+    """[[rótulo, 'actual'|'historia', [[x, y, w, h, color, [dibujos]]...]]]: el navegador compone cada camiseta como
+    hace Wikipedia (color de fondo + dibujo + contorno), así no hay que descargar miles de piezas."""
     if not title:
         return []
     name = title.replace("_", " ")
@@ -217,20 +231,14 @@ def kits_for(title, days):
             [(c, p, "historia") for c, p in club if not CUR.match(c)]
     seen, out = set(), []
     for cap, pieces, kind in boxes:
-        sig = tuple((p[4], tuple(p[5])) for p in pieces)
+        sp = [[x, y, w, h, col or None, [short(u) for u in urls]] for x, y, w, h, col, urls in pieces]
+        sig = json.dumps([[p[4], p[5]] for p in sp])
         if sig in seen:
             continue
         seen.add(sig)
-        im = compose(pieces)
-        if im.getbbox() is None:
-            continue
-        im = im.crop(im.getbbox())
-        b = io.BytesIO()
-        im.save(b, "PNG", optimize=True)
-        n = sum(1 for x in out if x[2] == kind) + 1
-        out.append([cap_es(cap) if cap else ("Equipación " if kind == "actual" else "Histórica ") + str(n),
-                    "data:image/png;base64," + base64.b64encode(b.getvalue()).decode(), kind])
-    return out[:24]
+        n = sum(1 for x in out if x[1] == kind) + 1
+        out.append([cap_es(cap) if cap else ("Equipación " if kind == "actual" else "Histórica ") + str(n), kind, sp])
+    return out[:40]
 
 
 def main():
