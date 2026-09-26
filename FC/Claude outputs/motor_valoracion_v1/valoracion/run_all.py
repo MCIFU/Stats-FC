@@ -39,6 +39,12 @@ def main(f1, f2, out, partidos=None, notas=None, avanzadas=None, clubmap=None):
     cfg = engine.load_config()
     raw1, w1 = loader.read_season(f1, "2025-26")
     raw2, w2 = loader.read_season(f2, "2026-27")
+    if partidos:  # edad por fecha de nacimiento y posición principal de la ficha TM
+        import ficha_tm
+        meta = ficha_tm.load_meta()
+        raw1, r1 = ficha_tm.corrige(raw1, w1, partidos, "2025-26", meta)
+        raw2, r2 = ficha_tm.corrige(raw2, w2, partidos, "2026-27", meta)
+        print(r1); print(r2)
     adv_names = [m for m, d in cfg["metrics"]["metrics"].items() if d["availability"] == "advanced"]
     if avanzadas:
         raw1 = attach_advanced(raw1, loader.read_advanced(avanzadas, w1, "2025-26", adv_names))

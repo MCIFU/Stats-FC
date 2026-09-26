@@ -5,3 +5,4 @@ FC/auxiliares/tmapi/sin_id_tm.csv
 __pycache__/
 FC/auxiliares/equipos/cache/
 FC/auxiliares/ligas/cache/
+FC/auxiliares/equipos/cache_media/

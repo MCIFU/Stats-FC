@@ -1,5 +1,5 @@
 {
-  "model_version": "rating_model_v1.3",
+  "model_version": "rating_model_v1.4",
   "model_date": "2026-09-25",
   "notes": "Primera versión de prueba. Todos los valores son parámetros propios del modelo, no oficiales.",
   "rating_blocks": {
@@ -79,7 +79,15 @@
     "equalize_position_spread": true,
     "comment_raw": "CA_RAW_ESCALADO = center + slope*(score_global-50): misma escala que CA_CONTEXT pero sin contexto",
     "coverage_shrink_ref": 0.6,
-    "comment_coverage": "score = 50 + (score_bruto-50) × MIN(1, RAIZ(cobertura/0.6)). Con poca cobertura (p.ej. centrales con solo minutos) la nota se acerca a la media: no afirmamos lo que no medimos."
+    "comment_coverage": "score = 50 + (score_bruto-50) × MIN(1, RAIZ(cobertura/0.6)). Con poca cobertura (p.ej. centrales con solo minutos) la nota se acerca a la media: no afirmamos lo que no medimos.",
+    "composite": {
+      "perf": 0.45,
+      "elo": 0.25,
+      "value": 0.3,
+      "elo_shrink_matches": 8,
+      "stretch": 1.18,
+      "comment": "v1.4: CA_FINAL = mezcla por percentiles de rendimiento estadístico (CA_PERF, 45 %), ELO (25 %, encogido con pocos partidos) y valor de mercado ajustado por edad (30 %), devuelta a la escala de la nota y estirada ×1,18 alrededor de 50 (el mejor ~91)."
+    }
   },
   "confidence": {
     "w_sample": 0.55,
@@ -227,7 +235,11 @@
     "comment_team": "Elo de EQUIPOS: arranca en 1500 + 4*(fuerza de su liga-80); rivales sin liga conocida (copas, ligas fuera de tus Excel) = fuerza 65. K=20 × (ln(|dif. goles|+1)+1). Se arrastra de 25-26 a 26-27.",
     "comment_opponent": "OPPONENT_STRENGTH (0-100): cada rival vale fuerza de su liga + (su Elo - Elo medio de su liga)/10; media ponderada por minutos, encogida hacia la fuerza de la liga del jugador × n/(n+10). Misma escala que competition_strength.",
     "opponent_shrink_matches": 10,
-    "opponent_elo_per_point": 10
+    "opponent_elo_per_point": 10,
+    "result_margin": 1.5,
+    "provisional_boost": 1.0,
+    "provisional_matches": 10,
+    "comment_v14": "v1.4: resultado con margen (0.5+0.5·tanh(dif/1.5): 1-0 = 0.79, 3-0 = 0.98) y K doble en los primeros partidos de un jugador sin Elo previo (baja con exp(-n/10))."
   },
   "form": {
     "windows": [
@@ -275,6 +287,7 @@
       "CB": 0.25,
       "GK": 0.0
     },
-    "comment": "Nota de partido 0-100. Si hay nota SofaScore: 50 + 30*(nota-6.8). Si no: w_ataque*percentil((G+A)/90 en su posición) + (1-w_ataque)*100*exp(-goles encajados con él en el campo/1.4)."
+    "comment": "Nota de partido 0-100. Si hay nota SofaScore: 50 + 30*(nota-6.8). Si no: w_ataque*percentil((G+A)/90 en su posición) + (1-w_ataque)*100*exp(-goles encajados con él en el campo/1.4).",
+    "assist_weight": 0.7
   }
 }

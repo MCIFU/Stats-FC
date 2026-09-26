@@ -88,9 +88,10 @@ def build(base, cfg, out_dir, matches=None, sims=None):
              for bl in ("LIGA", "COPA", "CONT", "FIFA", "SEL")],
             [_num(x.PROJ_1), _num(x.PROJ_2), _num(x.PROJ_3), _num(x.PROJ_LO), _num(x.PROJ_HI)],
             fm_id(x.name, str(x.club)),
+            _num(getattr(x, "CA_PERF", None)),
         ])
     fields = ["name", "season", "age", "nat", "pos", "grp", "club", "league", "value", "ligaMin", "min", "pj", "g", "a", "ligaG", "ligaA",
-              "ca", "pa", "paLo", "paHi", "elo", "form", "cons", "opp", "scout", "conf", "rol", "radar", "lgStr", "selPJ", "contPJ", "other", "tm", "comps", "proj", "fm"]
+              "ca", "pa", "paLo", "paHi", "elo", "form", "cons", "opp", "scout", "conf", "rol", "radar", "lgStr", "selPJ", "contPJ", "other", "tm", "comps", "proj", "fm", "perf"]
 
     sim = {}
     if sims is not None and len(sims):
@@ -134,10 +135,24 @@ def build(base, cfg, out_dir, matches=None, sims=None):
     mp = mfile.parents[1] / "tmapi" / "cache" / "meta_players.json.gz"
     metap = json.loads(_gz.decompress(mp.read_bytes())) if mp.exists() else {}
 
+    # país TM (id) → código de nacionalidad de los Excel (el más frecuente entre quienes tienen esa nacionalidad)
+    import collections as _co
+    natc = _co.defaultdict(_co.Counter)
+    for x in b.itertuples(index=False):
+        k = tm.get((x.player_id, x.season))
+        nid = (((metap.get(k) or {}).get("nationalityDetails") or {}).get("nationalities") or {}).get("nationalityId") if k else None
+        if nid and isinstance(x.nat, str):
+            natc[nid][x.nat] += 1
+    code_of = {k: c.most_common(1)[0][0] for k, c in natc.items()}
+
     def ficha(k):
         m = metap.get(k) or {}
         at = m.get("attributes") or {}
-        return [(m.get("lifeDates") or {}).get("dateOfBirth"), at.get("height"), (at.get("preferredFoot") or {}).get("name")]
+        bp = m.get("birthPlaceDetails") or {}
+        return [(m.get("lifeDates") or {}).get("dateOfBirth"), at.get("height"), (at.get("preferredFoot") or {}).get("name"),
+                [bp.get("placeOfBirth") or None, bp.get("placeOfBirthAdditionalInfo") or None, code_of.get(bp.get("countryOfBirthId"))]
+                if bp.get("placeOfBirth") or bp.get("countryOfBirthId") else None,
+                (at.get("position") or {}).get("name")]
     extra = {k: [(vl_all.get(k) or {}).get("c"), comp_mv((vl_all.get(k) or {}).get("mv", [])), (vl_all.get(k) or {}).get("inj", [])] + ficha(k)
              for k in usados}
     meta["crest"] = [crest.get(c) for c in clubs]

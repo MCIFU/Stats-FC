@@ -334,6 +334,57 @@ def add_ca(base, cfg, prev=None):
     if "CA_PRIOR" in base:
         nr = keep_prior & ~rated
         base.loc[nr, "CA_FINAL"] = base.loc[nr, "CA_PRIOR"]
+    return composite_ca(base, cfg)
+
+
+def _qmap(pct, dist):
+    """percentil 0-100 -> valor en la distribución dist (mapeo por cuantiles)."""
+    d = np.sort(np.asarray(dist, dtype=float))
+    return pd.Series(np.interp(pct.to_numpy(dtype=float) / 100, np.linspace(0, 1, len(d)), d), index=pct.index)
+
+
+def composite_ca(base, cfg):
+    """v1.4: nota final = rendimiento estadístico + ELO (resultados partido a partido contra cada rival) + valor de mercado
+    ajustado por edad. Cada parte se pasa a percentil (ELO y valor dentro de su posición) y la media ponderada se devuelve a
+    la escala de la nota por cuantiles. Así los mejores jugadores del mundo quedan arriba aunque sus números por 90 en una
+    temporada no sean los más altos (Mbappé, Saliba), y no suben jugadores con buenos números en equipos o ligas menores."""
+    C = cfg["model"]["current_ability"].get("composite")
+    base["CA_PERF"] = base.CA_FINAL
+    if not C or base.CA_FINAL.notna().sum() < 50:
+        return base
+    pool = base.CA_FINAL.notna() & base.in_pool
+    if pool.sum() < 50:
+        pool = base.CA_FINAL.notna()
+    parts = {"perf": pct_rank(base.CA_FINAL, base.CA_FINAL[pool])}
+    lv = np.log10(base.value_eur.where(base.value_eur > 0).clip(lower=5e4))
+    age = base.age.clip(17, 36).round()
+    ac = lv[pool].groupby(age[pool]).median().rolling(3, center=True, min_periods=1).mean()
+    peak = ac.loc[24:29].mean() if len(ac.loc[24:29]) else ac.mean()
+    base["value_age_adj"] = lv - age.map(ac).fillna(peak) + peak  # el precio de la juventud no cuenta como nivel actual
+    for k, col in (("elo", "ELO"), ("value", "value_age_adj")):
+        v = base[col] if col in base else pd.Series(np.nan, index=base.index)
+        p = pd.Series(np.nan, index=base.index)
+        for g, idx in base.groupby("pos_group").groups.items():
+            ref = v.loc[idx][pool.loc[idx]]
+            if ref.notna().sum() >= 30:
+                p.loc[idx] = pct_rank(v.loc[idx], ref)
+        parts[k] = p
+    # ELO con pocos partidos cuenta menos
+    if "n_matches" in base:
+        parts["elo_w"] = (base.n_matches.fillna(0) / (base.n_matches.fillna(0) + C.get("elo_shrink_matches", 8)))
+    num = pd.Series(0.0, index=base.index)
+    den = pd.Series(0.0, index=base.index)
+    for k in ("perf", "elo", "value"):
+        w = C.get(k, 0) * (parts["elo_w"] if k == "elo" and "elo_w" in parts else 1)
+        ok = parts[k].notna()
+        num += (w * parts[k]).where(ok, 0)
+        den += pd.Series(w, index=base.index).where(ok, 0) if np.isscalar(w) else w.where(ok, 0)
+    comp = (num / den.replace(0, np.nan)).where(base.CA_FINAL.notna())
+    for k in ("perf", "elo", "value"):
+        base[f"CA_PCT_{k.upper()}"] = parts[k]
+    out = _qmap(pct_rank(comp, comp[pool]), base.CA_FINAL[pool])
+    st = C.get("stretch", 1.0)
+    base["CA_FINAL"] = (50 + (out - 50) * st).clip(0, 99).where(base.CA_FINAL.notna())
     return base
 
 
@@ -428,7 +479,7 @@ def match_ratings(m: pd.DataFrame, cfg):
     if "sofa_rating" in m:
         s = pd.to_numeric(m.sofa_rating, errors="coerce")
         out = (R["sofa_center_value"] + R["sofa_points_per_unit"] * (s - R["sofa_center"])).clip(0, 100)
-    ga90 = (m.G.fillna(0) + m.A.fillna(0)) / (m.Min.clip(lower=R["min_minutes"]) / 90)
+    ga90 = (m.G.fillna(0) + R.get("assist_weight", 1.0) * m.A.fillna(0)) / (m.Min.clip(lower=R["min_minutes"]) / 90)
     att = ga90.groupby(m.pos_group).rank(pct=True) * 100
     conc = m.GC if "GC" in m else pd.Series(np.nan, index=m.index)
     conc = pd.to_numeric(conc, errors="coerce").fillna(m.ga * np.minimum(m.Min / 90, 1))
@@ -471,7 +522,7 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
     m["match_rating"] = match_ratings(m, cfg)
     m["good"] = (m.match_rating >= m.groupby("pos_group").match_rating.transform("median")).astype(float)
     comp = base.drop_duplicates("player_id").set_index("player_id").competition_strength
-    elo, rows = {}, []
+    elo, rows, n_seen = {}, [], {}
     for r in m.itertuples(index=False):
         p = r.player_id
         if p not in elo:
@@ -479,6 +530,7 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
             # v1.3: el Elo sigue de una temporada a otra (con una ligera vuelta a la media de su liga)
             if prev_elo is not None and p in prev_elo and pd.notna(prev_elo[p]):
                 elo[p] += E.get("season_carry", 0.85) * (prev_elo[p] - elo[p])
+                n_seen[p] = E.get("provisional_matches", 10) * 3  # ya asentado
         opp = before.get((r.date, r.club_key, r.opp_key), (None, team_elo.get(r.opp_key)))[1]
         if opp is None:
             opp = _elo_init(getattr(r, "opp_strength", np.nan), E)
@@ -487,9 +539,18 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
         opp_str = float(np.clip(s_opp + (opp - league_mean.get(s_opp, opp)) / E.get("opponent_elo_per_point", 10), 0, 100))
         h = 0 if pd.isna(r.home) else (E["home_advantage"] if r.home else -E["home_advantage"])
         exp = 1 / (1 + 10 ** ((opp - elo[p] - h) / 400))
-        res = np.nan if pd.isna(r.gf) or pd.isna(r.ga) else 1.0 if r.gf > r.ga else 0.5 if r.gf == r.ga else 0.0
+        if pd.isna(r.gf) or pd.isna(r.ga):
+            res = np.nan
+        elif E.get("result_margin"):  # v1.4: ganar 3-0 vale más que 1-0 (0.5 + 0.5·tanh(dif/1.5))
+            res = 0.5 + 0.5 * math.tanh((r.gf - r.ga) / E["result_margin"])
+        else:
+            res = 1.0 if r.gf > r.ga else 0.5 if r.gf == r.ga else 0.0
         score = r.match_rating / 100 if pd.isna(res) else E["w_individual"] * r.match_rating / 100 + E["w_result"] * res
         k = E["k_base"] * min(r.Min / E["minutes_full"], 1) * E["importance"].get(r.block, 1.0)
+        # v1.4: K provisional: los primeros partidos que vemos de un jugador (sin Elo arrastrado) mueven más
+        n_p = n_seen.get(p, 0)
+        k *= 1 + E.get("provisional_boost", 0) * math.exp(-n_p / E.get("provisional_matches", 10))
+        n_seen[p] = n_p + 1
         delta = k * (score - exp)
         rows.append({**r._asdict(), "opp_elo": opp, "opp_strength_match": opp_str, "elo_before": elo[p], "expected": exp, "score": score, "elo_delta": delta})
         elo[p] += delta

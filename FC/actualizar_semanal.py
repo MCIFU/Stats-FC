@@ -11,7 +11,7 @@ Pasos:
  3. Orden y formato de los Excel.
  4. Estadísticas avanzadas (FotMob + Understat, descarga de nuevo).
  5. Contrato, valor de mercado y lesiones (renovados si tienen > 6 días), fotos/enlaces, trayectorias,
-    equipos (FotMob, Wikidata, Wikipedia, noticias), portada (partidos y noticias) y ligas
+    equipos (FotMob, Wikidata, Wikipedia, noticias), fotos de estadios y equipaciones (Wikipedia), portada (partidos y noticias) y ligas
     (clasificación, partidos con goles, estadísticas, traspasos, límite salarial de LaLiga).
  6. Valoración + resumen + panel web (run_all.py).
 Tarda ~1-2 h (Transfermarkt limita la velocidad). Registro en auxiliares/actualizacion_semanal.log.
@@ -67,6 +67,7 @@ def main():
     run([AUX / "media/descargar_media.py"])
     run([AUX / "tmapi/descargar_carrera.py", "--refrescar", "6"])
     run([AUX / "equipos/descargar_equipos.py", "--refrescar", "1"])
+    run([AUX / "equipos/descargar_estadios_equipaciones.py", "--refrescar", "7"])
     run([AUX / "portada/descargar_portada.py"])
     run([AUX / "ligas/descargar_ligas.py", "--refrescar", "0.5"])
     run(["run_all.py", "../../../Temporada 2025-26.xlsx", "../../../Temporada 2026-27.xlsx", "../../Valoracion_FC_v1.2.xlsx",
