@@ -42,6 +42,34 @@ def build(base, cfg, out_dir, matches=None, sims=None):
         cc = matches.dropna(subset=["club_id"]).groupby("excel_club").club_id.agg(lambda s: s.mode().iloc[0])
         crest = {str(k): str(int(v)) for k, v in cc.items()}
     clubs, leagues, nats = (sorted(b[c].dropna().astype(str).unique().tolist()) for c in ("club", "league", "nat"))
+    # nombre visible de cada club = el de FotMob (Excel y Transfermarkt usan variantes: "Real Sporting", "Sporting Gijón"…)
+    import gzip as _gz0
+    import unicodedata
+    efile0 = Path(__file__).resolve().parents[3] / "auxiliares" / "equipos" / "equipos.json.gz"
+    eqc = json.loads(_gz0.decompress(efile0.read_bytes()))["clubs"] if efile0.exists() else {}
+    disp = [((eqc.get(c) or {}).get("name") or c) for c in clubs]
+    fm_team = {c: (eqc.get(c) or {}).get("fm") for c in clubs}
+    # id de FotMob de cada jugador (foto PNG recortada): mismo equipo FotMob + nombre (exacto, sin acentos o apellido único)
+    nrm = lambda t: " ".join(unicodedata.normalize("NFKD", str(t)).encode("ascii", "ignore").decode().lower().replace("-", " ").split())
+    fjp = Path(__file__).resolve().parents[3] / "auxiliares" / "ligas" / "fotmob_jugadores.json"
+    fmp = json.loads(fjp.read_text(encoding="utf-8")) if fjp.exists() else {}
+    by_team, by_name = {}, {}
+    for pid, (nm, tid) in fmp.items():
+        by_team.setdefault(tid, []).append((nrm(nm), pid))
+        by_name.setdefault(nrm(nm), set()).add(pid)
+
+    def fm_id(name, club):
+        n = nrm(name)
+        cand = by_team.get(fm_team.get(club)) or []
+        for k, pid in cand:
+            if k == n:
+                return pid
+        last = n.split(" ")[-1]
+        hit = [pid for k, pid in cand if k.split(" ")[-1] == last]
+        if len(hit) == 1:
+            return hit[0]
+        g = by_name.get(n) or set()
+        return next(iter(g)) if len(g) == 1 else None
     ci, li, ni = ({v: i for i, v in enumerate(x)} for x in (clubs, leagues, nats))
     grp = list(build_resumen.GRP)
     rad = build_resumen.radar(b)
@@ -59,9 +87,10 @@ def build(base, cfg, out_dir, matches=None, sims=None):
             [[_num(getattr(x, f"{bl}_PJ"), 0), _num(getattr(x, f"{bl}_Min"), 0), _num(getattr(x, f"{bl}_G"), 0), _num(getattr(x, f"{bl}_A"), 0)]
              for bl in ("LIGA", "COPA", "CONT", "FIFA", "SEL")],
             [_num(x.PROJ_1), _num(x.PROJ_2), _num(x.PROJ_3), _num(x.PROJ_LO), _num(x.PROJ_HI)],
+            fm_id(x.name, str(x.club)),
         ])
     fields = ["name", "season", "age", "nat", "pos", "grp", "club", "league", "value", "ligaMin", "min", "pj", "g", "a", "ligaG", "ligaA",
-              "ca", "pa", "paLo", "paHi", "elo", "form", "cons", "opp", "scout", "conf", "rol", "radar", "lgStr", "selPJ", "contPJ", "other", "tm", "comps", "proj"]
+              "ca", "pa", "paLo", "paHi", "elo", "form", "cons", "opp", "scout", "conf", "rol", "radar", "lgStr", "selPJ", "contPJ", "other", "tm", "comps", "proj", "fm"]
 
     sim = {}
     if sims is not None and len(sims):
@@ -112,6 +141,11 @@ def build(base, cfg, out_dir, matches=None, sims=None):
     extra = {k: [(vl_all.get(k) or {}).get("c"), comp_mv((vl_all.get(k) or {}).get("mv", [])), (vl_all.get(k) or {}).get("inj", [])] + ficha(k)
              for k in usados}
     meta["crest"] = [crest.get(c) for c in clubs]
+    # nombres oficiales cuando FotMob usa uno coloquial
+    NAME_FIX = {"Sporting Gijón": "Real Sporting", "Sporting Gijon": "Real Sporting", "Racing Santander": "Real Racing Club",
+                "Oviedo": "Real Oviedo", "Zaragoza": "Real Zaragoza", "Valladolid": "Real Valladolid"}
+    meta["clubDisp"] = [NAME_FIX.get(d, d) if d else d for d in disp]
+    meta["clubFm"] = [fm_team.get(c) for c in clubs]
     data = {"meta": meta, "media": media, "players": rows, "similar": sim}
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":"))
     (out_dir / "datos.js").write_text("window.FC_DATA=" + dump(data) + ";\n", encoding="utf-8")

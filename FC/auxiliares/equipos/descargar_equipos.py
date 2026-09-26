@@ -31,6 +31,7 @@ sys.path.insert(0, str(HERE.parent / "avanzadas"))
 import descargar_fotmob_understat as FM  # noqa: E402
 
 CACHE = HERE / "cache"
+KM = {}  # metadatos TM de clubes (colores)
 UA = {"User-Agent": "StatsFC/1.0 (uso personal; panel de scouting)"}
 TEAMSTATS = {  # lista FotMob → clave corta
     "possession_percentage_team": "pos", "accurate_pass_team": "pas", "accurate_long_balls_team": "lng", "accurate_cross_team": "crz",
@@ -80,7 +81,8 @@ def _fx(f, tid):
     st = f.get("status") or {}
     h, a = f.get("home") or {}, f.get("away") or {}
     return [(st.get("utcTime") or "")[:10], (f.get("tournament") or {}).get("name"), h.get("name"), a.get("name"),
-            st.get("scoreStr") if st.get("finished") else None, 1 if h.get("id") == tid else 0, f.get("result")]
+            st.get("scoreStr") if st.get("finished") else None, 1 if h.get("id") == tid else 0, f.get("result"), f.get("id"),
+            h.get("id"), a.get("id")]
 
 
 def resumen_equipo(d, tid):
@@ -91,13 +93,14 @@ def resumen_equipo(d, tid):
     coach = next((m for g in sq.get("squad") or [] if g.get("title") == "coach" for m in g.get("members") or []), {})
     ll = ov.get("lastLineupStats") or {}
     starters = [[p.get("name"), (p.get("verticalLayout") or {}).get("x"), (p.get("verticalLayout") or {}).get("y"), p.get("shirtNumber"),
-                 (p.get("performance") or {}).get("rating")] for p in ll.get("starters") or []]
+                 (p.get("performance") or {}).get("rating"), p.get("id")] for p in ll.get("starters") or []]
     form = [[x.get("resultString"), x.get("score"), (x.get("tooltipText") or {}).get("homeTeam"), (x.get("tooltipText") or {}).get("awayTeam"),
              ((x.get("date") or {}).get("utcTime") or "")[:10], x.get("tournamentName")] for x in ov.get("teamForm") or []]
     fixtures = ((d.get("fixtures") or {}).get("allFixtures") or {}).get("fixtures") or []
     done = [f for f in fixtures if (f.get("status") or {}).get("finished")][-12:]
     nxt = [f for f in fixtures if not (f.get("status") or {}).get("finished") and not (f.get("status") or {}).get("cancelled")][:6]
-    trophies = [[t.get("name"), t.get("won"), t.get("runnerup"), t.get("seasonsWon"), t.get("seasonsRunnerup")] for t in hi.get("trophyList") or []]
+    trophies = [[t.get("name"), t.get("won"), t.get("runnerup"), t.get("seasonsWon"), t.get("seasonsRunnerup"), t.get("leagueId")]
+                for t in hi.get("trophyList") or []]
     ranks = [[r.get("seasonName"), r.get("tournamentName"), r.get("position"), r.get("numberOfTeams"), (r.get("stats") or {}).get("points")]
              for r in ((hi.get("historicalTableData") or {}).get("ranks") or [])]
     coaches = [[c.get("name"), c.get("season"), c.get("leagueName"), c.get("win"), c.get("draw"), c.get("loss"), c.get("pointsPerGame")]
@@ -114,7 +117,15 @@ def resumen_equipo(d, tid):
                    "rows": [[r.get("idx"), r.get("name"), r.get("id"), r.get("played"), r.get("wins"), r.get("draws"), r.get("losses"),
                              r.get("scoresStr"), r.get("goalConDiff"), r.get("pts"), r.get("qualColor")] for r in rows]}
             break
-    return {"fm": tid, "name": det.get("name"), "short": det.get("shortName"), "country": det.get("country"),
+    trd = ((ov.get("transfers") or {}).get("data")) or {}
+
+    def tr(x):
+        fee = x.get("fee") or {}
+        return [x.get("name"), x.get("playerId"), (x.get("transferDate") or "")[:10], x.get("fromClub"), x.get("fromClubId"), x.get("toClub"),
+                x.get("toClubId"), fee.get("feeText"), fee.get("value"), 1 if x.get("onLoan") else 0, (x.get("position") or {}).get("label"),
+                x.get("marketValue")]
+    transfers = {"in": [tr(x) for x in trd.get("Players in") or []], "out": [tr(x) for x in trd.get("Players out") or []]}
+    return {"fm": tid, "name": det.get("name"), "tr": transfers, "short": det.get("shortName"), "country": det.get("country"),
             "league": det.get("primaryLeagueName"), "lid": det.get("primaryLeagueId"),
             "venue": [(v.get("widget") or {}).get("name"), (v.get("widget") or {}).get("city"), pairs.get("Capacity"), pairs.get("Opened"), pairs.get("Surface")],
             "coach": [coach.get("name"), coach.get("age"), coach.get("cname")] if coach else None,
@@ -193,6 +204,8 @@ def main():
     tm_of = pt.groupby("excel_club").club_id.agg(lambda s: str(int(s.mode().iloc[0]))).to_dict()
     print(f"{len(fm_of)} clubes enlazados con FotMob")
     wd = wikidata_clubs(sorted({tm_of[c] for c in fm_of if c in tm_of}))
+    kmp = HERE.parent / "tmapi" / "cache" / "meta_clubs.json.gz"
+    KM.update(json.loads(gzip.decompress(kmp.read_bytes())) if kmp.exists() else {})
 
     def one(item):
         club, (tid, liga) = item
@@ -208,6 +221,8 @@ def main():
         r["tm"] = tm_of.get(club)
         w = wd.get(r["tm"] or "", {})
         r["founded"], r["nick"] = w.get("inc"), (w.get("nick") or [])[:4]
+        cols = ((((KM.get(r["tm"] or "") or {}).get("baseDetails") or {}).get("superiorClub") or {}).get("colors")) or {}
+        r["kit"] = [cols.get("firstColor"), cols.get("secondColor"), cols.get("thirdColor")]
         r["wiki"] = w.get("es")
         r["about"] = wiki_extract(w["es"], ref) if w.get("es") else None
         r["style"] = {s: stats.get((s, liga), {}).get(tid) for s in FM.SEASONS}

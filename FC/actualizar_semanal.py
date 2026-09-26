@@ -11,7 +11,8 @@ Pasos:
  3. Orden y formato de los Excel.
  4. Estadísticas avanzadas (FotMob + Understat, descarga de nuevo).
  5. Contrato, valor de mercado y lesiones (renovados si tienen > 6 días), fotos/enlaces, trayectorias,
-    equipos (FotMob, Wikidata, Wikipedia, noticias) y portada (partidos y noticias).
+    equipos (FotMob, Wikidata, Wikipedia, noticias), portada (partidos y noticias) y ligas
+    (clasificación, partidos con goles, estadísticas, traspasos, límite salarial de LaLiga).
  6. Valoración + resumen + panel web (run_all.py).
 Tarda ~1-2 h (Transfermarkt limita la velocidad). Registro en auxiliares/actualizacion_semanal.log.
 """
@@ -47,11 +48,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sin-ligas", action="store_true", help="no busca debutantes (más rápido)")
     ap.add_argument("--sin-valor", action="store_true", help="no renueva contrato/valor/lesiones")
-    ap.add_argument("--diario", action="store_true", help="solo portada (partidos y noticias) y equipos (clasificación, racha, noticias)")
+    ap.add_argument("--diario", action="store_true", help="solo portada, equipos y ligas (clasificación, goles, traspasos)")
     a = ap.parse_args()
     if a.diario:
         run([AUX / "portada/descargar_portada.py"])
         run([AUX / "equipos/descargar_equipos.py", "--refrescar", "0.5"])
+        run([AUX / "ligas/descargar_ligas.py", "--refrescar", "0.5"])
         print(f"\nListo (diario). Registro: {LOG}")
         return
     env = {"TM_REFRESH_DAYS": "perf/=5,squads/=27,ligas/=27"}
@@ -66,6 +68,7 @@ def main():
     run([AUX / "tmapi/descargar_carrera.py", "--refrescar", "6"])
     run([AUX / "equipos/descargar_equipos.py", "--refrescar", "1"])
     run([AUX / "portada/descargar_portada.py"])
+    run([AUX / "ligas/descargar_ligas.py", "--refrescar", "0.5"])
     run(["run_all.py", "../../../Temporada 2025-26.xlsx", "../../../Temporada 2026-27.xlsx", "../../Valoracion_FC_v1.2.xlsx",
          "--partidos", "../../partidos_TM.csv", "--avanzadas", "../../avanzadas.csv"], cwd=VAL)
     print(f"\nListo. Registro: {LOG}")

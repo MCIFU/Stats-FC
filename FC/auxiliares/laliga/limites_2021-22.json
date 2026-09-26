@@ -1,0 +1,180 @@
+{
+ "temporada": "2021-22",
+ "columnas": [
+  "verano 2021",
+  "invierno 2022"
+ ],
+ "unidad": "miles de euros",
+ "LaLiga": {
+  "ATHLETIC CLUB": [
+   111818,
+   124654
+  ],
+  "FC BARCELONA": [
+   97942,
+   -144353
+  ],
+  "RCD ESPANYOL": [
+   77873,
+   79418
+  ],
+  "REAL MADRID": [
+   739163,
+   739163
+  ],
+  "ATLÉTICO DE MADRID": [
+   171606,
+   161221
+  ],
+  "SEVILLA FC": [
+   200399,
+   199147
+  ],
+  "REAL BETIS": [
+   70864,
+   61254
+  ],
+  "REAL SOCIEDAD": [
+   127704,
+   111230
+  ],
+  "LEVANTE UD": [
+   32108,
+   33828
+  ],
+  "CÁDIZ CF": [
+   45388,
+   47602
+  ],
+  "RCD MALLORCA": [
+   46129,
+   48210
+  ],
+  "VALENCIA CF": [
+   30986,
+   57748
+  ],
+  "C.A. OSASUNA": [
+   56230,
+   56430
+  ],
+  "DEPORTIVO ALAVÉS": [
+   42858,
+   42341
+  ],
+  "ELCHE CF": [
+   41525,
+   44731
+  ],
+  "VILLARREAL CF": [
+   159292,
+   148342
+  ],
+  "RC CELTA": [
+   65530,
+   66447
+  ],
+  "RAYO VALLECANO": [
+   41829,
+   48088
+  ],
+  "GRANADA CF": [
+   53498,
+   56793
+  ],
+  "GETAFE CF": [
+   64470,
+   64688
+  ]
+ },
+ "LaLiga2": {
+  "REAL SPORTING DE GIJÓN": [
+   9751,
+   9906
+  ],
+  "SD PONFERRADINA": [
+   5834,
+   6019
+  ],
+  "CD TENERIFE": [
+   9119,
+   9380
+  ],
+  "SD AMOREBIETA": [
+   4618,
+   4709
+  ],
+  "REAL OVIEDO": [
+   9595,
+   9910
+  ],
+  "CD MIRANDÉS": [
+   5701,
+   6000
+  ],
+  "R. VALLADOLID CF": [
+   29034,
+   29826
+  ],
+  "C.D. LEGANÉS": [
+   26443,
+   26443
+  ],
+  "GIRONA FC": [
+   3987,
+   9359
+  ],
+  "REAL ZARAGOZA": [
+   5708,
+   5708
+  ],
+  "SD EIBAR": [
+   30156,
+   30156
+  ],
+  "UD LAS PALMAS": [
+   11967,
+   11967
+  ],
+  "REAL SOCIEDAD B": [
+   12493,
+   12493
+  ],
+  "CD LUGO": [
+   4872,
+   5187
+  ],
+  "SD HUESCA": [
+   18667,
+   19775
+  ],
+  "AD ALCORCÓN": [
+   7104,
+   6765
+  ],
+  "CF FUENLABRADA": [
+   6651,
+   7118
+  ],
+  "BURGOS CF": [
+   5502,
+   6069
+  ],
+  "UD ALMERÍA": [
+   10336,
+   10336
+  ],
+  "MÁLAGA CF": [
+   12789,
+   12688
+  ],
+  "FC CARTAGENA": [
+   6142,
+   5403
+  ],
+  "UD IBIZA": [
+   7617,
+   7427
+  ]
+ }
+}

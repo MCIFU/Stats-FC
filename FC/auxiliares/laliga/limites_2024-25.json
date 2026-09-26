@@ -1,0 +1,180 @@
+{
+ "temporada": "2024-25",
+ "columnas": [
+  "sep 2024",
+  "feb 2025"
+ ],
+ "unidad": "miles de euros",
+ "LaLiga": {
+  "ATHLETIC CLUB": [
+   100818,
+   105818
+  ],
+  "FC BARCELONA": [
+   426427,
+   463642
+  ],
+  "RCD ESPANYOL": [
+   8789,
+   7812
+  ],
+  "REAL MADRID": [
+   754894,
+   754894
+  ],
+  "ATLÉTICO DE MADRID": [
+   310745,
+   314281
+  ],
+  "SEVILLA FC": [
+   2499,
+   684
+  ],
+  "REAL BETIS": [
+   108990,
+   108387
+  ],
+  "REAL SOCIEDAD": [
+   159259,
+   160173
+  ],
+  "RCD MALLORCA": [
+   58841,
+   58841
+  ],
+  "VALENCIA CF": [
+   74608,
+   79998
+  ],
+  "C.A. OSASUNA": [
+   51862,
+   52839
+  ],
+  "DEPORTIVO ALAVÉS": [
+   38628,
+   46138
+  ],
+  "VILLARREAL CF": [
+   135860,
+   135860
+  ],
+  "RC CELTA": [
+   77570,
+   77570
+  ],
+  "RAYO VALLECANO": [
+   45371,
+   45371
+  ],
+  "R. VALLADOLID CF": [
+   41836,
+   47037
+  ],
+  "C.D. LEGANÉS": [
+   37138,
+   34661
+  ],
+  "GIRONA FC": [
+   94464,
+   98877
+  ],
+  "UD LAS PALMAS": [
+   40320,
+   39842
+  ],
+  "GETAFE CF": [
+   39172,
+   39172
+  ]
+ },
+ "LaLiga2": {
+  "REAL SPORTING DE GIJÓN": [
+   8144,
+   8217
+  ],
+  "REAL CLUB DEPORTIVO DE LA CORUÑA": [
+   13451,
+   14678
+  ],
+  "LEVANTE UD": [
+   4266,
+   4266
+  ],
+  "CÁDIZ CF": [
+   18844,
+   17669
+  ],
+  "REAL RACING CLUB DE SANTANDER": [
+   12257,
+   13773
+  ],
+  "RACING CLUB DE FERROL": [
+   7557,
+   8661
+  ],
+  "CD ELDENSE": [
+   5861,
+   6056
+  ],
+  "CD TENERIFE": [
+   12052,
+   12312
+  ],
+  "CLUB DEPORTIVO CASTELLÓN": [
+   8269,
+   8539
+  ],
+  "ELCHE CF": [
+   14992,
+   16016
+  ],
+  "REAL OVIEDO": [
+   12530,
+   13201
+  ],
+  "CD MIRANDÉS": [
+   4375,
+   4542
+  ],
+  "GRANADA CF": [
+   6957,
+   10147
+  ],
+  "REAL ZARAGOZA": [
+   11785,
+   11846
+  ],
+  "ALBACETE BALOMPIÉ": [
+   7473,
+   7620
+  ],
+  "SD EIBAR": [
+   10088,
+   10088
+  ],
+  "CÓRDOBA CF": [
+   6102,
+   7711
+  ],
+  "SD HUESCA": [
+   2529,
+   2568
+  ],
+  "BURGOS CF": [
+   7914,
+   7910
+  ],
+  "UD ALMERÍA": [
+   3594,
+   3847
+  ],
+  "MÁLAGA CF": [
+   9816,
+   11840
+  ],
+  "FC CARTAGENA": [
+   4164,
+   5666
+  ]
+ }
+}

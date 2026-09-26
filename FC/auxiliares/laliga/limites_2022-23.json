@@ -1,0 +1,180 @@
+{
+ "temporada": "2022-23",
+ "columnas": [
+  "sep 2022",
+  "feb 2023"
+ ],
+ "unidad": "miles de euros",
+ "LaLiga": {
+  "ATHLETIC CLUB": [
+   127120,
+   127120
+  ],
+  "FC BARCELONA": [
+   656429,
+   648824
+  ],
+  "RCD ESPANYOL": [
+   72737,
+   69970
+  ],
+  "REAL MADRID": [
+   683462,
+   683462
+  ],
+  "ATLÉTICO DE MADRID": [
+   341040,
+   315826
+  ],
+  "SEVILLA FC": [
+   199855,
+   191356
+  ],
+  "REAL BETIS": [
+   96725,
+   100643
+  ],
+  "REAL SOCIEDAD": [
+   134199,
+   134199
+  ],
+  "CÁDIZ CF": [
+   45977,
+   46979
+  ],
+  "RCD MALLORCA": [
+   49692,
+   50203
+  ],
+  "VALENCIA CF": [
+   75835,
+   79991
+  ],
+  "C.A. OSASUNA": [
+   52134,
+   52134
+  ],
+  "ELCHE CF": [
+   42672,
+   42672
+  ],
+  "VILLARREAL CF": [
+   151206,
+   151206
+  ],
+  "RC CELTA": [
+   63855,
+   64379
+  ],
+  "RAYO VALLECANO": [
+   49903,
+   50398
+  ],
+  "R. VALLADOLID CF": [
+   46686,
+   48683
+  ],
+  "GIRONA FC": [
+   42724,
+   43477
+  ],
+  "GETAFE CF": [
+   69070,
+   68800
+  ],
+  "UD ALMERÍA": [
+   50749,
+   52315
+  ]
+ },
+ "LaLiga2": {
+  "REAL SPORTING DE GIJÓN": [
+   8564,
+   9562
+  ],
+  "LEVANTE UD": [
+   11948,
+   11699
+  ],
+  "REAL RACING CLUB DE SANTANDER": [
+   8505,
+   9973
+  ],
+  "DEPORTIVO ALAVÉS": [
+   9811,
+   9986
+  ],
+  "SD PONFERRADINA": [
+   6181,
+   6501
+  ],
+  "CD TENERIFE": [
+   10056,
+   10268
+  ],
+  "REAL OVIEDO": [
+   9757,
+   10247
+  ],
+  "CD MIRANDÉS": [
+   6174,
+   6474
+  ],
+  "C.D. LEGANÉS": [
+   19522,
+   15068
+  ],
+  "GRANADA CF": [
+   29126,
+   24922
+  ],
+  "REAL ZARAGOZA": [
+   10124,
+   10053
+  ],
+  "SD EIBAR": [
+   13208,
+   10716
+  ],
+  "ALBACETE BALOMPIÉ": [
+   5749,
+   6031
+  ],
+  "FC ANDORRA": [
+   6529,
+   6529
+  ],
+  "UD LAS PALMAS": [
+   11522,
+   12197
+  ],
+  "CD LUGO": [
+   4277,
+   3984
+  ],
+  "SD HUESCA": [
+   8102,
+   6411
+  ],
+  "BURGOS CF": [
+   6313,
+   6648
+  ],
+  "MÁLAGA CF": [
+   11500,
+   11793
+  ],
+  "FC CARTAGENA": [
+   6416,
+   6458
+  ],
+  "VILLARREAL CF B": [
+   null,
+   null
+  ],
+  "UD IBIZA": [
+   7482,
+   8229
+  ]
+ }
+}

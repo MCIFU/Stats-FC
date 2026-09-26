@@ -54,7 +54,7 @@ def partidos(dias_atras=7, dias_adelante=7):
                 st, h, a = x.get("status") or {}, x.get("home") or {}, x.get("away") or {}
                 out.append([pid, st.get("utcTime"), h.get("name"), a.get("name"), h.get("id"), a.get("id"),
                             h.get("score") if st.get("started") else None, a.get("score") if st.get("started") else None,
-                            1 if st.get("finished") else 0, 1 if st.get("cancelled") else 0, stage if lg.get("isGroup") else None])
+                            1 if st.get("finished") else 0, 1 if st.get("cancelled") else 0, stage if lg.get("isGroup") else None, x.get("id")])
     out.sort(key=lambda r: (order[r[0]], r[1] or ""))
     return out
 

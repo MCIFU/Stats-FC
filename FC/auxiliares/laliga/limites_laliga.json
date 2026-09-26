@@ -1,0 +1,1473 @@
+{
+ "fuente": "LaLiga, Transparencia · Límite de Coste de Plantilla Deportiva (miles de €)",
+ "url": "https://www.laliga.com/transparencia/gestion-economica/limite-coste-plantilla",
+ "temporadas": {
+  "2019-20": {
+   "columnas": [
+    "verano 2019",
+    "invierno 2020",
+    "final"
+   ],
+   "LaLiga": {
+    "ATHLETIC CLUB": [
+     103183,
+     103183,
+     103183
+    ],
+    "FC BARCELONA": [
+     671429,
+     656429,
+     656429
+    ],
+    "RCD ESPANYOL": [
+     68738,
+     86338,
+     86338
+    ],
+    "REAL MADRID": [
+     641049,
+     641049,
+     641049
+    ],
+    "ATLÉTICO DE MADRID": [
+     348500,
+     348500,
+     348500
+    ],
+    "SEVILLA FC": [
+     185166,
+     185166,
+     185166
+    ],
+    "REAL BETIS": [
+     100346,
+     102426,
+     102426
+    ],
+    "REAL SOCIEDAD": [
+     81135,
+     85572,
+     85572
+    ],
+    "LEVANTE UD": [
+     54604,
+     54604,
+     54604
+    ],
+    "RCD MALLORCA": [
+     29968,
+     33533,
+     33533
+    ],
+    "VALENCIA CF": [
+     170673,
+     177107,
+     177107
+    ],
+    "C.A. OSASUNA": [
+     38693,
+     38846,
+     40450
+    ],
+    "DEPORTIVO ALAVÉS": [
+     49771,
+     49371,
+     53171
+    ],
+    "VILLARREAL CF": [
+     108587,
+     113387,
+     113387
+    ],
+    "RC CELTA": [
+     62123,
+     68323,
+     69873
+    ],
+    "C.D. LEGANÉS": [
+     52082,
+     52082,
+     52082
+    ],
+    "R. VALLADOLID CF": [
+     32034,
+     34867,
+     34867
+    ],
+    "GRANADA CF": [
+     35461,
+     37898,
+     37898
+    ],
+    "SD EIBAR": [
+     47123,
+     47123,
+     47123
+    ],
+    "GETAFE CF": [
+     56284,
+     63799,
+     63799
+    ]
+   },
+   "LaLiga2": {
+    "REAL SPORTING DE GIJÓN": [
+     11314,
+     11314,
+     11314
+    ],
+    "REAL CLUB DEPORTIVO DE LA CORUÑA": [
+     11354,
+     13414,
+     13414
+    ],
+    "CÁDIZ CF": [
+     9053,
+     9735,
+     9735
+    ],
+    "REAL RACING CLUB DE SANTANDER": [
+     5078,
+     5827,
+     5827
+    ],
+    "CD TENERIFE": [
+     9786,
+     10262,
+     10262
+    ],
+    "SD PONFERRADINA": [
+     4194,
+     4234,
+     4884
+    ],
+    "ELCHE CF": [
+     5084,
+     5624,
+     5624
+    ],
+    "RAYO VALLECANO": [
+     19061,
+     21061,
+     21061
+    ],
+    "REAL OVIEDO": [
+     8168,
+     8809,
+     8905
+    ],
+    "CD MIRANDÉS": [
+     4268,
+     5084,
+     5084
+    ],
+    "GIRONA FC": [
+     29278,
+     29278,
+     29278
+    ],
+    "REAL ZARAGOZA": [
+     7562,
+     8183,
+     8183
+    ],
+    "ALBACETE BALOMPIÉ": [
+     7930,
+     9372,
+     9372
+    ],
+    "CD NUMANCIA": [
+     5286,
+     5286,
+     5286
+    ],
+    "UD LAS PALMAS": [
+     12246,
+     12444,
+     12444
+    ],
+    "CD LUGO": [
+     5985,
+     6155,
+     6155
+    ],
+    "SD HUESCA": [
+     16324,
+     17044,
+     17044
+    ],
+    "AD ALCORCÓN": [
+     6061,
+     6161,
+     6161
+    ],
+    "CF FUENLABRADA": [
+     4052,
+     4447,
+     4380
+    ],
+    "UD ALMERÍA": [
+     18122,
+     18871,
+     18871
+    ],
+    "MÁLAGA CF": [
+     9905,
+     9905,
+     9905
+    ],
+    "EXTREMADURA UD": [
+     6155,
+     6176,
+     6176
+    ]
+   }
+  },
+  "2020-21": {
+   "columnas": [
+    "verano 2020",
+    "invierno 2021",
+    "final"
+   ],
+   "LaLiga": {
+    "ATHLETIC CLUB": [
+     119819,
+     110735,
+     110735
+    ],
+    "FC BARCELONA": [
+     382717,
+     347078,
+     347078
+    ],
+    "REAL MADRID": [
+     468529,
+     473343,
+     473343
+    ],
+    "ATLÉTICO DE MADRID": [
+     252720,
+     217315,
+     217315
+    ],
+    "SEVILLA FC": [
+     185809,
+     183319,
+     183319
+    ],
+    "REAL BETIS": [
+     71304,
+     66253,
+     66253
+    ],
+    "REAL SOCIEDAD": [
+     100876,
+     95200,
+     95200
+    ],
+    "LEVANTE UD": [
+     37613,
+     36558,
+     36558
+    ],
+    "CÁDIZ CF": [
+     41028,
+     39930,
+     43168
+    ],
+    "VALENCIA CF": [
+     103390,
+     93133,
+     93133
+    ],
+    "C.A. OSASUNA": [
+     46638,
+     45732,
+     46748
+    ],
+    "DEPORTIVO ALAVÉS": [
+     42028,
+     39403,
+     41678
+    ],
+    "ELCHE CF": [
+     34600,
+     32250,
+     32250
+    ],
+    "VILLARREAL CF": [
+     145242,
+     142986,
+     142986
+    ],
+    "RC CELTA": [
+     62518,
+     65110,
+     65110
+    ],
+    "R. VALLADOLID CF": [
+     49361,
+     47204,
+     47204
+    ],
+    "GRANADA CF": [
+     56483,
+     56813,
+     56813
+    ],
+    "SD EIBAR": [
+     42706,
+     42017,
+     42017
+    ],
+    "SD HUESCA": [
+     37057,
+     37366,
+     37852
+    ],
+    "GETAFE CF": [
+     52589,
+     52361,
+     52361
+    ]
+   },
+   "LaLiga2": {
+    "RCD ESPANYOL": [
+     45342,
+     44762,
+     47092
+    ],
+    "CE SABADELL": [
+     4868,
+     5008,
+     5008
+    ],
+    "REAL SPORTING DE GIJÓN": [
+     5708,
+     5437,
+     6352
+    ],
+    "RCD MALLORCA": [
+     19049,
+     18587,
+     18587
+    ],
+    "SD PONFERRADINA": [
+     4430,
+     4441,
+     4441
+    ],
+    "CLUB DEPORTIVO CASTELLÓN": [
+     5014,
+     5235,
+     5235
+    ],
+    "CD TENERIFE": [
+     10823,
+     10772,
+     10894
+    ],
+    "RAYO VALLECANO": [
+     16412,
+     15756,
+     15756
+    ],
+    "REAL OVIEDO": [
+     9060,
+     8629,
+     8629
+    ],
+    "CD MIRANDÉS": [
+     4595,
+     4377,
+     4377
+    ],
+    "C.D. LEGANÉS": [
+     26704,
+     26444,
+     26444
+    ],
+    "GIRONA FC": [
+     4253,
+     4155,
+     15954
+    ],
+    "REAL ZARAGOZA": [
+     8850,
+     8544,
+     8544
+    ],
+    "ALBACETE BALOMPIÉ": [
+     7133,
+     6216,
+     6216
+    ],
+    "UD LAS PALMAS": [
+     7927,
+     11884,
+     11884
+    ],
+    "CD LUGO": [
+     5357,
+     4485,
+     4485
+    ],
+    "AD ALCORCÓN": [
+     5284,
+     6152,
+     6152
+    ],
+    "CF FUENLABRADA": [
+     5668,
+     5552,
+     5552
+    ],
+    "UD ALMERÍA": [
+     27582,
+     27322,
+     27426
+    ],
+    "MÁLAGA CF": [
+     3671,
+     2964,
+     2964
+    ],
+    "UD LOGROÑÉS": [
+     4546,
+     4748,
+     4748
+    ],
+    "FC CARTAGENA": [
+     5228,
+     5716,
+     5716
+    ]
+   }
+  },
+  "2021-22": {
+   "columnas": [
+    "verano 2021",
+    "invierno 2022"
+   ],
+   "LaLiga": {
+    "ATHLETIC CLUB": [
+     111818,
+     124654
+    ],
+    "FC BARCELONA": [
+     97942,
+     -144353
+    ],
+    "RCD ESPANYOL": [
+     77873,
+     79418
+    ],
+    "REAL MADRID": [
+     739163,
+     739163
+    ],
+    "ATLÉTICO DE MADRID": [
+     171606,
+     161221
+    ],
+    "SEVILLA FC": [
+     200399,
+     199147
+    ],
+    "REAL BETIS": [
+     70864,
+     61254
+    ],
+    "REAL SOCIEDAD": [
+     127704,
+     111230
+    ],
+    "LEVANTE UD": [
+     32108,
+     33828
+    ],
+    "CÁDIZ CF": [
+     45388,
+     47602
+    ],
+    "RCD MALLORCA": [
+     46129,
+     48210
+    ],
+    "VALENCIA CF": [
+     30986,
+     57748
+    ],
+    "C.A. OSASUNA": [
+     56230,
+     56430
+    ],
+    "DEPORTIVO ALAVÉS": [
+     42858,
+     42341
+    ],
+    "ELCHE CF": [
+     41525,
+     44731
+    ],
+    "VILLARREAL CF": [
+     159292,
+     148342
+    ],
+    "RC CELTA": [
+     65530,
+     66447
+    ],
+    "RAYO VALLECANO": [
+     41829,
+     48088
+    ],
+    "GRANADA CF": [
+     53498,
+     56793
+    ],
+    "GETAFE CF": [
+     64470,
+     64688
+    ]
+   },
+   "LaLiga2": {
+    "REAL SPORTING DE GIJÓN": [
+     9751,
+     9906
+    ],
+    "SD PONFERRADINA": [
+     5834,
+     6019
+    ],
+    "CD TENERIFE": [
+     9119,
+     9380
+    ],
+    "SD AMOREBIETA": [
+     4618,
+     4709
+    ],
+    "REAL OVIEDO": [
+     9595,
+     9910
+    ],
+    "CD MIRANDÉS": [
+     5701,
+     6000
+    ],
+    "R. VALLADOLID CF": [
+     29034,
+     29826
+    ],
+    "C.D. LEGANÉS": [
+     26443,
+     26443
+    ],
+    "GIRONA FC": [
+     3987,
+     9359
+    ],
+    "REAL ZARAGOZA": [
+     5708,
+     5708
+    ],
+    "SD EIBAR": [
+     30156,
+     30156
+    ],
+    "UD LAS PALMAS": [
+     11967,
+     11967
+    ],
+    "REAL SOCIEDAD B": [
+     12493,
+     12493
+    ],
+    "CD LUGO": [
+     4872,
+     5187
+    ],
+    "SD HUESCA": [
+     18667,
+     19775
+    ],
+    "AD ALCORCÓN": [
+     7104,
+     6765
+    ],
+    "CF FUENLABRADA": [
+     6651,
+     7118
+    ],
+    "BURGOS CF": [
+     5502,
+     6069
+    ],
+    "UD ALMERÍA": [
+     10336,
+     10336
+    ],
+    "MÁLAGA CF": [
+     12789,
+     12688
+    ],
+    "FC CARTAGENA": [
+     6142,
+     5403
+    ],
+    "UD IBIZA": [
+     7617,
+     7427
+    ]
+   }
+  },
+  "2022-23": {
+   "columnas": [
+    "sep 2022",
+    "feb 2023"
+   ],
+   "LaLiga": {
+    "ATHLETIC CLUB": [
+     127120,
+     127120
+    ],
+    "FC BARCELONA": [
+     656429,
+     648824
+    ],
+    "RCD ESPANYOL": [
+     72737,
+     69970
+    ],
+    "REAL MADRID": [
+     683462,
+     683462
+    ],
+    "ATLÉTICO DE MADRID": [
+     341040,
+     315826
+    ],
+    "SEVILLA FC": [
+     199855,
+     191356
+    ],
+    "REAL BETIS": [
+     96725,
+     100643
+    ],
+    "REAL SOCIEDAD": [
+     134199,
+     134199
+    ],
+    "CÁDIZ CF": [
+     45977,
+     46979
+    ],
+    "RCD MALLORCA": [
+     49692,
+     50203
+    ],
+    "VALENCIA CF": [
+     75835,
+     79991
+    ],
+    "C.A. OSASUNA": [
+     52134,
+     52134
+    ],
+    "ELCHE CF": [
+     42672,
+     42672
+    ],
+    "VILLARREAL CF": [
+     151206,
+     151206
+    ],
+    "RC CELTA": [
+     63855,
+     64379
+    ],
+    "RAYO VALLECANO": [
+     49903,
+     50398
+    ],
+    "R. VALLADOLID CF": [
+     46686,
+     48683
+    ],
+    "GIRONA FC": [
+     42724,
+     43477
+    ],
+    "GETAFE CF": [
+     69070,
+     68800
+    ],
+    "UD ALMERÍA": [
+     50749,
+     52315
+    ]
+   },
+   "LaLiga2": {
+    "REAL SPORTING DE GIJÓN": [
+     8564,
+     9562
+    ],
+    "LEVANTE UD": [
+     11948,
+     11699
+    ],
+    "REAL RACING CLUB DE SANTANDER": [
+     8505,
+     9973
+    ],
+    "DEPORTIVO ALAVÉS": [
+     9811,
+     9986
+    ],
+    "SD PONFERRADINA": [
+     6181,
+     6501
+    ],
+    "CD TENERIFE": [
+     10056,
+     10268
+    ],
+    "REAL OVIEDO": [
+     9757,
+     10247
+    ],
+    "CD MIRANDÉS": [
+     6174,
+     6474
+    ],
+    "C.D. LEGANÉS": [
+     19522,
+     15068
+    ],
+    "GRANADA CF": [
+     29126,
+     24922
+    ],
+    "REAL ZARAGOZA": [
+     10124,
+     10053
+    ],
+    "SD EIBAR": [
+     13208,
+     10716
+    ],
+    "ALBACETE BALOMPIÉ": [
+     5749,
+     6031
+    ],
+    "FC ANDORRA": [
+     6529,
+     6529
+    ],
+    "UD LAS PALMAS": [
+     11522,
+     12197
+    ],
+    "CD LUGO": [
+     4277,
+     3984
+    ],
+    "SD HUESCA": [
+     8102,
+     6411
+    ],
+    "BURGOS CF": [
+     6313,
+     6648
+    ],
+    "MÁLAGA CF": [
+     11500,
+     11793
+    ],
+    "FC CARTAGENA": [
+     6416,
+     6458
+    ],
+    "VILLARREAL CF B": [
+     null,
+     null
+    ],
+    "UD IBIZA": [
+     7482,
+     8229
+    ]
+   }
+  },
+  "2023-24": {
+   "columnas": [
+    "sep 2023",
+    "feb 2024"
+   ],
+   "LaLiga": {
+    "ATHLETIC CLUB": [
+     100062,
+     100062
+    ],
+    "FC BARCELONA": [
+     270026,
+     204161
+    ],
+    "REAL MADRID": [
+     727451,
+     727451
+    ],
+    "ATLÉTICO DE MADRID": [
+     296357,
+     303408
+    ],
+    "SEVILLA FC": [
+     168720,
+     152286
+    ],
+    "REAL BETIS": [
+     89906,
+     93241
+    ],
+    "REAL SOCIEDAD": [
+     124749,
+     144941
+    ],
+    "CÁDIZ CF": [
+     49276,
+     49486
+    ],
+    "RCD MALLORCA": [
+     60951,
+     60963
+    ],
+    "VALENCIA CF": [
+     85528,
+     85528
+    ],
+    "C.A. OSASUNA": [
+     47133,
+     52996
+    ],
+    "DEPORTIVO ALAVÉS": [
+     31278,
+     31288
+    ],
+    "VILLARREAL CF": [
+     143918,
+     143918
+    ],
+    "RC CELTA": [
+     79887,
+     81187
+    ],
+    "RAYO VALLECANO": [
+     51535,
+     51535
+    ],
+    "GIRONA FC": [
+     51976,
+     52171
+    ],
+    "GRANADA CF": [
+     47585,
+     62660
+    ],
+    "UD LAS PALMAS": [
+     35188,
+     33721
+    ],
+    "GETAFE CF": [
+     40275,
+     41633
+    ],
+    "UD ALMERÍA": [
+     62081,
+     66857
+    ]
+   },
+   "LaLiga2": {
+    "RCD ESPANYOL": [
+     10071,
+     9447
+    ],
+    "REAL SPORTING DE GIJÓN": [
+     8091,
+     8615
+    ],
+    "LEVANTE UD": [
+     4753,
+     4753
+    ],
+    "REAL RACING CLUB DE SANTANDER": [
+     7358,
+     7883
+    ],
+    "RACING CLUB DE FERROL": [
+     5769,
+     6584
+    ],
+    "CD ELDENSE": [
+     5371,
+     5476
+    ],
+    "CD TENERIFE": [
+     10753,
+     10227
+    ],
+    "VILLARREAL CF B": [
+     null,
+     null
+    ],
+    "ELCHE CF": [
+     23946,
+     23854
+    ],
+    "SD AMOREBIETA": [
+     4097,
+     4144
+    ],
+    "REAL OVIEDO": [
+     9447,
+     10258
+    ],
+    "CD MIRANDÉS": [
+     5050,
+     5294
+    ],
+    "R. VALLADOLID CF": [
+     16629,
+     13066
+    ],
+    "C.D. LEGANÉS": [
+     9873,
+     10196
+    ],
+    "REAL ZARAGOZA": [
+     9882,
+     10771
+    ],
+    "ALBACETE BALOMPIÉ": [
+     7638,
+     7647
+    ],
+    "SD EIBAR": [
+     11071,
+     11071
+    ],
+    "FC ANDORRA": [
+     7690,
+     6524
+    ],
+    "SD HUESCA": [
+     4590,
+     4627
+    ],
+    "AD ALCORCÓN": [
+     5216,
+     5457
+    ],
+    "BURGOS CF": [
+     7100,
+     5503
+    ],
+    "FC CARTAGENA": [
+     5207,
+     5183
+    ]
+   }
+  },
+  "2024-25": {
+   "columnas": [
+    "sep 2024",
+    "feb 2025"
+   ],
+   "LaLiga": {
+    "ATHLETIC CLUB": [
+     100818,
+     105818
+    ],
+    "FC BARCELONA": [
+     426427,
+     463642
+    ],
+    "RCD ESPANYOL": [
+     8789,
+     7812
+    ],
+    "REAL MADRID": [
+     754894,
+     754894
+    ],
+    "ATLÉTICO DE MADRID": [
+     310745,
+     314281
+    ],
+    "SEVILLA FC": [
+     2499,
+     684
+    ],
+    "REAL BETIS": [
+     108990,
+     108387
+    ],
+    "REAL SOCIEDAD": [
+     159259,
+     160173
+    ],
+    "RCD MALLORCA": [
+     58841,
+     58841
+    ],
+    "VALENCIA CF": [
+     74608,
+     79998
+    ],
+    "C.A. OSASUNA": [
+     51862,
+     52839
+    ],
+    "DEPORTIVO ALAVÉS": [
+     38628,
+     46138
+    ],
+    "VILLARREAL CF": [
+     135860,
+     135860
+    ],
+    "RC CELTA": [
+     77570,
+     77570
+    ],
+    "RAYO VALLECANO": [
+     45371,
+     45371
+    ],
+    "R. VALLADOLID CF": [
+     41836,
+     47037
+    ],
+    "C.D. LEGANÉS": [
+     37138,
+     34661
+    ],
+    "GIRONA FC": [
+     94464,
+     98877
+    ],
+    "UD LAS PALMAS": [
+     40320,
+     39842
+    ],
+    "GETAFE CF": [
+     39172,
+     39172
+    ]
+   },
+   "LaLiga2": {
+    "REAL SPORTING DE GIJÓN": [
+     8144,
+     8217
+    ],
+    "REAL CLUB DEPORTIVO DE LA CORUÑA": [
+     13451,
+     14678
+    ],
+    "LEVANTE UD": [
+     4266,
+     4266
+    ],
+    "CÁDIZ CF": [
+     18844,
+     17669
+    ],
+    "REAL RACING CLUB DE SANTANDER": [
+     12257,
+     13773
+    ],
+    "RACING CLUB DE FERROL": [
+     7557,
+     8661
+    ],
+    "CD ELDENSE": [
+     5861,
+     6056
+    ],
+    "CD TENERIFE": [
+     12052,
+     12312
+    ],
+    "CLUB DEPORTIVO CASTELLÓN": [
+     8269,
+     8539
+    ],
+    "ELCHE CF": [
+     14992,
+     16016
+    ],
+    "REAL OVIEDO": [
+     12530,
+     13201
+    ],
+    "CD MIRANDÉS": [
+     4375,
+     4542
+    ],
+    "GRANADA CF": [
+     6957,
+     10147
+    ],
+    "REAL ZARAGOZA": [
+     11785,
+     11846
+    ],
+    "ALBACETE BALOMPIÉ": [
+     7473,
+     7620
+    ],
+    "SD EIBAR": [
+     10088,
+     10088
+    ],
+    "CÓRDOBA CF": [
+     6102,
+     7711
+    ],
+    "SD HUESCA": [
+     2529,
+     2568
+    ],
+    "BURGOS CF": [
+     7914,
+     7910
+    ],
+    "UD ALMERÍA": [
+     3594,
+     3847
+    ],
+    "MÁLAGA CF": [
+     9816,
+     11840
+    ],
+    "FC CARTAGENA": [
+     4164,
+     5666
+    ]
+   }
+  },
+  "2025-26": {
+   "columnas": [
+    "sep 2025",
+    "mar 2026"
+   ],
+   "LaLiga": {
+    "SEVILLA FC": [
+     22139,
+     22139
+    ],
+    "ATHLETIC CLUB": [
+     126050,
+     132050
+    ],
+    "FC BARCELONA": [
+     351284,
+     432807
+    ],
+    "RCD ESPANYOL": [
+     56587,
+     57088
+    ],
+    "REAL MADRID": [
+     761226,
+     761226
+    ],
+    "ATLÉTICO DE MADRID": [
+     326989,
+     336268
+    ],
+    "REAL BETIS": [
+     125946,
+     122147
+    ],
+    "LEVANTE UD": [
+     35537,
+     17446
+    ],
+    "REAL SOCIEDAD": [
+     128259,
+     128259
+    ],
+    "RCD MALLORCA": [
+     60917,
+     60966
+    ],
+    "VALENCIA CF": [
+     91238,
+     95667
+    ],
+    "C.A. OSASUNA": [
+     54530,
+     57262
+    ],
+    "DEPORTIVO ALAVÉS": [
+     40999,
+     47788
+    ],
+    "ELCHE CF": [
+     40480,
+     36868
+    ],
+    "VILLARREAL CF": [
+     173084,
+     173084
+    ],
+    "RC CELTA": [
+     91124,
+     91124
+    ],
+    "RAYO VALLECANO": [
+     47028,
+     48952
+    ],
+    "REAL OVIEDO": [
+     45120,
+     46815
+    ],
+    "GIRONA FC": [
+     75442,
+     76959
+    ],
+    "GETAFE CF": [
+     50705,
+     34818
+    ]
+   },
+   "LaLiga2": {
+    "REAL SPORTING DE GIJÓN": [
+     11492,
+     11101
+    ],
+    "REAL CLUB DEPORTIVO DE LA CORUÑA": [
+     11490,
+     13253
+    ],
+    "REAL SOCIEDAD B": [
+     null,
+     null
+    ],
+    "CÁDIZ CF": [
+     7065,
+     7065
+    ],
+    "REAL RACING CLUB DE SANTANDER": [
+     12106,
+     13850
+    ],
+    "CLUB DEPORTIVO CASTELLÓN": [
+     11334,
+     11563
+    ],
+    "CULTURAL Y DEPORTIVA LEONESA": [
+     6898,
+     7471
+    ],
+    "CD MIRANDÉS": [
+     7891,
+     7891
+    ],
+    "R. VALLADOLID CF": [
+     12165,
+     12165
+    ],
+    "C.D. LEGANÉS": [
+     14773,
+     19773
+    ],
+    "GRANADA CF": [
+     4298,
+     4298
+    ],
+    "REAL ZARAGOZA": [
+     11301,
+     12801
+    ],
+    "ALBACETE BALOMPIÉ": [
+     8511,
+     9422
+    ],
+    "SD EIBAR": [
+     8985,
+     8985
+    ],
+    "FC ANDORRA": [
+     6461,
+     6988
+    ],
+    "UD LAS PALMAS": [
+     13377,
+     15183
+    ],
+    "CÓRDOBA CF": [
+     10092,
+     10254
+    ],
+    "AD CEUTA": [
+     6713,
+     6909
+    ],
+    "SD HUESCA": [
+     11537,
+     10949
+    ],
+    "BURGOS CF": [
+     8507,
+     8242
+    ],
+    "UD ALMERÍA": [
+     3395,
+     10504
+    ],
+    "MÁLAGA CF": [
+     11718,
+     11718
+    ]
+   }
+  },
+  "2026-27": {
+   "columnas": [
+    "sep 2026"
+   ],
+   "LaLiga": {
+    "SEVILLA FC": [
+     20161
+    ],
+    "ATHLETIC CLUB": [
+     139203
+    ],
+    "FC BARCELONA": [
+     582769
+    ],
+    "RCD ESPANYOL": [
+     61791
+    ],
+    "REAL MADRID": [
+     832786
+    ],
+    "ATLÉTICO DE MADRID": [
+     361287
+    ],
+    "REAL CLUB DEPORTIVO DE LA CORUÑA": [
+     64016
+    ],
+    "REAL BETIS": [
+     142847
+    ],
+    "LEVANTE UD": [
+     45571
+    ],
+    "REAL SOCIEDAD": [
+     137190
+    ],
+    "REAL RACING CLUB DE SANTANDER": [
+     53183
+    ],
+    "VALENCIA CF": [
+     98812
+    ],
+    "C.A. OSASUNA": [
+     55354
+    ],
+    "DEPORTIVO ALAVÉS": [
+     43253
+    ],
+    "ELCHE CF": [
+     60140
+    ],
+    "VILLARREAL CF": [
+     170564
+    ],
+    "RC CELTA": [
+     88089
+    ],
+    "RAYO VALLECANO": [
+     62319
+    ],
+    "GETAFE CF": [
+     56704
+    ],
+    "MÁLAGA CF": [
+     33634
+    ]
+   },
+   "LaLiga2": {
+    "CENTRE D'ESPORTS SABADELL FC": [
+     6118
+    ],
+    "REAL SPORTING DE GIJÓN": [
+     13345
+    ],
+    "REAL SOCIEDAD B": [
+     null
+    ],
+    "CÁDIZ CF": [
+     4673
+    ],
+    "RCD MALLORCA": [
+     34697
+    ],
+    "CD ELDENSE": [
+     5792
+    ],
+    "CD TENERIFE": [
+     8707
+    ],
+    "CD CASTELLÓN": [
+     15433
+    ],
+    "CELTA FORTUNA": [
+     null
+    ],
+    "REAL OVIEDO": [
+     20767
+    ],
+    "REAL VALLADOLID CF": [
+     4343
+    ],
+    "C.D. LEGANÉS": [
+     20770
+    ],
+    "GIRONA FC": [
+     35088
+    ],
+    "GRANADA CF": [
+     4026
+    ],
+    "ALBACETE BALOMPIÉ": [
+     8605
+    ],
+    "SD EIBAR": [
+     9450
+    ],
+    "FC ANDORRA": [
+     9587
+    ],
+    "UD LAS PALMAS": [
+     17149
+    ],
+    "CÓRDOBA CF": [
+     11048
+    ],
+    "AD CEUTA": [
+     7163
+    ],
+    "BURGOS CF": [
+     9774
+    ],
+    "UD ALMERÍA": [
+     3975
+    ]
+   }
+  }
+ }
+}

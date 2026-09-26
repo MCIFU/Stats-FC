@@ -1,0 +1,180 @@
+{
+ "temporada": "2025-26",
+ "columnas": [
+  "sep 2025",
+  "mar 2026"
+ ],
+ "unidad": "miles de euros",
+ "LaLiga": {
+  "SEVILLA FC": [
+   22139,
+   22139
+  ],
+  "ATHLETIC CLUB": [
+   126050,
+   132050
+  ],
+  "FC BARCELONA": [
+   351284,
+   432807
+  ],
+  "RCD ESPANYOL": [
+   56587,
+   57088
+  ],
+  "REAL MADRID": [
+   761226,
+   761226
+  ],
+  "ATLÉTICO DE MADRID": [
+   326989,
+   336268
+  ],
+  "REAL BETIS": [
+   125946,
+   122147
+  ],
+  "LEVANTE UD": [
+   35537,
+   17446
+  ],
+  "REAL SOCIEDAD": [
+   128259,
+   128259
+  ],
+  "RCD MALLORCA": [
+   60917,
+   60966
+  ],
+  "VALENCIA CF": [
+   91238,
+   95667
+  ],
+  "C.A. OSASUNA": [
+   54530,
+   57262
+  ],
+  "DEPORTIVO ALAVÉS": [
+   40999,
+   47788
+  ],
+  "ELCHE CF": [
+   40480,
+   36868
+  ],
+  "VILLARREAL CF": [
+   173084,
+   173084
+  ],
+  "RC CELTA": [
+   91124,
+   91124
+  ],
+  "RAYO VALLECANO": [
+   47028,
+   48952
+  ],
+  "REAL OVIEDO": [
+   45120,
+   46815
+  ],
+  "GIRONA FC": [
+   75442,
+   76959
+  ],
+  "GETAFE CF": [
+   50705,
+   34818
+  ]
+ },
+ "LaLiga2": {
+  "REAL SPORTING DE GIJÓN": [
+   11492,
+   11101
+  ],
+  "REAL CLUB DEPORTIVO DE LA CORUÑA": [
+   11490,
+   13253
+  ],
+  "REAL SOCIEDAD B": [
+   null,
+   null
+  ],
+  "CÁDIZ CF": [
+   7065,
+   7065
+  ],
+  "REAL RACING CLUB DE SANTANDER": [
+   12106,
+   13850
+  ],
+  "CLUB DEPORTIVO CASTELLÓN": [
+   11334,
+   11563
+  ],
+  "CULTURAL Y DEPORTIVA LEONESA": [
+   6898,
+   7471
+  ],
+  "CD MIRANDÉS": [
+   7891,
+   7891
+  ],
+  "R. VALLADOLID CF": [
+   12165,
+   12165
+  ],
+  "C.D. LEGANÉS": [
+   14773,
+   19773
+  ],
+  "GRANADA CF": [
+   4298,
+   4298
+  ],
+  "REAL ZARAGOZA": [
+   11301,
+   12801
+  ],
+  "ALBACETE BALOMPIÉ": [
+   8511,
+   9422
+  ],
+  "SD EIBAR": [
+   8985,
+   8985
+  ],
+  "FC ANDORRA": [
+   6461,
+   6988
+  ],
+  "UD LAS PALMAS": [
+   13377,
+   15183
+  ],
+  "CÓRDOBA CF": [
+   10092,
+   10254
+  ],
+  "AD CEUTA": [
+   6713,
+   6909
+  ],
+  "SD HUESCA": [
+   11537,
+   10949
+  ],
+  "BURGOS CF": [
+   8507,
+   8242
+  ],
+  "UD ALMERÍA": [
+   3395,
+   10504
+  ],
+  "MÁLAGA CF": [
+   11718,
+   11718
+  ]
+ }
+}

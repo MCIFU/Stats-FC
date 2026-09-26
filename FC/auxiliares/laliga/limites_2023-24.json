@@ -1,0 +1,180 @@
+{
+ "temporada": "2023-24",
+ "columnas": [
+  "sep 2023",
+  "feb 2024"
+ ],
+ "unidad": "miles de euros",
+ "LaLiga": {
+  "ATHLETIC CLUB": [
+   100062,
+   100062
+  ],
+  "FC BARCELONA": [
+   270026,
+   204161
+  ],
+  "REAL MADRID": [
+   727451,
+   727451
+  ],
+  "ATLÉTICO DE MADRID": [
+   296357,
+   303408
+  ],
+  "SEVILLA FC": [
+   168720,
+   152286
+  ],
+  "REAL BETIS": [
+   89906,
+   93241
+  ],
+  "REAL SOCIEDAD": [
+   124749,
+   144941
+  ],
+  "CÁDIZ CF": [
+   49276,
+   49486
+  ],
+  "RCD MALLORCA": [
+   60951,
+   60963
+  ],
+  "VALENCIA CF": [
+   85528,
+   85528
+  ],
+  "C.A. OSASUNA": [
+   47133,
+   52996
+  ],
+  "DEPORTIVO ALAVÉS": [
+   31278,
+   31288
+  ],
+  "VILLARREAL CF": [
+   143918,
+   143918
+  ],
+  "RC CELTA": [
+   79887,
+   81187
+  ],
+  "RAYO VALLECANO": [
+   51535,
+   51535
+  ],
+  "GIRONA FC": [
+   51976,
+   52171
+  ],
+  "GRANADA CF": [
+   47585,
+   62660
+  ],
+  "UD LAS PALMAS": [
+   35188,
+   33721
+  ],
+  "GETAFE CF": [
+   40275,
+   41633
+  ],
+  "UD ALMERÍA": [
+   62081,
+   66857
+  ]
+ },
+ "LaLiga2": {
+  "RCD ESPANYOL": [
+   10071,
+   9447
+  ],
+  "REAL SPORTING DE GIJÓN": [
+   8091,
+   8615
+  ],
+  "LEVANTE UD": [
+   4753,
+   4753
+  ],
+  "REAL RACING CLUB DE SANTANDER": [
+   7358,
+   7883
+  ],
+  "RACING CLUB DE FERROL": [
+   5769,
+   6584
+  ],
+  "CD ELDENSE": [
+   5371,
+   5476
+  ],
+  "CD TENERIFE": [
+   10753,
+   10227
+  ],
+  "VILLARREAL CF B": [
+   null,
+   null
+  ],
+  "ELCHE CF": [
+   23946,
+   23854
+  ],
+  "SD AMOREBIETA": [
+   4097,
+   4144
+  ],
+  "REAL OVIEDO": [
+   9447,
+   10258
+  ],
+  "CD MIRANDÉS": [
+   5050,
+   5294
+  ],
+  "R. VALLADOLID CF": [
+   16629,
+   13066
+  ],
+  "C.D. LEGANÉS": [
+   9873,
+   10196
+  ],
+  "REAL ZARAGOZA": [
+   9882,
+   10771
+  ],
+  "ALBACETE BALOMPIÉ": [
+   7638,
+   7647
+  ],
+  "SD EIBAR": [
+   11071,
+   11071
+  ],
+  "FC ANDORRA": [
+   7690,
+   6524
+  ],
+  "SD HUESCA": [
+   4590,
+   4627
+  ],
+  "AD ALCORCÓN": [
+   5216,
+   5457
+  ],
+  "BURGOS CF": [
+   7100,
+   5503
+  ],
+  "FC CARTAGENA": [
+   5207,
+   5183
+  ]
+ }
+}
