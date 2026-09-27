@@ -674,3 +674,33 @@ foto TM: 22457 · Wikidata: 20316 · Commons: 6323 · Wikipedia ES: 9709
 
 === 27/09/2026 17:39 /home/user/Stats-FC/FC/auxiliares/tmapi/descargar_carrera.py --refrescar 6
 26362 jugadores
+  1000/26362
+  2000/26362
+  3000/26362
+  4000/26362
+  5000/26362
+  6000/26362
+  7000/26362
+  8000/26362
+  9000/26362
+  10000/26362
+  11000/26362
+  12000/26362
+  13000/26362
+  14000/26362
+  15000/26362
+  16000/26362
+  17000/26362
+  18000/26362
+  19000/26362
+  20000/26362
+  21000/26362
+  22000/26362
+  23000/26362
+  24000/26362
+  25000/26362
+  26000/26362
+26362 jugadores con trayectoria · 19090 clubes · 1583 competiciones
+--- código 0 en 10 min
+
+=== 27/09/2026 17:49 run_all.py ../../../Temporada 2025-26.xlsx ../../../Temporada 2026-27.xlsx ../../Valoracion_FC_v1.2.xlsx --partidos ../../partidos_TM.csv --avanzadas ../../avanzadas.csv
