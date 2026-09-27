@@ -149,3 +149,7 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'DataFrame' object has no attribute 'fm_minutes'
 --- código 1 en 2 min
+
+=== 27/09/2026 14:35 /home/user/Stats-FC/FC/auxiliares/avanzadas/descargar_fotmob_understat.py --refresh
+41667 filas de 36 ligas en los Excel
+  2025-26 Premier: 613 filas · FotMob 454 jugadores, cruzados 433 · Understat 551, cruzados 497
