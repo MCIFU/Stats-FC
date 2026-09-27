@@ -384,3 +384,112 @@ partidos descargados
   títulos 50/532
   títulos 100/532
   títulos 150/532
+  títulos 200/532
+  títulos 250/532
+  títulos 300/532
+  títulos 350/532
+  títulos 400/532
+  títulos 450/532
+  títulos 500/532
+entrenadores: 532 · con títulos 298 · sistemas identificados 16
+--- código 0 en 6 min
+
+=== 27/09/2026 15:09 /home/user/Stats-FC/FC/auxiliares/portada/descargar_portada.py
+portada: 721 partidos · 48 noticias → /home/user/Stats-FC/FC/Panel_FC/portada.js
+--- código 0 en 0 min
+
+=== 27/09/2026 15:09 /home/user/Stats-FC/FC/auxiliares/ligas/descargar_ligas.py --refrescar 0.5
+  Premier: 380 partidos, 100 traspasos
+  LaLiga: 380 partidos, 100 traspasos
+  Bundesliga: 306 partidos, 100 traspasos
+  Serie A: 380 partidos, 100 traspasos
+  Ligue 1: 306 partidos, 100 traspasos
+  Eredivisie: 306 partidos, 100 traspasos
+  Portugal: 306 partidos, 100 traspasos
+  Scottish Premiership: 198 partidos, 100 traspasos
+  Süper Lig: 306 partidos, 100 traspasos
+  Liga Belga: 306 partidos, 100 traspasos
+  Saudi Pro: 306 partidos, 100 traspasos
+  Ekstraklasa: 306 partidos, 100 traspasos
+  Liga MX: 153 partidos, 100 traspasos
+  MLS: 510 partidos, 100 traspasos
+  Brasileirão: 380 partidos, 100 traspasos
+  Liga Argentina: 495 partidos, 100 traspasos
+  Championship: 552 partidos, 100 traspasos
+  LaLiga2: 462 partidos, 100 traspasos
+  Serie B: 380 partidos, 100 traspasos
+  2. Bundesliga: 306 partidos, 100 traspasos
+  Super League 1: 182 partidos, 100 traspasos
+  Superliga: 132 partidos, 100 traspasos
+  Super League: 132 partidos, 100 traspasos
+  Bundesliga Austria: 132 partidos, 100 traspasos
+  J1 League: 380 partidos, 48 traspasos
+  K League 1: 198 partidos, 5 traspasos
+  Primera Federación: 760 partidos, 100 traspasos
+  Segunda Federación: 1598 partidos, 35 traspasos
+  League One: 552 partidos, 100 traspasos
+  League Two: 552 partidos, 100 traspasos
+  National League: 552 partidos, 30 traspasos
+  Ligue 2: 306 partidos, 100 traspasos
+  Ligue 3: 306 partidos, 32 traspasos
+  3. Liga: 380 partidos, 100 traspasos
+  Regionalliga: 1566 partidos, 28 traspasos
+  Serie C: 1140 partidos, 100 traspasos
+5209 partidos terminados → goles
+  500/5209
+  1000/5209
+  1500/5209
+  2000/5209
+  2500/5209
+  3000/5209
+  3500/5209
+  4000/5209
+  4500/5209
+  5000/5209
+ligas: 36 · goles de 5209 partidos · 19098 jugadores FotMob
+--- código 0 en 1 min
+
+=== 27/09/2026 15:10 /home/user/Stats-FC/FC/auxiliares/ligas/descargar_historia_ligas.py --refrescar 0.5
+  Premier: 127 campeones · 17 temporadas · 43 listas de jugadores
+  LaLiga: 95 campeones · 17 temporadas · 37 listas de jugadores
+  Bundesliga: 114 campeones · 17 temporadas · 37 listas de jugadores
+  Serie A: 121 campeones · 17 temporadas · 37 listas de jugadores
+  Ligue 1: 112 campeones · 17 temporadas · 37 listas de jugadores
+  Eredivisie: 127 campeones · 17 temporadas · 37 listas de jugadores
+  Portugal: 92 campeones · 17 temporadas · 37 listas de jugadores
+  Scottish Premiership: 129 campeones · 17 temporadas · 37 listas de jugadores
+  Süper Lig: 70 campeones · 17 temporadas · 37 listas de jugadores
+  Liga Belga: 123 campeones · 17 temporadas · 37 listas de jugadores
+  Saudi Pro: 22 campeones · 17 temporadas · 36 listas de jugadores
+  Ekstraklasa: 99 campeones · 17 temporadas · 37 listas de jugadores
+  Liga MX: 114 campeones · 33 temporadas · 36 listas de jugadores
+  MLS: 30 campeones · 17 temporadas · 37 listas de jugadores
+  Brasileirão: 67 campeones · 17 temporadas · 36 listas de jugadores
+  Liga Argentina: 148 campeones · 17 temporadas · 36 listas de jugadores
+  Championship: 123 campeones · 17 temporadas · 37 listas de jugadores
+  LaLiga2: 95 campeones · 17 temporadas · 37 listas de jugadores
+  Serie B: 93 campeones · 17 temporadas · 37 listas de jugadores
+  2. Bundesliga: 52 campeones · 17 temporadas · 37 listas de jugadores
+  Super League 1: 90 campeones · 17 temporadas · 37 listas de jugadores
+  Superliga: 112 campeones · 17 temporadas · 37 listas de jugadores
+  Super League: 32 campeones · 17 temporadas · 37 listas de jugadores
+  Bundesliga Austria: 108 campeones · 17 temporadas · 37 listas de jugadores
+  J1 League: 57 campeones · 18 temporadas · 37 listas de jugadores
+  K League 1: 43 campeones · 17 temporadas · 37 listas de jugadores
+  Primera Federación: 0 campeones · 17 temporadas · 2 listas de jugadores
+  Segunda Federación: https://www.fotmob.com/api/data/leagues?id=9138&season=2016/2017: 502 Server Error: Bad Gateway for url: https://www.fotmob.com/api/data/leagues?id=9138&season=2016/2017
+  League One: 33 campeones · 17 temporadas · 37 listas de jugadores
+  League Two: 33 campeones · 17 temporadas · 37 listas de jugadores
+  National League: 24 campeones · 17 temporadas · 3 listas de jugadores
+  Ligue 2: 86 campeones · 17 temporadas · 37 listas de jugadores
+  Ligue 3: 0 campeones · 17 temporadas · 3 listas de jugadores
+  3. Liga: 18 campeones · 17 temporadas · 30 listas de jugadores
+  Regionalliga: 0 campeones · 18 temporadas · 2 listas de jugadores
+  Serie C: 0 campeones · 17 temporadas · 30 listas de jugadores
+--- código 0 en 1 min
+
+=== 27/09/2026 15:12 run_all.py ../../../Temporada 2025-26.xlsx ../../../Temporada 2026-27.xlsx ../../Valoracion_FC_v1.2.xlsx --partidos ../../partidos_TM.csv --avanzadas ../../avanzadas.csv
+2025-26: ficha TM en 15623 jugadores · edad corregida en 7302 · posición afinada en 4643
+2026-27: ficha TM en 12989 jugadores · edad corregida en 1794 · posición afinada en 3833
+partidos: 25-26 383896 filas / 15622 jugadores; 26-27 119109 / 12988
+--- código 0 en 15 min

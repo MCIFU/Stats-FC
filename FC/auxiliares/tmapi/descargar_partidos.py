@@ -154,8 +154,14 @@ def squad(club_id, tmseason):
     if not p.exists():
         def api():
             d = get(f"{TMAPI}/club/{club_id}/squad?season={tmseason}")
-            return {str(x.get("playerId")): None for x in ((d or {}).get("data") or {}).get("squad") or [] if x.get("playerId")}
-        return cached(f"squads_api/{club_id}_{tmseason}.json.gz", api)
+            ids = [str(x.get("playerId")) for x in ((d or {}).get("data") or {}).get("squad") or [] if x.get("playerId")]
+            names = {}
+            for i in range(0, len(ids), 50):  # nombre de cada jugador: ficha /players (la plantilla de la API no lo trae)
+                q = "&".join(f"ids%5B%5D={x}" for x in ids[i:i + 50])
+                for it in as_list(get(f"{TMAPI}/players?{q}")):
+                    names[str(it.get("id"))] = it.get("name")
+            return {p: names.get(p) or p for p in ids}
+        return cached(f"squads_named/{club_id}_{tmseason}.json.gz", api)
     return _squad_web(club_id, tmseason)
 
 
