@@ -230,3 +230,26 @@ avanzadas.csv: 41667 filas, con FotMob 25705, con Understat 4563
 
 === 27/09/2026 14:43 /home/user/Stats-FC/FC/auxiliares/tmapi/descargar_valor_lesiones.py --refrescar 6
 17600 jugadores
+  1000/17600
+  2000/17600
+  3000/17600
+  4000/17600
+  5000/17600
+  6000/17600
+  7000/17600
+  8000/17600
+  9000/17600
+  10000/17600
+  11000/17600
+  12000/17600
+  13000/17600
+  14000/17600
+  15000/17600
+  16000/17600
+  17000/17600
+contrato: 14912 · historial valor: 17148 · con lesiones: 12241
+--- código 0 en 1 min
+
+=== 27/09/2026 14:45 /home/user/Stats-FC/FC/auxiliares/media/descargar_media.py
+17600 jugadores con ID de Transfermarkt
+  wikidata 300/1354
