@@ -200,7 +200,7 @@ def main():
         tid = names.get((season, liga), {}).get(g.sofa_team.mode().iloc[0])
         if tid and (club not in fm_of or season == "2026-27"):
             fm_of[club] = (tid, liga)
-    pt = pd.read_csv(FC / "Claude outputs" / "partidos_TM.csv", usecols=["excel_club", "club_id"]).dropna()
+    pt = pd.read_csv((lambda b: b / "partidos_TM.csv.gz" if (b / "partidos_TM.csv.gz").exists() else b / "partidos_TM.csv")(FC / "Claude outputs"), usecols=["excel_club", "club_id"]).dropna()
     tm_of = pt.groupby("excel_club").club_id.agg(lambda s: str(int(s.mode().iloc[0]))).to_dict()
     print(f"{len(fm_of)} clubes enlazados con FotMob")
     wd = wikidata_clubs(sorted({tm_of[c] for c in fm_of if c in tm_of}))

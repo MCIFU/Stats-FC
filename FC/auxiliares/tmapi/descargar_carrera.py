@@ -56,7 +56,7 @@ def main():
     ap.add_argument("--refrescar", type=int, default=None)
     ap.add_argument("--workers", type=int, default=6)
     a = ap.parse_args()
-    csv = HERE.parents[1] / "Claude outputs" / "partidos_TM.csv"
+    csv = (lambda b: b / "partidos_TM.csv.gz" if (b / "partidos_TM.csv.gz").exists() else b / "partidos_TM.csv")(HERE.parents[1] / "Claude outputs")
     ids = sorted(set(pd.read_csv(csv, usecols=["tm_id"]).tm_id.dropna().astype(int).astype(str)))
     print(f"{len(ids)} jugadores", flush=True)
 

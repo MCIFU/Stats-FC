@@ -55,7 +55,7 @@ def wikidata(ids, cache):
 
 
 def main():
-    csv = FC / "Claude outputs" / "partidos_TM.csv"
+    csv = (lambda b: b / "partidos_TM.csv.gz" if (b / "partidos_TM.csv.gz").exists() else b / "partidos_TM.csv")(FC / "Claude outputs")
     ids = sorted(set(pd.read_csv(csv, usecols=["tm_id"]).tm_id.dropna().astype(int).astype(str)))
     print(f"{len(ids)} jugadores con ID de Transfermarkt")
     meta = dp.meta("players", ids)

@@ -496,3 +496,181 @@ partidos: 25-26 383896 filas / 15622 jugadores; 26-27 119109 / 12988
 
 === 27/09/2026 16:55 /home/user/Stats-FC/FC/auxiliares/tmapi/actualizar_excels.py --escribir --crecimiento --partidos todas
 41849 filas; 62 con club fuera de clubmap.json (se dejan igual)
+  plantillas 25/1785
+  plantillas 50/1785
+  plantillas 75/1785
+  plantillas 100/1785
+  plantillas 125/1785
+  plantillas 150/1785
+  plantillas 175/1785
+  plantillas 200/1785
+  plantillas 225/1785
+  plantillas 250/1785
+  plantillas 275/1785
+  plantillas 300/1785
+  plantillas 325/1785
+  plantillas 350/1785
+  plantillas 375/1785
+  plantillas 400/1785
+  plantillas 425/1785
+  plantillas 450/1785
+  plantillas 475/1785
+  plantillas 500/1785
+  plantillas 525/1785
+  plantillas 550/1785
+  plantillas 575/1785
+  plantillas 600/1785
+  plantillas 625/1785
+  plantillas 650/1785
+  plantillas 675/1785
+  plantillas 700/1785
+  plantillas 725/1785
+  plantillas 750/1785
+  plantillas 775/1785
+  plantillas 800/1785
+  plantillas 825/1785
+  plantillas 850/1785
+  plantillas 875/1785
+  plantillas 900/1785
+  plantillas 925/1785
+  plantillas 950/1785
+  plantillas 975/1785
+  plantillas 1000/1785
+  plantillas 1025/1785
+  plantillas 1050/1785
+  plantillas 1075/1785
+  plantillas 1100/1785
+  plantillas 1125/1785
+  plantillas 1150/1785
+  plantillas 1175/1785
+  plantillas 1200/1785
+  plantillas 1225/1785
+  plantillas 1250/1785
+  plantillas 1275/1785
+  plantillas 1300/1785
+  plantillas 1325/1785
+  plantillas 1350/1785
+  plantillas 1375/1785
+  plantillas 1400/1785
+  plantillas 1425/1785
+  plantillas 1450/1785
+  plantillas 1475/1785
+  plantillas 1500/1785
+  plantillas 1525/1785
+  plantillas 1550/1785
+  plantillas 1575/1785
+  plantillas 1600/1785
+  plantillas 1625/1785
+  plantillas 1650/1785
+  plantillas 1675/1785
+  plantillas 1700/1785
+  plantillas 1725/1785
+  plantillas 1750/1785
+  plantillas 1775/1785
+IDs: {'exact': 41232, 'global': 293, 'sin_id': 198, 'fuzzy': 63, 'manual': 1}
+  198 filas sin ID -> auxiliares/tmapi/sin_id_tm.csv (añádelas a pidmap_manual.json)
+26447 jugadores TM; performance-game…
+  1000/26447 (16s)
+  2000/26447 (30s)
+  3000/26447 (43s)
+  4000/26447 (59s)
+  5000/26447 (74s)
+  6000/26447 (87s)
+  7000/26447 (114s)
+  8000/26447 (142s)
+  9000/26447 (169s)
+  10000/26447 (194s)
+  11000/26447 (218s)
+  12000/26447 (243s)
+  13000/26447 (267s)
+  14000/26447 (289s)
+  15000/26447 (311s)
+  16000/26447 (329s)
+  17000/26447 (348s)
+  18000/26447 (366s)
+  19000/26447 (383s)
+  20000/26447 (400s)
+  21000/26447 (416s)
+  22000/26447 (433s)
+  23000/26447 (448s)
+  24000/26447 (466s)
+  25000/26447 (480s)
+  26000/26447 (496s)
+clubes de año natural: 2935 | ligas: ['17AC', '17WC', '23AF', '2DVB', 'A168', 'A2SW', 'A2VI', 'AF19', 'AG18', 'AR1N', 'AR3F', 'AR3R', 'ARG1', 'ARG2', 'ARGC', 'ASD1', 'ASD2', 'BCE2', 'BO1A', 'BR4P', 'BRA1', 'BRA2', 'BRAL', 'BRCB', 'BRCM', 'BRES', 'BRGO', 'BRPB', 'BRQR', 'C20Q', 'C220', 'CACG', 'CDN1', 'CHL3', 'CL2B', 'CL2F', 'CL2Z', 'CL3S', 'CLO', 'CLPD']
+708738 filas jugador-partido (25931 jugadores) -> /home/user/Stats-FC/FC/Claude outputs/partidos_TM.csv
+filas: {'iguales': 39315, 'cambian': 2274} | cambia CONT: 2
+bloques que cambian: [('LIGA', 4908), ('COPA', 165), ('SEL', 71), ('CONT', 19)]
+por temporada: {'2025-26': 44, '2026-27': 2230} -> auxiliares/tmapi/diferencias_TM.csv
+escribiendo 41515 filas que solo crecen; 74 con bajadas quedan en diferencias_TM.csv
+Temporada 2025-26.xlsx: 3 filas escritas
+Temporada 2026-27.xlsx: 2197 filas escritas
+--- código 0 en 31 min
+
+=== 27/09/2026 17:27 /home/user/Stats-FC/FC/auxiliares/tmapi/descargar_valor_lesiones.py --refrescar 6
+26362 jugadores
+  1000/26362
+  2000/26362
+  3000/26362
+  4000/26362
+  5000/26362
+  6000/26362
+  7000/26362
+  8000/26362
+  9000/26362
+  10000/26362
+  11000/26362
+  12000/26362
+  13000/26362
+  14000/26362
+  15000/26362
+  16000/26362
+  17000/26362
+  18000/26362
+  19000/26362
+  20000/26362
+  21000/26362
+  22000/26362
+  23000/26362
+  24000/26362
+  25000/26362
+  26000/26362
+contrato: 22095 · historial valor: 25384 · con lesiones: 16091
+--- código 0 en 10 min
+
+=== 27/09/2026 17:38 /home/user/Stats-FC/FC/auxiliares/media/descargar_media.py
+26362 jugadores con ID de Transfermarkt
+  wikidata 300/8768
+  wikidata 600/8768
+  wikidata 900/8768
+  wikidata 1200/8768
+  wikidata 1500/8768
+  wikidata 1800/8768
+  wikidata 2100/8768
+  wikidata 2400/8768
+  wikidata 2700/8768
+  wikidata 3000/8768
+  wikidata 3300/8768
+  wikidata 3600/8768
+  wikidata 3900/8768
+  wikidata 4200/8768
+  wikidata 4500/8768
+  wikidata 4800/8768
+  wikidata 5100/8768
+  wikidata 5400/8768
+  wikidata 5700/8768
+  wikidata 6000/8768
+  wikidata 6300/8768
+  wikidata 6600/8768
+  wikidata 6900/8768
+  wikidata 7200/8768
+  wikidata 7500/8768
+  wikidata 7800/8768
+  wikidata 8100/8768
+  wikidata 8400/8768
+  wikidata 8700/8768
+  wikidata 8768/8768
+foto TM: 22457 · Wikidata: 20316 · Commons: 6323 · Wikipedia ES: 9709
+--- código 0 en 1 min
+
+=== 27/09/2026 17:39 /home/user/Stats-FC/FC/auxiliares/tmapi/descargar_carrera.py --refrescar 6
+26362 jugadores

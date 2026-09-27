@@ -242,7 +242,10 @@ def exportar_partidos(res, ligas, out_path):
                             home=g["home"], gf=g["gf"], ga=g["ga"], Min=g["Min"], G=g["G"], A=g["A"],
                             GC=g["GC"] if r["gk"] else None))
     df = pd.DataFrame(out).sort_values(["season", "date", "tm_id"])
-    df.to_csv(out_path, index=False, encoding="utf-8-sig")
+    df.to_csv(out_path, index=False, encoding="utf-8-sig")  # .csv.gz: comprimido (el .csv pasa de 100 MB, límite de GitHub)
+    old = out_path.with_suffix("") if out_path.suffix == ".gz" else None
+    if old is not None and old.exists():
+        old.unlink()
     print(f"{len(df)} filas jugador-partido ({df.name.nunique()} jugadores) -> {out_path}")
     return df
 
@@ -273,7 +276,7 @@ def main():
     res, stats = agregar(rows, ctx)
     if a.partidos:
         ligas = None if a.partidos == "todas" else set(a.partidos.split(","))
-        exportar_partidos(res, ligas, FC / "Claude outputs" / "partidos_TM.csv")
+        exportar_partidos(res, ligas, FC / "Claude outputs" / "partidos_TM.csv.gz")
     res = [{k: v for k, v in r.items() if k != "used"} for r in res]
     df = pd.DataFrame(res)
     rep = df[(df.cambios != "") | df.cont_cambia].copy()

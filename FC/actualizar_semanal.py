@@ -7,7 +7,7 @@ Pasos:
  1. Ligas completas: añade a quien haya debutado (plantillas TM renovadas cada 27 días).
  2. Partidos TM (caché renovada si tiene > 5 días): escribe en los Excel solo las filas que crecen
     (partidos nuevos); las que bajan quedan en auxiliares/tmapi/diferencias_TM.csv para revisarlas.
-    Exporta partidos_TM.csv.
+    Exporta partidos_TM.csv.gz.
  3. Orden y formato de los Excel.
  4. Estadísticas avanzadas (FotMob + Understat, descarga de nuevo).
  5. Contrato, valor de mercado y lesiones (renovados si tienen > 6 días), fotos/enlaces, trayectorias,
@@ -76,7 +76,7 @@ def main():
     run([AUX / "ligas/descargar_ligas.py", "--refrescar", "0.5"])
     run([AUX / "ligas/descargar_historia_ligas.py", "--refrescar", "0.5"])
     run(["run_all.py", "../../../Temporada 2025-26.xlsx", "../../../Temporada 2026-27.xlsx", "../../Valoracion_FC_v1.2.xlsx",
-         "--partidos", "../../partidos_TM.csv", "--avanzadas", "../../avanzadas.csv"], cwd=VAL)
+         "--partidos", "../../partidos_TM.csv.gz", "--avanzadas", "../../avanzadas.csv"], cwd=VAL)
     print(f"\nListo. Registro: {LOG}")
 
 
