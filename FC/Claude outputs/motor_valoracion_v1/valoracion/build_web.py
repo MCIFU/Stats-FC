@@ -163,8 +163,18 @@ def build(base, cfg, out_dir, matches=None, sims=None):
     meta["clubFm"] = [fm_team.get(c) for c in clubs]
     data = {"meta": meta, "media": media, "players": rows, "similar": sim}
     dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(",", ":"))
+    # cada archivo por debajo de 16 MB: jugadores, ficha TM y partidos en 3 trozos (datos.js + datos_2.js + datos_3.js…)
+    NP = 3
+    step = -(-len(rows) // NP)
+    data["players"] = rows[:step]
     (out_dir / "datos.js").write_text("window.FC_DATA=" + dump(data) + ";\n", encoding="utf-8")
-    (out_dir / "extra.js").write_text("window.FC_EXTRA=" + dump(extra) + ";\n", encoding="utf-8")
+    for k in range(1, NP):
+        (out_dir / f"datos_{k + 1}.js").write_text("(function(a){for(const x of a)window.FC_DATA.players.push(x);})(" + dump(rows[k * step:(k + 1) * step]) + ");\n", encoding="utf-8")
+    ek = list(extra)
+    es = -(-len(ek) // NP)
+    (out_dir / "extra.js").write_text("window.FC_EXTRA=" + dump({k: extra[k] for k in ek[:es]}) + ";\n", encoding="utf-8")
+    for k in range(1, NP):
+        (out_dir / f"extra_{k + 1}.js").write_text("Object.assign(window.FC_EXTRA," + dump({x: extra[x] for x in ek[k * es:(k + 1) * es]}) + ");\n", encoding="utf-8")
     # trayectoria completa: 64 paquetes que la página carga al abrir una ficha (carrera/c_NN.js)
     cfile = mfile.parents[1] / "tmapi" / "carrera.json.gz"
     if cfile.exists():
@@ -184,7 +194,11 @@ def build(base, cfg, out_dir, matches=None, sims=None):
         eq = json.loads(_gz.decompress(efile.read_bytes()))
         (out_dir / "equipos.js").write_text("window.FC_TEAMS=" + dump(eq["clubs"]) + ";\n", encoding="utf-8")
     # partidos aparte: cada archivo por debajo de 16 MB
-    (out_dir / "partidos.js").write_text("window.FC_GAMES=" + dump({"games": games, "opponents": opps}) + ";\n", encoding="utf-8")
+    gk = list(games)
+    gs = -(-len(gk) // NP)
+    (out_dir / "partidos.js").write_text("window.FC_GAMES=" + dump({"games": {k: games[k] for k in gk[:gs]}, "opponents": opps}) + ";\n", encoding="utf-8")
+    for k in range(1, NP):
+        (out_dir / f"partidos_{k + 1}.js").write_text("Object.assign(window.FC_GAMES.games," + dump({x: games[x] for x in gk[k * gs:(k + 1) * gs]}) + ");\n", encoding="utf-8")
     return out_dir / "datos.js"
 
 
@@ -193,5 +207,5 @@ if __name__ == "__main__":  # desde una caché: python build_web.py base.pkl FC/
     import sys
     d = pickle.load(open(sys.argv[1], "rb"))
     p = build(d["base"], d["cfg"], sys.argv[2], d.get("matches"), d.get("sims"))
-    for f in ("datos.js", "extra.js", "partidos.js"):
+    for f in ("datos.js", "datos_2.js", "datos_3.js", "extra.js", "extra_2.js", "extra_3.js", "partidos.js", "partidos_2.js", "partidos_3.js"):
         print(f, f"{(p.parent / f).stat().st_size / 1e6:.1f} MB")
