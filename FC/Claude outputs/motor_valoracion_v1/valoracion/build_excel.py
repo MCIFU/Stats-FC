@@ -350,7 +350,11 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
     write_df(we, t.sort_values(["Liga", "Fuerza en su liga (pct)"], ascending=[True, False]).round(2), freeze="D2")
 
     # ---------------- ELO_PARTIDOS
-    wm = wb.create_sheet("ELO_PARTIDOS")
+    # ELO_PARTIDOS y DATOS_ORIGEN van a un libro aparte (…_partidos.xlsx): ninguna fórmula los usa y el libro principal
+    # pasaba de 100 MB (límite de GitHub) con las divisiones inferiores
+    wb2 = Workbook()
+    wb2.remove(wb2.active)
+    wm = wb2.create_sheet("ELO_PARTIDOS")
     mcols = ["name", "season", "date", "block", "club", "opponent", "home", "gf", "ga", "Min", "G", "A", "GC", "sofa_rating", "match_rating",
              "opp_elo", "elo_before", "expected", "score", "elo_delta"]
     if matches is not None and len(matches):
@@ -362,8 +366,8 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
             if c in mx:
                 mx[c] = pd.to_numeric(mx[c], errors="coerce").round(3 if c in ("expected", "score") else 1)
         mx = mx.sort_values(["name", "date"])
-        # en el Excel solo los últimos 5 partidos de cada jugador y temporada (el detalle completo está en el panel y en partidos_TM.csv.gz)
-        mx = mx.groupby(["player_id", "season"] if "season" in mx else ["player_id"], group_keys=False).tail(5)
+        # solo los últimos 10 partidos de cada jugador y temporada (el detalle completo está en el panel y en partidos_TM.csv.gz)
+        mx = mx.groupby(["player_id", "season"] if "season" in mx else ["player_id"], group_keys=False).tail(10)
         es = {"name": "Jugador", "season": "Temporada", "date": "Fecha", "block": "Bloque", "club": "Club", "opponent": "Rival",
               "home": "Local", "gf": "GF", "ga": "GC", "Min": "Min", "G": "G", "A": "A", "GC": "GC portero", "sofa_rating": "Nota SofaScore",
               "match_rating": "Nota partido", "opp_elo": "Elo rival", "elo_before": "Elo antes", "expected": "Esperado",
@@ -458,7 +462,7 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
 
     # ---------------- DATOS_ORIGEN
     if raw is not None:
-        wo = wb.create_sheet("DATOS_ORIGEN")
+        wo = wb2.create_sheet("DATOS_ORIGEN")
         write_df(wo, raw, freeze="C2")
 
     # ---------------- FICHA (fórmulas)
@@ -467,6 +471,10 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
     build_leeme(leeme, cfg, b, source_note)
     pulir(wb)
     wb.save(out_path)
+    for w in wb2.worksheets:
+        w.sheet_properties.tabColor = TABS.get(w.title, "64748B")
+        _tabla(w)
+    wb2.save(str(out_path).replace(".xlsx", "_partidos.xlsx"))
     return b
 
 
@@ -615,7 +623,7 @@ def build_leeme(ws, cfg, b, source_note):
         ("Un sistema propio y explicable. NO copia el ELO de BeSoccer ni el CA/PA de Football Manager. Cada número se puede seguir hasta la estadística original.", F_BASE),
         ("", None),
         ("FLUJO", F_BOLD),
-        ("DATOS_ORIGEN → per90 → ajuste por muestra → PERCENTILES (posición; liga y global) → ATRIBUTOS → ROLES → CA → REL_PERF → PA → SCOUT.  ELO / FORM / CONSISTENCY: capa por partido.", F_BASE),
+        ("DATOS_ORIGEN → per90 → ajuste por muestra → PERCENTILES (posición; liga y global) → ATRIBUTOS → ROLES → CA → REL_PERF → PA → SCOUT.  ELO / FORM / CONSISTENCY: capa por partido. Las hojas ELO_PARTIDOS y DATOS_ORIGEN están en el libro …_partidos.xlsx (mismo nombre + _partidos).", F_BASE),
         ("", None),
         ("MÉTRICAS (separadas, no son la misma cosa)", F_BOLD),
         ("CA (Current Ability): nivel actual estimado. CA_RAW = sin contexto; CA_CONTEXT = cómo domina en su liga, situado según el nivel de esa liga; CA_FINAL = mezcla, encogida hacia la media de su liga si hay pocos minutos.", F_BASE),
