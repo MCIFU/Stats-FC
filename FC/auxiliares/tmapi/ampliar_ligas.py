@@ -30,7 +30,12 @@ LIGAS = {"Eredivisie": ("NL1", False), "Süper Lig": ("TR1", False), "Liga Belga
          "Brasileirão": ("BRA1", True), "Ekstraklasa": ("PL1", False), "MLS": ("MLS1", True), "Portugal": ("PO1", False),
          "Championship": ("GB2", False), "LaLiga2": ("ES2", False), "Serie B": ("IT2", False), "2. Bundesliga": ("L2", False),
          "Super League 1": ("GR1", False), "Superliga": ("DK1", False), "Super League": ("C1", False),
-         "Bundesliga Austria": ("A1", False), "J1 League": ("JAP1", True), "K League 1": ("RSK1", True)}
+         "Bundesliga Austria": ("A1", False), "J1 League": ("JAP1", True), "K League 1": ("RSK1", True),
+         # divisiones inferiores de las 5 grandes (una etiqueta puede agrupar varios grupos de TM)
+         "Primera Federación": (["E3G1", "E3G2"], False), "Segunda Federación": ([f"E4G{i}" for i in range(1, 6)], False),
+         "League One": ("GB3", False), "League Two": ("GB4", False), "National League": ("CNAT", False),
+         "Ligue 2": ("FR2", False), "Ligue 3": ("FR3", False), "3. Liga": ("L3", False),
+         "Regionalliga": (["RLN3", "RLW3", "RLSW", "RLB3", "RLN4"], False), "Serie C": (["IT3A", "IT3B", "IT3C"], False)}
 # Japón pasa a temporada ago-may en 2026/27 (TM: saison_id 2026); el torneo corto feb-jun 2026 es otra competición
 SID = {("JAP1", "2026-27"): 2026}
 POSMAP = {"CF": "DC", "SS": "MCO", "LW": "EI", "RW": "ED", "LM": "EI", "RM": "ED", "AM": "MCO", "CM": "MC", "DM": "MCD",
@@ -49,6 +54,20 @@ def hexcol(c, default):
 
 
 def clubes_liga(comp, sid):
+    """Clubes de una liga en una temporada: API de TM (clasificación de esa temporada); la web solo si falla."""
+    def api():
+        d = D.get(f"{D.TMAPI}/competition/{comp}/table?season={sid}")
+        ids = [str(c.get("clubId")) for t in ((d or {}).get("data") or {}).get("tables") or [] for c in t.get("clubs") or [] if c.get("clubId")]
+        return list(dict.fromkeys(ids)) or None
+    p = D.CACHE / f"ligas/{comp}_{sid}.json.gz"
+    if not p.exists():
+        try:
+            v = api()
+            if v:
+                return D.cached(f"ligas/{comp}_{sid}.json.gz", lambda: v)
+        except Exception:  # noqa: BLE001
+            pass
+
     def fetch():
         h = D.get(f"{D.TMWEB}/x/startseite/wettbewerb/{comp}/saison_id/{sid}", as_json=False)
         return list(dict.fromkeys(re.findall(r'href="/[^"/]+/startseite/verein/(\d+)/saison_id/' + str(sid), h)))
@@ -102,20 +121,32 @@ def main():
     cand = {}  # (temporada, liga) -> {tm_id: nombre plantilla}
     league_clubs = {}
     for liga in ligas:
-        comp, cal = LIGAS[liga]
+        comps, cal = LIGAS[liga]
+        comps = [comps] if isinstance(comps, str) else comps
         for season in ("2025-26", "2026-27"):
-            sid = (2024 if season == "2025-26" else 2025) if cal else (2025 if season == "2025-26" else 2026)
-            sid = SID.get((comp, season), sid)
-            clubs = clubes_liga(comp, sid)
+            base_sid = (2024 if season == "2025-26" else 2025) if cal else (2025 if season == "2025-26" else 2026)
+            clubs, sid_of = [], {}
+            for comp in comps:
+                sid = SID.get((comp, season), base_sid)
+                for c in clubes_liga(comp, sid):
+                    if c not in sid_of:
+                        clubs.append(c)
+                        sid_of[c] = sid
             league_clubs[(season, liga)] = set(clubs)
             names = {}
             for c in clubs:
-                fresh = not (D.CACHE / f"squads/{c}_{sid}.json.gz").exists()
+                sid = sid_of[c]
                 names.update(D.squad(c, sid))
-                if fresh:
-                    time.sleep(1.5)
             cand[(season, liga)] = names
             print(f"{season} {liga}: {len(clubs)} clubes, {len(names)} jugadores en plantillas")
+    # nombres que la API de plantillas no da: los de la ficha TM
+    sin = {p for d in cand.values() for p, n in d.items() if not n}
+    if sin:
+        FF = fichas(sin)
+        for d in cand.values():
+            for p in d:
+                if not d[p]:
+                    d[p] = (FF.get(p) or {}).get("name") or p
     pids = sorted({r["tm_id"] for r in rows if r.get("tm_id")} | {p for d in cand.values() for p in d})
     all_clubs = {r["club_id"] for r in rows} | {c for s in league_clubs.values() for c in s}
     ctx = A.construir(pids, False, a.workers, a.corte, all_clubs)

@@ -148,6 +148,18 @@ RX_PLAYER = re.compile(r'href="/[^"/]+/(?:profil|leistungsdaten)/spieler/(\d+)[^
 
 
 def squad(club_id, tmseason):
+    """Jugadores de un club en una temporada {id: nombre}. Caché de la web si existe; si no, la API (sin límite de ritmo
+    de la web; el nombre llega vacío y lo completa quien llama con la ficha /players)."""
+    p = CACHE / f"squads/{club_id}_{tmseason}.json.gz"
+    if not p.exists():
+        def api():
+            d = get(f"{TMAPI}/club/{club_id}/squad?season={tmseason}")
+            return {str(x.get("playerId")): None for x in ((d or {}).get("data") or {}).get("squad") or [] if x.get("playerId")}
+        return cached(f"squads_api/{club_id}_{tmseason}.json.gz", api)
+    return _squad_web(club_id, tmseason)
+
+
+def _squad_web(club_id, tmseason):
     def fetch():
         html = get(f"{TMWEB}/x/leistungsdaten/verein/{club_id}/plus/1?reldata=%26{tmseason}", as_json=False)
         seen = {}

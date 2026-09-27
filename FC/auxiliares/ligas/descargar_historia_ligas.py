@@ -31,7 +31,9 @@ WIKI = {47: "Premier_League", 87: "Primera_División_de_España", 54: "Bundeslig
         536: "Liga_Profesional_Saudí", 196: "Ekstraklasa", 230: "Liga_MX", 130: "Major_League_Soccer", 268: "Campeonato_Brasileño_de_Serie_A",
         112: "Primera_División_de_Argentina", 48: "EFL_Championship", 140: "Segunda_División_de_España", 86: "Serie_B",
         146: "2._Bundesliga", 135: "Superliga_de_Grecia", 46: "Superliga_de_Dinamarca", 69: "Superliga_de_Suiza",
-        38: "Bundesliga_de_Austria", 223: "J1_League", 9080: "K_League_1"}
+        38: "Bundesliga_de_Austria", 223: "J1_League", 9080: "K_League_1",
+        8968: "Primera_Federación", 9138: "Segunda_Federación", 108: "EFL_League_One", 109: "EFL_League_Two", 117: "National_League",
+        110: "Ligue_2", 8970: "Championnat_National", 208: "3._Liga", 512: "Regionalliga", 147: "Serie_C"}
 
 
 def rows(t):

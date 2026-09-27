@@ -29,7 +29,8 @@ AUX = FC / "auxiliares"
 VAL = FC / "Claude outputs" / "motor_valoracion_v1" / "valoracion"
 LOG = AUX / "actualizacion_semanal.log"
 LIGAS = ("Eredivisie,Süper Lig,Liga Belga,Saudi Pro,Liga MX,Scottish Premiership,Liga Argentina,Brasileirão,Ekstraklasa,MLS,Portugal,"
-         "Championship,LaLiga2,Serie B,2. Bundesliga,Super League 1,Superliga,Super League,Bundesliga Austria,J1 League,K League 1")
+         "Championship,LaLiga2,Serie B,2. Bundesliga,Super League 1,Superliga,Super League,Bundesliga Austria,J1 League,K League 1,"
+         "Primera Federación,Segunda Federación,League One,League Two,National League,Ligue 2,Ligue 3,3. Liga,Regionalliga,Serie C")
 
 
 def run(args, cwd=FC, env=None):

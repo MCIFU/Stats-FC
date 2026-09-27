@@ -440,6 +440,41 @@
       "strength": 70,
       "country": "AUT",
       "confederation": "UEFA"
+    },
+    "Primera Federación": {
+      "strength": 56,
+      "country": "ESP",
+      "confederation": "UEFA"
+    },
+    "Segunda Federación": {
+      "strength": 46,
+      "country": "ESP",
+      "confederation": "UEFA"
+    },
+    "National League": {
+      "strength": 48,
+      "country": "ENG",
+      "confederation": "UEFA"
+    },
+    "Ligue 3": {
+      "strength": 53,
+      "country": "FRA",
+      "confederation": "UEFA"
+    },
+    "3. Liga": {
+      "strength": 60,
+      "country": "GER",
+      "confederation": "UEFA"
+    },
+    "Regionalliga": {
+      "strength": 46,
+      "country": "GER",
+      "confederation": "UEFA"
+    },
+    "Serie C": {
+      "strength": 55,
+      "country": "ITA",
+      "confederation": "UEFA"
     }
   }
 }

@@ -37,7 +37,11 @@ LEAGUES = {"Premier": (47, "EPL", False), "LaLiga": (87, "La_liga", False), "Bun
            "Liga Argentina": (112, None, True), "Championship": (48, None, False), "LaLiga2": (140, None, False),
            "Serie B": (86, None, False), "2. Bundesliga": (146, None, False), "Super League 1": (135, None, False),
            "Superliga": (46, None, False), "Super League": (69, None, False), "Bundesliga Austria": (38, None, False),
-           "J1 League": (223, None, True), "K League 1": (9080, None, True)}
+           "J1 League": (223, None, True), "K League 1": (9080, None, True),
+           # divisiones inferiores de las 5 grandes (Tercera Federación no está en FotMob)
+           "Primera Federación": (8968, None, False), "Segunda Federación": (9138, None, False), "League One": (108, None, False),
+           "League Two": (109, None, False), "National League": (117, None, False), "Ligue 2": (110, None, False),
+           "Ligue 3": (8970, None, False), "3. Liga": (208, None, False), "Regionalliga": (512, None, False), "Serie C": (147, None, False)}
 SPECIAL = {("J1 League", "2026-27"): ("2026", "2026/2027")}
 PADJ = ["tackles_won_p90", "interceptions_p90", "recoveries_p90", "blocks_clear_p90", "fm_tackles_p90"]
 SEASONS = {"2025-26": ("2025/2026", "2025", 2025), "2026-27": ("2026/2027", "2026", 2026)}
