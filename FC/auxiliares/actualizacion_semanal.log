@@ -153,3 +153,80 @@ AttributeError: 'DataFrame' object has no attribute 'fm_minutes'
 === 27/09/2026 14:35 /home/user/Stats-FC/FC/auxiliares/avanzadas/descargar_fotmob_understat.py --refresh
 41667 filas de 36 ligas en los Excel
   2025-26 Premier: 613 filas · FotMob 454 jugadores, cruzados 433 · Understat 551, cruzados 497
+  2025-26 LaLiga: 575 filas · FotMob 503 jugadores, cruzados 478 · Understat 611, cruzados 554
+  2025-26 Bundesliga: 470 filas · FotMob 426 jugadores, cruzados 405 · Understat 507, cruzados 463
+  2025-26 Serie A: 534 filas · FotMob 500 jugadores, cruzados 467 · Understat 609, cruzados 528
+  2025-26 Ligue 1: 493 filas · FotMob 457 jugadores, cruzados 413 · Understat 563, cruzados 488
+  2025-26 Eredivisie: 494 filas · FotMob 433 jugadores, cruzados 409
+  2025-26 Portugal: 545 filas · FotMob 473 jugadores, cruzados 438
+  2025-26 Scottish Premiership: 374 filas · FotMob 332 jugadores, cruzados 317
+  2025-26 Süper Lig: 549 filas · FotMob 454 jugadores, cruzados 434
+  2025-26 Liga Belga: 465 filas · FotMob 398 jugadores, cruzados 379
+  2025-26 Saudi Pro: 525 filas · FotMob 424 jugadores, cruzados 405
+  2025-26 Ekstraklasa: 532 filas · FotMob 458 jugadores, cruzados 445
+  2025-26 Liga MX: 573 filas · FotMob 486 jugadores, cruzados 477
+  2025-26 MLS: 848 filas · FotMob 713 jugadores, cruzados 703
+  2025-26 Brasileirão: 727 filas · FotMob 613 jugadores, cruzados 595
+  2025-26 Liga Argentina: 995 filas · FotMob 835 jugadores, cruzados 830
+  2025-26 Championship: 712 filas · FotMob 642 jugadores, cruzados 606
+  2025-26 LaLiga2: 628 filas · FotMob 578 jugadores, cruzados 529
+  2025-26 Serie B: 576 filas · FotMob 505 jugadores, cruzados 495
+  2025-26 2. Bundesliga: 511 filas · FotMob 454 jugadores, cruzados 430
+  2025-26 Super League 1: 435 filas · FotMob 376 jugadores, cruzados 356
+  2025-26 Superliga: 345 filas · FotMob 298 jugadores, cruzados 272
+  2025-26 Super League: 353 filas · FotMob 322 jugadores, cruzados 290
+  2025-26 Bundesliga Austria: 307 filas · FotMob 281 jugadores, cruzados 251
+  2025-26 J1 League: 608 filas · FotMob 521 jugadores, cruzados 523
+  2025-26 K League 1: 395 filas · FotMob 345 jugadores, cruzados 326
+  2025-26 Primera Federación: 749 filas · FotMob 0 jugadores, cruzados 0
+  2025-26 Segunda Federación: 1531 filas · FotMob 0 jugadores, cruzados 0
+  2025-26 League One: 627 filas · FotMob 642 jugadores, cruzados 552
+  2025-26 League Two: 579 filas · FotMob 641 jugadores, cruzados 513
+  2025-26 National League: 519 filas · FotMob 209 jugadores, cruzados 155
+  2025-26 Ligue 2: 477 filas · FotMob 459 jugadores, cruzados 412
+  2025-26 Ligue 3: 390 filas · FotMob 0 jugadores, cruzados 0
+  2025-26 3. Liga: 464 filas · FotMob 518 jugadores, cruzados 409
+  2025-26 Regionalliga: 1752 filas · FotMob 0 jugadores, cruzados 0
+  FotMob 147: temporada 2025/2026 sin estadísticas, se omite
+  2025-26 Serie C: 1423 filas · FotMob 0 jugadores, cruzados 0
+  2026-27 Premier: 545 filas · FotMob 356 jugadores, cruzados 350 · Understat 426, cruzados 414
+  2026-27 LaLiga: 528 filas · FotMob 396 jugadores, cruzados 393 · Understat 463, cruzados 449
+  2026-27 Bundesliga: 365 filas · FotMob 306 jugadores, cruzados 305 · Understat 368, cruzados 363
+  2026-27 Serie A: 438 filas · FotMob 387 jugadores, cruzados 381 · Understat 454, cruzados 434
+  2026-27 Ligue 1: 377 filas · FotMob 329 jugadores, cruzados 321 · Understat 424, cruzados 373
+  2026-27 Eredivisie: 397 filas · FotMob 344 jugadores, cruzados 331
+  2026-27 Portugal: 425 filas · FotMob 337 jugadores, cruzados 332
+  2026-27 Scottish Premiership: 284 filas · FotMob 240 jugadores, cruzados 238
+  2026-27 Süper Lig: 400 filas · FotMob 334 jugadores, cruzados 330
+  2026-27 Liga Belga: 400 filas · FotMob 335 jugadores, cruzados 330
+  2026-27 Saudi Pro: 418 filas · FotMob 329 jugadores, cruzados 316
+  2026-27 Ekstraklasa: 424 filas · FotMob 347 jugadores, cruzados 345
+  2026-27 Liga MX: 439 filas · FotMob 358 jugadores, cruzados 358
+  2026-27 MLS: 829 filas · FotMob 700 jugadores, cruzados 694
+  2026-27 Brasileirão: 668 filas · FotMob 570 jugadores, cruzados 534
+  2026-27 Liga Argentina: 959 filas · FotMob 798 jugadores, cruzados 776
+  2026-27 Championship: 543 filas · FotMob 454 jugadores, cruzados 447
+  2026-27 LaLiga2: 458 filas · FotMob 439 jugadores, cruzados 389
+  2026-27 Serie B: 433 filas · FotMob 378 jugadores, cruzados 376
+  2026-27 2. Bundesliga: 386 filas · FotMob 318 jugadores, cruzados 314
+  2026-27 Super League 1: 313 filas · FotMob 272 jugadores, cruzados 272
+  2026-27 Superliga: 286 filas · FotMob 238 jugadores, cruzados 221
+  2026-27 Super League: 279 filas · FotMob 239 jugadores, cruzados 230
+  2026-27 Bundesliga Austria: 260 filas · FotMob 227 jugadores, cruzados 222
+  2026-27 J1 League: 497 filas · FotMob 544 jugadores, cruzados 447
+  2026-27 K League 1: 359 filas · FotMob 310 jugadores, cruzados 296
+  2026-27 Primera Federación: 695 filas · FotMob 0 jugadores, cruzados 0
+  2026-27 Segunda Federación: 1173 filas · FotMob 0 jugadores, cruzados 0
+  2026-27 League One: 499 filas · FotMob 424 jugadores, cruzados 416
+  2026-27 League Two: 511 filas · FotMob 433 jugadores, cruzados 425
+  2026-27 National League: 479 filas · FotMob 0 jugadores, cruzados 0
+  2026-27 Ligue 2: 369 filas · FotMob 339 jugadores, cruzados 308
+  2026-27 Ligue 3: 368 filas · FotMob 0 jugadores, cruzados 0
+  2026-27 3. Liga: 393 filas · FotMob 380 jugadores, cruzados 335
+  2026-27 Regionalliga: 1541 filas · FotMob 0 jugadores, cruzados 0
+  2026-27 Serie C: 1236 filas · FotMob 989 jugadores, cruzados 926
+avanzadas.csv: 41667 filas, con FotMob 25705, con Understat 4563
+--- código 0 en 8 min
+
+=== 27/09/2026 14:43 /home/user/Stats-FC/FC/auxiliares/tmapi/descargar_valor_lesiones.py --refrescar 6
+17600 jugadores
