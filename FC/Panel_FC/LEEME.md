@@ -1,7 +1,7 @@
 # Panel Scouting FC
 
 Abre `index.html` con doble clic (Chrome, Edge o Firefox). Necesita en la misma carpeta: `datos.js`, `extra.js`, `partidos.js`,
-`equipos.js`, `portada.js`, `ligas.js`, `goles.js`, `estadios.js`, `equipaciones.js`, `nombres.js` y la carpeta `carrera/`.
+`equipos.js`, `portada.js`, `ligas.js`, `goles.js`, `estadios.js`, `equipaciones.js`, `entrenadores.js`, `nombres.js` y la carpeta `carrera/`.
 Con internet se ven además las fotos recortadas de los jugadores (FotMob), escudos, logos de liga, la galería de Wikimedia Commons y las tipografías.
 
 Todo nombre de jugador, equipo o liga es un enlace: clic normal lo abre, clic con la rueda (botón central) lo abre en otra pestaña.
@@ -19,6 +19,8 @@ Pestañas:
 - **Equipos**: clasificación con los últimos 5 (V/E/D; al pasar el ratón se ve el partido y se resaltan los dos equipos), partidos,
   alineación con las caras recortadas, forma de jugar (8 escalas frente al resto de su liga), estadísticas, plantilla, palmarés con un
   icono por título, historia, efemérides, entrenadores, foto del estadio y equipaciones actuales e históricas (dibujos de Wikipedia).
+- **Entrenadores** (clic en su nombre en el equipo o la liga): ficha personal, palmarés, trayectoria por clubes con puntos por partido,
+  gráfico por temporada, etapas con edad media del once y sistema, últimos partidos, mayores victorias y temporada a temporada.
 - **Ligas**: cada liga tiene su página con clasificación, partidos por jornada con goles, goleadores/asistentes y otras listas,
   equipos y estadios con foto (asistencia media), estadísticas de equipo, traspasos y, en LaLiga y LaLiga2, límite salarial por temporada (2019-20 a 2026-27).
 
