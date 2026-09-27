@@ -2,3 +2,150 @@
 === 27/09/2026 13:57 /home/user/Stats-FC/FC/auxiliares/tmapi/actualizar_excels.py --escribir --crecimiento --partidos todas
 41849 filas; 62 con club fuera de clubmap.json (se dejan igual)
   plantillas 25/1785
+  plantillas 50/1785
+  plantillas 75/1785
+  plantillas 100/1785
+  plantillas 125/1785
+  plantillas 150/1785
+  plantillas 175/1785
+  plantillas 200/1785
+  plantillas 225/1785
+  plantillas 250/1785
+  plantillas 275/1785
+  plantillas 300/1785
+  plantillas 325/1785
+  plantillas 350/1785
+  plantillas 375/1785
+  plantillas 400/1785
+  plantillas 425/1785
+  plantillas 450/1785
+  plantillas 475/1785
+  plantillas 500/1785
+  plantillas 525/1785
+  plantillas 550/1785
+  plantillas 575/1785
+  plantillas 600/1785
+  plantillas 625/1785
+  plantillas 650/1785
+  plantillas 675/1785
+  plantillas 700/1785
+  plantillas 725/1785
+  plantillas 750/1785
+  plantillas 775/1785
+  plantillas 800/1785
+  plantillas 825/1785
+  plantillas 850/1785
+  plantillas 875/1785
+  plantillas 900/1785
+  plantillas 925/1785
+  plantillas 950/1785
+  plantillas 975/1785
+  plantillas 1000/1785
+  plantillas 1025/1785
+  plantillas 1050/1785
+  plantillas 1075/1785
+  plantillas 1100/1785
+  plantillas 1125/1785
+  plantillas 1150/1785
+  plantillas 1175/1785
+  plantillas 1200/1785
+  plantillas 1225/1785
+  plantillas 1250/1785
+  plantillas 1275/1785
+  plantillas 1300/1785
+  plantillas 1325/1785
+  plantillas 1350/1785
+  plantillas 1375/1785
+  plantillas 1400/1785
+  plantillas 1425/1785
+  plantillas 1450/1785
+  plantillas 1475/1785
+  plantillas 1500/1785
+  plantillas 1525/1785
+  plantillas 1550/1785
+  plantillas 1575/1785
+  plantillas 1600/1785
+  plantillas 1625/1785
+  plantillas 1650/1785
+  plantillas 1675/1785
+  plantillas 1700/1785
+  plantillas 1725/1785
+  plantillas 1750/1785
+  plantillas 1775/1785
+IDs: {'exact': 26649, 'global': 2283, 'sin_id': 12794, 'fuzzy': 56, 'manual': 1, 'wratio': 4}
+  12794 filas sin ID -> auxiliares/tmapi/sin_id_tm.csv (añádelas a pidmap_manual.json)
+17713 jugadores TM; performance-game…
+  1000/17713 (18s)
+  2000/17713 (36s)
+  3000/17713 (53s)
+  4000/17713 (72s)
+  5000/17713 (105s)
+  6000/17713 (134s)
+  7000/17713 (163s)
+  8000/17713 (191s)
+  9000/17713 (214s)
+  10000/17713 (236s)
+  11000/17713 (261s)
+  12000/17713 (282s)
+  13000/17713 (303s)
+  14000/17713 (323s)
+  15000/17713 (344s)
+  16000/17713 (363s)
+  17000/17713 (381s)
+clubes de año natural: 2930 | ligas: ['17AC', '17WC', '23AF', '2DVB', 'A168', 'A2SW', 'A2VI', 'AF19', 'AG18', 'AR1N', 'AR3F', 'AR3R', 'ARG1', 'ARG2', 'ARGC', 'ASD1', 'ASD2', 'BCE2', 'BO1A', 'BR4P', 'BRA1', 'BRA2', 'BRAL', 'BRCB', 'BRCM', 'BRES', 'BRGO', 'BRPB', 'BRQR', 'C20Q', 'C220', 'CACG', 'CDN1', 'CHL3', 'CL2B', 'CL2F', 'CL2Z', 'CL3S', 'CLO', 'CLPD']
+503230 filas jugador-partido (17414 jugadores) -> /home/user/Stats-FC/FC/Claude outputs/partidos_TM.csv
+filas: {'iguales': 28381, 'cambian': 612} | cambia CONT: 20
+bloques que cambian: [('LIGA', 1301), ('COPA', 348), ('SEL', 228), ('CONT', 64)]
+por temporada: {'2025-26': 152, '2026-27': 460} -> auxiliares/tmapi/diferencias_TM.csv
+escribiendo 28774 filas que solo crecen; 219 con bajadas quedan en diferencias_TM.csv
+Temporada 2025-26.xlsx: 20 filas escritas
+Temporada 2026-27.xlsx: 373 filas escritas
+--- código 0 en 25 min
+
+=== 27/09/2026 14:23 /home/user/Stats-FC/FC/auxiliares/estilo/estilo_temporadas.py
+ok Temporada 2025-26.xlsx
+ok Temporada 2026-27.xlsx
+--- código 0 en 5 min
+
+=== 27/09/2026 14:29 /home/user/Stats-FC/FC/auxiliares/avanzadas/descargar_fotmob_understat.py --refresh
+41667 filas de 36 ligas en los Excel
+  2025-26 Premier: 613 filas · FotMob 454 jugadores, cruzados 433 · Understat 551, cruzados 497
+  2025-26 LaLiga: 575 filas · FotMob 503 jugadores, cruzados 478 · Understat 611, cruzados 554
+  2025-26 Bundesliga: 470 filas · FotMob 426 jugadores, cruzados 405 · Understat 507, cruzados 463
+  2025-26 Serie A: 534 filas · FotMob 500 jugadores, cruzados 467 · Understat 609, cruzados 528
+  2025-26 Ligue 1: 493 filas · FotMob 457 jugadores, cruzados 413 · Understat 563, cruzados 488
+  2025-26 Eredivisie: 494 filas · FotMob 433 jugadores, cruzados 409
+  2025-26 Portugal: 545 filas · FotMob 473 jugadores, cruzados 438
+  2025-26 Scottish Premiership: 374 filas · FotMob 332 jugadores, cruzados 317
+  2025-26 Süper Lig: 549 filas · FotMob 454 jugadores, cruzados 434
+  2025-26 Liga Belga: 465 filas · FotMob 398 jugadores, cruzados 379
+  2025-26 Saudi Pro: 525 filas · FotMob 424 jugadores, cruzados 405
+  2025-26 Ekstraklasa: 532 filas · FotMob 458 jugadores, cruzados 445
+  2025-26 Liga MX: 573 filas · FotMob 486 jugadores, cruzados 477
+  2025-26 MLS: 848 filas · FotMob 713 jugadores, cruzados 703
+  2025-26 Brasileirão: 727 filas · FotMob 613 jugadores, cruzados 595
+  2025-26 Liga Argentina: 995 filas · FotMob 835 jugadores, cruzados 830
+  2025-26 Championship: 712 filas · FotMob 642 jugadores, cruzados 606
+  2025-26 LaLiga2: 628 filas · FotMob 578 jugadores, cruzados 529
+  2025-26 Serie B: 576 filas · FotMob 505 jugadores, cruzados 495
+  2025-26 2. Bundesliga: 511 filas · FotMob 454 jugadores, cruzados 430
+  2025-26 Super League 1: 435 filas · FotMob 376 jugadores, cruzados 356
+  2025-26 Superliga: 345 filas · FotMob 298 jugadores, cruzados 272
+  2025-26 Super League: 353 filas · FotMob 322 jugadores, cruzados 290
+  2025-26 Bundesliga Austria: 307 filas · FotMob 281 jugadores, cruzados 251
+  2025-26 J1 League: 608 filas · FotMob 521 jugadores, cruzados 523
+  2025-26 K League 1: 395 filas · FotMob 345 jugadores, cruzados 326
+Traceback (most recent call last):
+  File "/home/user/Stats-FC/FC/auxiliares/avanzadas/descargar_fotmob_understat.py", line 254, in <module>
+    main()
+  File "/home/user/Stats-FC/FC/auxiliares/avanzadas/descargar_fotmob_understat.py", line 224, in main
+    fm = fotmob_table(lid, name, a.refresh)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Stats-FC/FC/auxiliares/avanzadas/descargar_fotmob_understat.py", line 148, in fotmob_table
+    n90 = (df.fm_minutes / 90).where(df.fm_minutes > 0)
+           ^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/pandas/core/generic.py", line 6194, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataFrame' object has no attribute 'fm_minutes'
+--- código 1 en 2 min

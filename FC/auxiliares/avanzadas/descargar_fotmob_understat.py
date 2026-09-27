@@ -104,7 +104,8 @@ def fotmob_table(lid, season_name, refresh):
     names = season_name if isinstance(season_name, (tuple, list)) else (season_name,)
     bases = sorted({x["RelativePath"].rsplit("/", 1)[0] for x in info["stats"]["seasonStatLinks"] if x["Name"] in names})
     if not bases:
-        raise RuntimeError(f"FotMob {lid}: temporada {season_name} no encontrada")
+        print(f"  FotMob {lid}: temporada {season_name} sin estadísticas, se omite")
+        return pd.DataFrame(columns=["sofa_id", "sofa_name", "sofa_team_id", "sofa_team", "fm_minutes"])
     acc = {}
     stage_min = collections.defaultdict(dict)
     for base in bases:
@@ -142,6 +143,8 @@ def fotmob_table(lid, season_name, refresh):
                 out[c] = sum(v * m for v, m, _ in L) / w if w else L[-1][0]
         rows.append(out)
     df = pd.DataFrame(rows)
+    if df.empty or "fm_minutes" not in df:  # liga sin listas de FotMob (divisiones bajas): nada que cruzar
+        return pd.DataFrame(columns=["sofa_id", "sofa_name", "sofa_team_id", "sofa_team", "fm_minutes"])
     for c in [c for cols in FOTMOB.values() for c in cols]:
         if c not in df:
             df[c] = np.nan
@@ -223,7 +226,7 @@ def main():
             name = SPECIAL.get((liga, season)) or (fm_cal if cal else fm_season)
             fm = fotmob_table(lid, name, a.refresh)
             us = understat_table(us_league, us_year, a.refresh) if us_league else pd.DataFrame(columns=["sofa_id", "sofa_name", "sofa_team_id", "sofa_team", "us_minutes"])
-            mf = {i: (s, h) for i, s, h in match_players(e, fm, "fm_minutes")}
+            mf = {i: (s, h) for i, s, h in match_players(e, fm, "fm_minutes")} if len(fm) else {i: (None, "") for i in e.index}
             mu = {i: (s, h) for i, s, h in match_players(e, us, "us_minutes")} if len(us) else {i: (None, "") for i in e.index}
             nf = sum(1 for s, _ in mf.values() if s is not None)
             nu = sum(1 for s, _ in mu.values() if s is not None)
