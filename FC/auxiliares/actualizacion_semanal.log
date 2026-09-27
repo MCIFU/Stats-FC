@@ -493,3 +493,6 @@ ligas: 36 · goles de 5209 partidos · 19098 jugadores FotMob
 2026-27: ficha TM en 12989 jugadores · edad corregida en 1794 · posición afinada en 3833
 partidos: 25-26 383896 filas / 15622 jugadores; 26-27 119109 / 12988
 --- código 0 en 15 min
+
+=== 27/09/2026 16:55 /home/user/Stats-FC/FC/auxiliares/tmapi/actualizar_excels.py --escribir --crecimiento --partidos todas
+41849 filas; 62 con club fuera de clubmap.json (se dejan igual)
