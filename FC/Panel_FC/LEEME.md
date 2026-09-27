@@ -1,6 +1,6 @@
 # Panel Scouting FC
 
-Abre `index.html` con doble clic (Chrome, Edge o Firefox). Necesita en la misma carpeta: `datos.js`, `extra.js`, `partidos.js`,
+Abre `index.html` con doble clic (Chrome, Edge o Firefox). Necesita en la misma carpeta: `datos*.js`, `extra*.js`, `partidos*.js` (3 partes cada uno),
 `equipos.js`, `portada.js`, `ligas.js`, `goles.js`, `estadios.js`, `equipaciones.js`, `entrenadores.js`, `nombres.js` y la carpeta `carrera/`.
 Con internet se ven además las fotos recortadas de los jugadores (FotMob), escudos, logos de liga, la galería de Wikimedia Commons y las tipografías.
 
@@ -35,3 +35,8 @@ o al recalcular la valoración (`run_all.py` → `build_web.py`).
 Nivel (motor v1.4): mezcla por percentiles de rendimiento estadístico ajustado por liga (45 %), ELO partido a partido (25 %) y valor de
 mercado corregido por edad (30 %). Edad calculada con la fecha de nacimiento y posición principal de la ficha de Transfermarkt
 (los Excel de temporada no se modifican). "Rendimiento" en la ficha = solo estadísticas; la vista Oportunidades de Fichajes usa ese dato.
+
+Ligas (36): las 26 anteriores más Primera y Segunda Federación, League One, League Two, National League, Ligue 2, Ligue 3, 3. Liga,
+Regionalliga (5 grupos) y Serie C (3 grupos). Tercera Federación no entra: Transfermarkt no tiene sus partidos jugador a jugador.
+Primera/Segunda Federación, Ligue 3, Regionalliga y Serie C no tienen estadísticas avanzadas en FotMob: su nivel sale de partidos,
+minutos, goles, asistencias, resultados (ELO) y valor de mercado.
