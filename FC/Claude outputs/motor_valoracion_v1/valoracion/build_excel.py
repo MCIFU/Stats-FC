@@ -277,9 +277,7 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
     pdf = pd.DataFrame({"KEY": b.KEY, "Jugador": b.name, "Grupo": b.pos_group, "Club": b.club, "Liga": b.league, "Min Liga": b.LIGA_Min})
     for m in pm:
         lab = metrics[m]["label"]
-        pdf[f"{lab} · valor"] = b[m].round(3)
-        if metrics[m].get("shrink"):
-            pdf[f"{lab} · ajust. muestra"] = b[f"adj_{m}"].round(3)
+        pdf[f"{lab} · valor"] = b[m].round(2)  # (el valor ajustado por muestra ya no se escribe: el Excel pasaba de 100 MB)
         pdf[f"{lab} · pct liga"] = b[f"pctL_{m}"].round(1)
         pdf[f"{lab} · pct global"] = b[f"pctG_{m}"].round(1)
     write_df(wp, pdf, freeze="C2")
@@ -364,8 +362,8 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
             if c in mx:
                 mx[c] = pd.to_numeric(mx[c], errors="coerce").round(3 if c in ("expected", "score") else 1)
         mx = mx.sort_values(["name", "date"])
-        # en el Excel solo los últimos 10 partidos de cada jugador y temporada (el detalle completo está en partidos_TM.csv)
-        mx = mx.groupby(["player_id", "season"] if "season" in mx else ["player_id"], group_keys=False).tail(10)
+        # en el Excel solo los últimos 5 partidos de cada jugador y temporada (el detalle completo está en el panel y en partidos_TM.csv.gz)
+        mx = mx.groupby(["player_id", "season"] if "season" in mx else ["player_id"], group_keys=False).tail(5)
         es = {"name": "Jugador", "season": "Temporada", "date": "Fecha", "block": "Bloque", "club": "Club", "opponent": "Rival",
               "home": "Local", "gf": "GF", "ga": "GC", "Min": "Min", "G": "G", "A": "A", "GC": "GC portero", "sofa_rating": "Nota SofaScore",
               "match_rating": "Nota partido", "opp_elo": "Elo rival", "elo_before": "Elo antes", "expected": "Esperado",
@@ -540,7 +538,7 @@ def build_ficha(ws, b, C, attrs, roles, pm, metrics, n):
     cols = ["KEY", "Jugador", "Grupo", "Club", "Liga", "Min Liga"]
     for m in pm:
         lab = metrics[m]["label"]
-        cols += [f"{lab} · valor"] + ([f"{lab} · ajust. muestra"] if metrics[m].get("shrink") else []) + [f"{lab} · pct liga", f"{lab} · pct global"]
+        cols += [f"{lab} · valor", f"{lab} · pct liga", f"{lab} · pct global"]
     pos = {c: get_column_letter(j) for j, c in enumerate(cols, 1)}
     for i, m in enumerate(pm, r + 1):
         lab = metrics[m]["label"]
