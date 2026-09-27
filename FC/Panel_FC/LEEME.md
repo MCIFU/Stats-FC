@@ -21,8 +21,11 @@ Pestañas:
   icono por título, historia, efemérides, entrenadores, foto del estadio y equipaciones actuales e históricas (dibujos de Wikipedia).
 - **Entrenadores** (clic en su nombre en el equipo o la liga): ficha personal, palmarés, trayectoria por clubes con puntos por partido,
   gráfico por temporada, etapas con edad media del once y sistema, últimos partidos, mayores victorias y temporada a temporada.
-- **Ligas**: cada liga tiene su página con clasificación, partidos por jornada con goles, goleadores/asistentes y otras listas,
-  equipos y estadios con foto (asistencia media), estadísticas de equipo, traspasos y, en LaLiga y LaLiga2, límite salarial por temporada (2019-20 a 2026-27).
+- **Ligas**: clasificación general, de local, de visitante, tras cada jornada y de cada temporada desde 2010/11, y predicción final
+  (simulación de los partidos que faltan); historia (resumen, campeones desde el inicio, más veces campeón, podio, nuevos y descensos de cada año);
+  partidos por jornada con goles, estadio, árbitro y asistencia; 37 rankings de jugadores y 29 de equipos (pulsa uno para verlo entero);
+  equipos y estadios con foto, ocupación y entrenador; traspasos y, en LaLiga y LaLiga2, límite salarial (2019-20 a 2026-27).
+  Los datos de cada liga están en `ligas/h_<id>.js` y se cargan al abrirla.
 
 Logos: `logos/index.html` compara las variantes A–F (claro/oscuro e icono). El panel usa la A.
 
