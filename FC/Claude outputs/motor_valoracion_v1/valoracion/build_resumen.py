@@ -136,21 +136,100 @@ def proyeccion(b, cfg, years=3):
     return b
 
 
+# estadísticas que respaldan cada eje (se muestran debajo del radar en el panel)
+RADAR_STATS = {
+    "campo": [["goals_p90", "npxg_p90", "shots_p90", "sot_pct"], ["assists_p90", "xa_p90", "key_passes_p90", "sca_p90"],
+              ["pass_cmp_pct", "prog_passes_p90", "final_third_passes_p90", "long_cmp_pct"],
+              ["take_ons_won_p90", "take_on_pct", "prog_carries_p90"],
+              ["tackles_won_p90", "interceptions_p90", "recoveries_p90", "aerials_won_p90"], ["min_share", "min_per_app"]],
+    "GK": [["gk_save_pct", "gk_psxg_minus_ga_p90"], ["gk_gc_p90", "gk_cs_pct"], ["gk_launch_cmp_pct", "pass_cmp_pct"],
+           ["min_share", "min_per_app"], [], []],
+}
+
+
+def _z(p):
+    """percentil 0-100 -> puntuación z (recortada: el 1 % de cada cola no dispara la escala)."""
+    from statistics import NormalDist
+    inv = np.vectorize(NormalDist().inv_cdf, otypes=[float])
+    x = np.clip(np.asarray(p, dtype=float) / 100, 0.02, 0.98)
+    out = np.full(x.shape, np.nan)
+    ok = ~np.isnan(x)
+    out[ok] = inv(x[ok])
+    return out
+
+
 def radar(b):
+    """Ejes del radar en escala 0-100 con 50 = jugador medio de su posición.
+
+    1. Cada atributo es el percentil frente a su posición en su liga (o en todas si la liga tiene pocos jugadores);
+       se pasa a puntuación z y se promedia dentro del eje, re-escalando para que cada eje tenga la misma dispersión.
+    2. Nivel de liga: +0,45 z por cada desviación de fuerza de liga (ser el mejor regateador de Regionalliga no es
+       lo mismo que serlo en la Premier).
+    3. Muestra: con pocos minutos el valor se acerca a 50 (min / (min + 300)).
+    4. Escala final 50 + 44·tanh(z/2): la media queda en 50, un jugador top de una gran liga ronda 85-92, y los
+       valores por debajo de 15 o por encima de 95 no aparecen.
+    Ejes sin estadísticas (ligas sin datos avanzados) quedan vacíos en lugar de 0.
+    """
     out = np.full((len(b), 6), np.nan)
     gk = (b.pos_group == "GK").to_numpy()
+    mins = b.LIGA_Min.fillna(0).to_numpy(float)
+    shrink = mins / (mins + 300)
+    ls = b.competition_strength.astype(float)
+    lz = ((ls - ls.mean()) / (ls.std() or 1)).fillna(0).to_numpy()
+    rated = mins >= 450
     for key, axes in RADAR.items():
         mask = gk if key == "GK" else ~gk
         for k, (_, attrs) in enumerate(axes):
-            cols = []
+            zs = []
             for a in attrs:
-                if a.startswith("@"):  # percentil dentro de los porteros
-                    cols.append(b[a[1:]].where(b.pos_group == "GK").groupby(b.season).rank(pct=True) * 100)
-                elif f"attrG_{a}" in b:
-                    cols.append(b[f"attrG_{a}"])
-            if cols:
-                out[mask, k] = pd.concat(cols, axis=1).mean(axis=1).to_numpy()[mask]
-    return out
+                if a.startswith("@"):  # percentil dentro de los porteros de la temporada
+                    zs.append(_z(b[a[1:]].where(b.pos_group == "GK").groupby(b.season).rank(pct=True) * 100))
+                else:
+                    col = f"attrL_{a}" if f"attrL_{a}" in b else f"attrG_{a}"
+                    if col in b:
+                        zs.append(_z(b[col]))
+            if not zs:
+                continue
+            # el primer atributo de cada eje es el principal (goles en "Gol", asistencias en "Creación"...): cuenta doble
+            w = np.array([2.0] + [1.0] * (len(zs) - 1))[:, None]
+            Z = np.vstack(zs)
+            ok = ~np.isnan(Z)
+            with np.errstate(invalid="ignore"):
+                z = np.where(ok.any(0), np.nansum(Z * w, 0) / np.maximum((ok * w).sum(0), 1e-9), np.nan)
+            # misma dispersión en todos los ejes (la media de varios atributos sale más plana)
+            z = pd.Series(z)
+            for (se, pg), ix in b.groupby(["season", "pos_group"]).groups.items():
+                ix = np.asarray(ix)
+                ref = z.iloc[ix][rated[ix]]
+                sd = ref.std()
+                if pd.notna(sd) and sd > 0:
+                    z.iloc[ix] = (z.iloc[ix] - ref.mean()) / sd
+            z = z.to_numpy()
+            if not attrs[0].startswith("@") and attrs[0] != "USAGE":
+                z = z + 0.45 * lz
+            z = z * shrink
+            v = 50 + 44 * np.tanh(z / 2)
+            out[mask, k] = np.clip(v, 12, 95)[mask]
+    return np.round(out)
+
+
+def radar_stats(b):
+    """Valores reales (por 90 o %) que respaldan cada eje, para mostrarlos junto al radar."""
+    gk = (b.pos_group == "GK").to_numpy()
+    res = []
+    cols = {m for v in RADAR_STATS.values() for ax in v for m in ax}
+    have = {m: b[m].to_numpy(float) if m in b else None for m in cols}
+    for i in range(len(b)):
+        axes = RADAR_STATS["GK" if gk[i] else "campo"]
+        row = []
+        for ax in axes:
+            vals = []
+            for m in ax:
+                x = have[m][i] if have[m] is not None else np.nan
+                vals.append(None if not np.isfinite(x) else round(float(x), 2))
+            row.append(vals)
+        res.append(row)
+    return res
 
 
 def build(base, cfg, out_path):

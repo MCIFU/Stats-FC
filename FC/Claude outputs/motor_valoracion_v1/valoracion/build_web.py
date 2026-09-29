@@ -73,6 +73,7 @@ def build(base, cfg, out_dir, matches=None, sims=None):
     ci, li, ni = ({v: i for i, v in enumerate(x)} for x in (clubs, leagues, nats))
     grp = list(build_resumen.GRP)
     rad = build_resumen.radar(b)
+    rst = build_resumen.radar_stats(b)
     rows = []
     for i, x in enumerate(b.itertuples(index=False)):
         rows.append([
@@ -89,9 +90,10 @@ def build(base, cfg, out_dir, matches=None, sims=None):
             [_num(x.PROJ_1), _num(x.PROJ_2), _num(x.PROJ_3), _num(x.PROJ_LO), _num(x.PROJ_HI)],
             fm_id(x.name, str(x.club)),
             _num(getattr(x, "CA_PERF", None)),
+            rst[i] if (x.LIGA_Min or 0) >= 90 and any(v is not None for ax in rst[i] for v in ax) else None,
         ])
     fields = ["name", "season", "age", "nat", "pos", "grp", "club", "league", "value", "ligaMin", "min", "pj", "g", "a", "ligaG", "ligaA",
-              "ca", "pa", "paLo", "paHi", "elo", "form", "cons", "opp", "scout", "conf", "rol", "radar", "lgStr", "selPJ", "contPJ", "other", "tm", "comps", "proj", "fm", "perf"]
+              "ca", "pa", "paLo", "paHi", "elo", "form", "cons", "opp", "scout", "conf", "rol", "radar", "lgStr", "selPJ", "contPJ", "other", "tm", "comps", "proj", "fm", "perf", "rst"]
 
     sim = {}
     if sims is not None and len(sims):
@@ -122,7 +124,7 @@ def build(base, cfg, out_dir, matches=None, sims=None):
             games[idx[(p, s)]] = arr
     meta = {"generated": pd.Timestamp.now().strftime("%d/%m/%Y"), "fields": fields, "clubs": clubs, "leagues": leagues, "nats": nats,
             "groups": [[k, v[0], "#" + v[1]] for k, v in build_resumen.GRP.items()],
-            "radar": {k: [a for a, _ in v] for k, v in build_resumen.RADAR.items()}, "epoch": EPOCH.strftime("%Y-%m-%d"),
+            "radar": {k: [a for a, _ in v] for k, v in build_resumen.RADAR.items()}, "rstat": build_resumen.RADAR_STATS, "epoch": EPOCH.strftime("%Y-%m-%d"),
             "gameStride": 11, "gameDelta": ["day", "elo10"], "gameFields": ["day", "opp", "gf", "ga", "home", "min", "g", "a", "rating", "elo10", "block"], "blocks": ["Liga", "Copa", "Continental", "Mundial Clubes"]}
     ti = fields.index("tm")
     usados = {r[ti] for r in rows if r[ti]}

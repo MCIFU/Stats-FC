@@ -102,6 +102,19 @@ main{max-width:1240px;margin:0 auto;padding:20px 16px 48px}
 .note .bar{height:6px;border-radius:3px;background:var(--surface-2);border:1px solid var(--line);margin-top:4px;overflow:hidden}
 .note .bar i{display:block;height:100%;background:var(--a);border-radius:0 3px 3px 0}
 .note small{color:var(--muted);font-size:12px}
+.sty-list{display:grid;gap:10px;margin-top:6px}
+.sty-row .hd{display:flex;align-items:baseline;gap:8px}
+.sty-row .hd b{font-size:14px;font-weight:600}
+.sty-row .hd .v{margin-left:auto;font:700 20px var(--display)}
+.sty-row .hd .t{font-size:12px;padding:1px 7px;border-radius:5px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+.sty-row .hd .t.hi{background:var(--a-soft);color:var(--a);border-color:transparent}
+.sty-bar{position:relative;height:8px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);margin-top:4px}
+.sty-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--a)}
+.sty-bar u{position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--muted);opacity:.6}
+.sty-st{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px;font-size:12px;color:var(--muted)}
+.sty-st span b{color:var(--ink-2);font-weight:600}
+.sty-sum{font-size:14px;margin:0 0 8px;color:var(--ink-2)}
+.sty-nd{font-size:12px;color:var(--muted);font-style:italic}
 @media (max-width:460px){.notes{grid-template-columns:minmax(0,1fr)}}
 /* ---------- tablas */
 .tw{overflow-x:auto}
@@ -514,7 +527,7 @@ table.plt td{vertical-align:middle}table.plt .pts{font:800 17px var(--display)}
     </div>
     <div class="grid g-player">
       <div class="card" id="p-hero"></div>
-      <div class="card"><h3>Estilo de juego</h3><div id="p-radar"></div><p class="muted" style="font-size:12px;margin:6px 0 0">Percentil frente a jugadores de su posición en todas las ligas, ajustado por nivel de liga. 50 = normal.</p></div>
+      <div class="card"><h3>Estilo de juego</h3><div id="p-radar"></div><div id="p-style"></div><p class="muted" style="font-size:12px;margin:10px 0 0">Escala 0-100 frente a jugadores de su misma posición: 50 = media, 65 = bueno, 75 = muy bueno, 85+ = élite. Tiene en cuenta el nivel de la liga, y con pocos minutos el valor se acerca a 50. Entre paréntesis, la media de su posición en su liga.</p></div>
     </div>
     <div class="card" style="margin-top:16px"><h3>ELO partido a partido</h3><div id="p-elo" class="rel"></div></div>
     <div class="grid g-4" style="margin-top:16px">
@@ -672,14 +685,38 @@ function radarSVG(items,labels){
   let s=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Radar de estilo de juego">`;
   [25,50,75,100].forEach(r=>{s+=`<polygon points="${labels.map((_,k)=>pt(k,r).join(",")).join(" ")}" fill="none" stroke="var(--line)" stroke-width="${r===50?1.5:1}" ${r===50?'stroke-dasharray="4 4"':""}/>`;});
   labels.forEach((l,k)=>{const[x,y]=pt(k,100);s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/>`;});
-  items.forEach(it=>{const v=it.vals.map(x=>x??0);s+=`<polygon points="${v.map((x,k)=>pt(k,x).join(",")).join(" ")}" fill="${it.soft}" stroke="${it.color}" stroke-width="2" stroke-linejoin="round"/>`;
-    v.forEach((x,k)=>{const[px,py]=pt(k,x);s+=`<circle cx="${px}" cy="${py}" r="4" fill="${it.color}" stroke="var(--surface)" stroke-width="2"><title>${esc(labels[k])}: ${it.vals[k]??"sin datos"}</title></circle>`;});});
+  items.forEach(it=>{const v=(it.vals||[]).map(x=>x??50);while(v.length<n)v.push(50);s+=`<polygon points="${v.map((x,k)=>pt(k,x).join(",")).join(" ")}" fill="${it.soft}" stroke="${it.color}" stroke-width="2" stroke-linejoin="round"/>`;
+    v.forEach((x,k)=>{const[px,py]=pt(k,x);const nd=(it.vals||[])[k]==null;s+=`<circle cx="${px}" cy="${py}" r="4" fill="${nd?"var(--surface)":it.color}" stroke="${nd?"var(--muted)":"var(--surface)"}" stroke-width="2"><title>${esc(labels[k])}: ${nd?"sin datos":Math.round(x)}</title></circle>`;});});
   labels.forEach((l,k)=>{const[x,y]=pt(k,124);const anc=Math.abs(x-cx)<8?"middle":x>cx?"start":"end";const dy=y<cy-60?-6:y>cy+60?14:4;
-    const vals=items.map(it=>`<tspan fill="${it.color}" font-weight="700">${it.vals[k]==null?"s/d":Math.round(it.vals[k])}</tspan>`).join('<tspan fill="var(--muted)"> · </tspan>');
+    const vals=items.map(it=>`<tspan fill="${(it.vals||[])[k]==null?"var(--muted)":it.color}" font-weight="700">${(it.vals||[])[k]==null?"s/d":Math.round(it.vals[k])}</tspan>`).join('<tspan fill="var(--muted)"> · </tspan>');
     s+=`<text x="${x+(anc==="start"?6:anc==="end"?-6:0)}" y="${y+dy}" text-anchor="${anc}" font-size="13" font-weight="600" style="fill:var(--ink-2)">${esc(l)}</text><text x="${x+(anc==="start"?6:anc==="end"?-6:0)}" y="${y+dy+16}" text-anchor="${anc}" font-size="14" font-family="Barlow Condensed">${vals}</text>`;});
   return s+"</svg>";
 }
 function radarLabels(p){return p.grp===0?M.radar.GK:M.radar.campo;}
+/* estadísticas que explican cada eje: [etiqueta, decimales, sufijo, factor] */
+const RST={goals_p90:["Goles/90",2],npxg_p90:["xG sin penaltis/90",2],shots_p90:["Tiros/90",1],sot_pct:["A puerta",0,"%"],
+  assists_p90:["Asist./90",2],xa_p90:["xA/90",2],key_passes_p90:["Pases clave/90",1],sca_p90:["Acciones de tiro/90",1],
+  pass_cmp_pct:["Acierto de pase",0,"%"],prog_passes_p90:["Pases progresivos/90",1],final_third_passes_p90:["Pases al último tercio/90",1],long_cmp_pct:["Acierto en largo",0,"%"],
+  take_ons_won_p90:["Regates/90",1],take_on_pct:["Éxito regate",0,"%"],prog_carries_p90:["Conducciones prog./90",1],
+  tackles_won_p90:["Entradas ganadas/90",1],interceptions_p90:["Intercepciones/90",1],recoveries_p90:["Recuperaciones/90",1],aerials_won_p90:["Duelos aéreos/90",1],
+  min_share:["De los minutos de liga",0,"%",100],min_per_app:["Min por partido",0],
+  gk_save_pct:["Paradas",0,"%"],gk_psxg_minus_ga_p90:["Goles evitados/90",2],gk_gc_p90:["Encajados/90",2],gk_cs_pct:["Porterías a cero",0,"%",100],gk_launch_cmp_pct:["Acierto en saque largo",0,"%"]};
+const styTier=v=>v==null?"":v>=85?"Élite":v>=75?"Muy bueno":v>=65?"Bueno":v>=45?"Normal":v>=35?"Flojo":"Muy flojo";
+const RSTAVG={};
+function rstAvg(p){const k=p.season+"|"+p.grp+"|"+p.league;if(RSTAVG[k])return RSTAVG[k];
+  const pool=P.filter(q=>q.season===p.season&&q.grp===p.grp&&q.league===p.league&&q.rst&&(q.ligaMin||0)>=450);
+  const out=(p.rst||[]).map((ax,a)=>ax.map((_,j)=>{let t=0,n=0;pool.forEach(q=>{const v=q.rst[a]&&q.rst[a][j];if(v!=null){t+=v;n++;}});return n>=5?t/n:null;}));
+  return RSTAVG[k]=out;}
+function styleHTML(p){
+  const lab=radarLabels(p),keys=M.rstat?M.rstat[p.grp===0?"GK":"campo"]:[],R=p.radar||[],av=p.rst?rstAvg(p):[];
+  const fmt=(m,v)=>{const d=RST[m]||[m,1];const x=v*(d[3]||1);return fx(d[2]==="%"?Math.min(x,100):x,d[1])+(d[2]||"");};
+  const have=lab.map((l,k)=>[l,R[k]]).filter(x=>x[1]!=null).sort((a,b)=>b[1]-a[1]);
+  const sum=have.length>=3?`<p class="sty-sum">Lo mejor: <b>${have.slice(0,2).map(x=>esc(x[0].toLowerCase())).join("</b> y <b>")}</b>${have[have.length-1][1]<45?` · Menos fuerte en <b>${esc(have[have.length-1][0].toLowerCase())}</b>`:""}.</p>`:"";
+  const rows=lab.map((l,k)=>{const v=R[k];const st=(p.rst&&p.rst[k])||[];
+    const chips=(keys[k]||[]).map((m,j)=>st[j]==null?"":`<span>${esc((RST[m]||[m])[0])} <b>${fmt(m,st[j])}</b>${av[k]&&av[k][j]!=null?` (${fmt(m,av[k][j])})`:""}</span>`).join("");
+    return `<div class="sty-row"><div class="hd"><b>${esc(l)}</b>${v!=null?`<span class="t${v>=75?" hi":""}">${styTier(v)}</span>`:""}<span class="v num" style="${v==null?"color:var(--muted);font-size:14px":""}">${v==null?"sin datos":Math.round(v)}</span></div>
+      <div class="sty-bar"><i style="width:${v==null?0:v}%"></i><u></u></div>${chips?`<div class="sty-st">${chips}</div>`:(v==null?`<div class="sty-nd">Esta liga no tiene estadísticas avanzadas para este eje.</div>`:"")}</div>`;}).join("");
+  return sum+`<div class="sty-list">${rows}</div>`;}
 
 /* ---------- gráfico ELO (una o dos series) */
 function eloChart(el,series){
@@ -738,6 +775,7 @@ function showPlayer(i){cur=P[i];store.set("player",i);const p=cur;
       ["Nivel de rivales",p.opp,"fuerza media rival"],["Interés scout",p.scout,"potencial + edad + nivel"]].map(([l,v,s])=>
       `<div class="note"><div class="top-l"><span class="lbl">${l}</span><span class="v num">${fx(v,Number.isInteger(v)?0:1)}</span></div><div class="bar"><i style="width:${v==null?0:Math.max(0,Math.min(100,v))}%"></i></div><small>${s}</small></div>`).join("")}</div>`;
   $("#p-radar").innerHTML=radarSVG([{vals:p.radar,color:"var(--a)",soft:"var(--a-soft)"}],radarLabels(p));
+  $("#p-style").innerHTML=styleHTML(p);
   const gs=games(i);
   eloChart($("#p-elo"),[{name:p.name,games:gs,color:"var(--a)",soft:"var(--a-soft)"}]);
   showMedia(p);

@@ -89,6 +89,9 @@ def main(f1, f2, out, partidos=None, notas=None, avanzadas=None, clubmap=None):
         note += " Nota de partido: SofaScore."
     if avanzadas:
         note += " Métricas avanzadas (5 grandes, liga): Understat y FotMob (Opta)."
+    import pickle  # caché para rehacer solo el panel: python build_web.py cache/base.pkl ../../../Panel_FC
+    (HERE / "cache").mkdir(exist_ok=True)
+    pickle.dump({"base": base, "cfg": cfg, "matches": mm, "sims": sims}, open(HERE / "cache" / "base.pkl", "wb"))
     b = build_excel.build(base, cfg, out, raw=src, sims=sims, corr=corr, matches=mm, history=h, source_note=note)
     import build_resumen  # versión corta y visual, junto al extenso
     build_resumen.build(base, cfg, str(Path(out).with_name("Resumen_FC.xlsx")))
