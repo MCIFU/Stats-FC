@@ -413,6 +413,9 @@ def add_relperf_pa(base, cfg, prev=None):
     mult = P["relperf_multiplier_min"] + (P["relperf_multiplier_max"] - P["relperf_multiplier_min"]) * base.REL_PERF / 100
     headroom = ((100 - base.CA_FINAL) / P["headroom_ref"]).clip(0, 1)
     base["growth_effective"] = base.growth_age * mult * headroom
+    if P.get("minutes_full_growth"):  # v1.5: poca muestra -> menos margen proyectado
+        gm = P["growth_min_factor"]
+        base["growth_effective"] *= gm + (1 - gm) * (base.LIGA_Min.fillna(0) / P["minutes_full_growth"]).clip(0, 1)
     base["trend_ca"] = np.nan
     if prev is not None:
         pv = prev[["player_id", "CA_FINAL", "LIGA_Min"]].rename(columns={"CA_FINAL": "CA_prev", "LIGA_Min": "LIGA_Min_prev"})
@@ -425,6 +428,12 @@ def add_relperf_pa(base, cfg, prev=None):
     width = rb * (1.5 - base.CA_CONFIDENCE / 100)
     base["PA_RANGE_LOW"] = np.maximum(base.CA_FINAL, base.PA_ESTIMATE - width)
     base["PA_RANGE_HIGH"] = (base.PA_ESTIMATE + width).clip(upper=100)
+    if P.get("soft_cap_from"):  # v1.5: techo suave (el máximo ronda 95)
+        c0, sp = P["soft_cap_from"], P["soft_cap_span"]
+        for c in ("PA_ESTIMATE", "PA_RANGE_LOW", "PA_RANGE_HIGH"):
+            v = base[c]
+            base[c] = np.where(v > c0, c0 + sp * np.tanh((v - c0) / sp), v)
+        base["PA_RANGE_LOW"] = np.minimum(base.PA_RANGE_LOW, base.PA_ESTIMATE)
     base["PA_CONFIDENCE"] = base.CA_CONFIDENCE * base.age.map(lambda a: interp_age(P["age_confidence"], a))
     for c in ["PA_ESTIMATE", "PA_RANGE_LOW", "PA_RANGE_HIGH", "PA_CONFIDENCE"]:
         base.loc[base.CA_FINAL.isna() | base.age.isna(), c] = np.nan
@@ -672,6 +681,12 @@ def run(raw: pd.DataFrame, cfg, matches=None, prev=None, team_games=None, prev_m
     base = add_attributes(base, cfg)
     base = add_roles(base, cfg)
     base = add_ca(base, cfg, prev)
+    # v1.5: forma en la escala del nivel (nivel ± lo que se sale de su media en los últimos partidos)
+    if "FORM" in base:
+        base["FORM_RAW"] = base.FORM
+        F = cfg["model"]["form"]
+        if F.get("level_span"):
+            base["FORM"] = (base.CA_FINAL + F["level_span"] * np.tanh((base.FORM_RAW - 50) / F["level_scale"])).clip(0, 100).where(base.FORM_RAW.notna())
     base = add_relperf_pa(base, cfg, prev)
     base = add_scout(base, cfg)
     base["model_version"] = cfg["model"]["model_version"]

@@ -104,7 +104,8 @@ def build(base, cfg, out_dir, matches=None, sims=None):
     games, opps = {}, []
     if matches is not None and len(matches):
         m = matches.dropna(subset=["elo_before"]).sort_values("date")
-        m = m.assign(elo_after=70 + (m.elo_before + m.elo_delta - 1500) / 10)
+        sc = cfg["model"]["elo"]["scale_to_100"]
+        m = m.assign(elo_after=sc["center_value"] + (m.elo_before + m.elo_delta - sc["center"]) / sc["points_per_unit"])
         om = {}
         blocks = ["LIGA", "COPA", "CONT", "FIFA"]
         for (p, s), g in m.groupby(["player_id", "season"], sort=False):

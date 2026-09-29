@@ -1,6 +1,6 @@
 {
-  "model_version": "rating_model_v1.4",
-  "model_date": "2026-09-25",
+  "model_version": "rating_model_v1.5",
+  "model_date": "2026-09-29",
   "notes": "Primera versión de prueba. Todos los valores son parámetros propios del modelo, no oficiales.",
   "rating_blocks": {
     "LIGA": {
@@ -145,7 +145,12 @@
       "GK": 2,
       "CB": 1
     },
-    "comment_delay": "v1.2: la curva de crecimiento se retrasa estos años por posición (un portero de 26 usa la fila de 24). Pico real: porteros ~28-31, centrales ~27-29; en tus datos la mediana de edad del top-50 de CA es 28 en porteros frente a 25-27 en el resto."
+    "comment_delay": "v1.2: la curva de crecimiento se retrasa estos años por posición (un portero de 26 usa la fila de 24). Pico real: porteros ~28-31, centrales ~27-29; en tus datos la mediana de edad del top-50 de CA es 28 en porteros frente a 25-27 en el resto.",
+    "minutes_full_growth": 1800,
+    "growth_min_factor": 0.4,
+    "soft_cap_from": 85,
+    "soft_cap_span": 12,
+    "comment_v15": "v1.5: (1) crecimiento × (0,4 + 0,6·min(minutos de liga/1800, 1)): con 500' no se puede proyectar un 98. (2) techo suave por encima de 85: 85 + 12·tanh((PA-85)/12), así el máximo ronda 95 y no hay una fila de 97-99."
   },
   "relative_performance": {
     "age_bands": [
@@ -210,7 +215,7 @@
   "elo": {
     "initial": 1500,
     "initial_from_competition": true,
-    "initial_competition_factor": 4.0,
+    "initial_competition_factor": 7.0,
     "comment_initial": "ELO inicial = 1500 + factor*(competition_strength-80). No se usa el CA.",
     "k_base": 24,
     "season_carry": 0.85,
@@ -227,7 +232,7 @@
     "scale_to_100": {
       "center": 1500,
       "points_per_unit": 10,
-      "center_value": 70
+      "center_value": 64
     },
     "unknown_team_strength": 65,
     "k_team": 20,
@@ -239,7 +244,8 @@
     "result_margin": 1.5,
     "provisional_boost": 1.0,
     "provisional_matches": 10,
-    "comment_v14": "v1.4: resultado con margen (0.5+0.5·tanh(dif/1.5): 1-0 = 0.79, 3-0 = 0.98) y K doble en los primeros partidos de un jugador sin Elo previo (baja con exp(-n/10))."
+    "comment_v14": "v1.4: resultado con margen (0.5+0.5·tanh(dif/1.5): 1-0 = 0.79, 3-0 = 0.98) y K doble en los primeros partidos de un jugador sin Elo previo (baja con exp(-n/10)).",
+    "comment_v15": "v1.5: factor de liga 4->7 y centro de la escala 70->64. Con 4 la diferencia entre la Premier (fuerza 95) y Regionalliga (46) era solo de 20 puntos de ELO y el mejor de Regionalliga (78) igualaba a la media de la Premier. Ahora el ELO medio de cada liga coincide con su nivel medio (Premier ~74, LaLiga2 ~58, Regionalliga ~40) y el ELO de equipos también se separa más."
   },
   "form": {
     "windows": [
@@ -250,7 +256,10 @@
     "decay_half_life_matches": 6,
     "days_window_365": 365,
     "min_matches": 3,
-    "comment": "FORM_n = media de la nota de partido de los últimos n partidos (≤365 días), semivida 6 partidos, ponderada por minutos. FORM = FORM_10."
+    "comment": "FORM_n = media de la nota de partido de los últimos n partidos (≤365 días), semivida 6 partidos, ponderada por minutos. FORM = FORM_10.",
+    "comment_v15": "v1.5: FORM = NIVEL ACTUAL + 12·tanh((forma bruta - 50)/16). La forma bruta (media de notas de los últimos 10 partidos) no depende de la liga: un jugador de Segunda Federación en racha salía en 80 como uno de la Premier. Ahora es 'nivel en los últimos partidos': como mucho 12 puntos por encima o por debajo de su nivel. La forma bruta se guarda en FORM_RAW.",
+    "level_span": 12,
+    "level_scale": 16
   },
   "consistency": {
     "min_matches": 8,
