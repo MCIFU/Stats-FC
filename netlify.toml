@@ -1,0 +1,9 @@
+# Netlify publica el panel estático (no hace falta compilar nada)
+[build]
+  publish = "FC/Panel_FC"
+  command = ""
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
