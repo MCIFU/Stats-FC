@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["1440913"]={"id":1440913,"name":"Winner EF 8","code":null,"rank":null,"colors":"#333333","coach":null,"squad":[],"fx":[],"troph":[],"coaches":[],"venue":null,"tops":{},"form":[],"lineup":null};

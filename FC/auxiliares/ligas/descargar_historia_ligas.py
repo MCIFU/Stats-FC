@@ -71,6 +71,34 @@ def fixtures(d):
     return out
 
 
+def playoff(d):
+    """Cuadro de eliminatorias (Mundial, Eurocopa...): [[ronda, [[local, visitante, goles L, goles V, ganador, penaltis?], ...]], ...]."""
+    out = []
+    for r in ((d.get("playoff") or {}).get("rounds") or []):
+        ms = []
+        for x in r.get("matchups") or []:
+            pens = None
+            for m in x.get("matches") or []:
+                st = m.get("status") or {}
+                pens = (st.get("reason") or {}).get("short") if isinstance(st.get("reason"), dict) else None
+            ms.append([x.get("homeTeamId"), x.get("awayTeamId"), x.get("homeScore"), x.get("awayScore"), x.get("winner"),
+                       x.get("homeTeam"), x.get("awayTeam"), pens])
+        if ms:
+            out.append([r.get("stage"), ms])
+    return out
+
+
+def upcoming(d, n=60):
+    out = []
+    for m in ((d.get("fixtures") or {}).get("allMatches") or []):
+        st, h, a = m.get("status") or {}, m.get("home") or {}, m.get("away") or {}
+        if st.get("finished") or st.get("cancelled"):
+            continue
+        out.append([m.get("round"), (st.get("utcTime") or "")[:16], int(h["id"]) if h.get("id") else None, int(a["id"]) if a.get("id") else None,
+                    h.get("name"), a.get("name")])
+    return out[:n]
+
+
 def stat_all(url, ref, n=100):
     name = "st_" + url.split("/stats/", 1)[-1].replace("/", "_")
     d = cached(name + ".gz", lambda: FM.get(url), ref)
@@ -108,9 +136,9 @@ def wiki(title):
     return v
 
 
-def liga(lid, nombre, ref):
+def liga(lid, nombre, ref, max_seasons=None):
     cur = cached(f"league_{lid}.json.gz", lambda: FM.get(f"https://www.fotmob.com/api/data/leagues?id={lid}"), ref) or {}
-    seasons = cur.get("allAvailableSeasons") or []
+    seasons = (cur.get("allAvailableSeasons") or [])[:max_seasons]
     names = {}
     hist = []
     for k, s in enumerate(seasons):
@@ -123,7 +151,24 @@ def liga(lid, nombre, ref):
         for t in tb:
             for r in t["all"]:
                 names[str(r[2])] = r[1]
-        hist.append({"s": s, "tables": [{k2: v for k2, v in t.items() if k == 0 or k2 not in ("home", "away")} for t in tb], "fx": fixtures(d)})
+        h = {"s": s, "tables": [{k2: v for k2, v in t.items() if k == 0 or k2 not in ("home", "away")} for t in tb], "fx": fixtures(d)}
+        po = playoff(d)
+        if po:
+            h["po"] = po
+            for _, ms in po:
+                for x in ms:
+                    for i, n in ((x[0], x[5]), (x[1], x[6])):
+                        if i and n:
+                            names.setdefault(str(i), n)
+        if k == 0:
+            up = upcoming(d)
+            if up:
+                h["up"] = up
+                for x in up:
+                    for i, n in ((x[2], x[4]), (x[3], x[5])):
+                        if i and n:
+                            names.setdefault(str(i), n)
+        hist.append(h)
         time.sleep(0.2)
     champs = [[x.get("seasonName"), (x.get("winner") or {}).get("id"), (x.get("winner") or {}).get("name"),
                (x.get("loser") or {}).get("id"), (x.get("loser") or {}).get("name")] for x in (cur.get("seasons") or [])]

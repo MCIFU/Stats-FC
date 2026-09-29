@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["1625333"]={"id":1625333,"name":"Israel U23","code":null,"rank":null,"colors":"#5ab0d2","coach":null,"squad":[],"fx":[],"troph":[],"coaches":[[106326,"Guy Luzon","2024","2024",0,1,2]],"venue":null,"tops":{},"form":[],"lineup":null};

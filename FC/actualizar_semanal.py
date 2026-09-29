@@ -57,6 +57,7 @@ def main():
         run([AUX / "equipos/descargar_equipos.py", "--refrescar", "0.5"])
         run([AUX / "ligas/descargar_ligas.py", "--refrescar", "0.5"])
         run([AUX / "ligas/descargar_historia_ligas.py", "--refrescar", "0.5"])
+    run([AUX / "selecciones/descargar_selecciones.py", "--refrescar", "3"])
         print(f"\nListo (diario). Registro: {LOG}")
         return
     env = {"TM_REFRESH_DAYS": "perf/=5,squads/=27,ligas/=27"}

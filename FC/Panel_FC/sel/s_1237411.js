@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["1237411"]={"id":1237411,"name":"Dominican Republic U23","code":null,"rank":null,"colors":"#3060A8","coach":null,"squad":[],"fx":[],"troph":[],"coaches":[[213470,"Ibai Gómez","2024","2024",0,2,1]],"venue":["Estadio Panamericano","San Cristóbal",2800,2003],"tops":{},"form":[],"lineup":null};

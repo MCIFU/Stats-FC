@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["750130"]={"id":750130,"name":"Guinea U23","code":null,"rank":null,"colors":"#C61C29","coach":null,"squad":[],"fx":[],"troph":[["Olympics Intercontinental Play-offs","-1",1,0,"2024  Paris",""]],"coaches":[[25642,"Kaba Diawara","2024","2024",0,0,3]],"venue":["Stade du 28 Septembre","Conakry",35000,0],"tops":{},"form":[],"lineup":null};

@@ -1,0 +1,1 @@
+window.FC_LH=window.FC_LH||{};window.FC_LH["10304"]={"lid":10304,"liga":"Finalissima","champs":[],"hist":[{"s":"2026","tables":[],"fx":[]},{"s":"2022","tables":[],"fx":[["final","2022-06-01",8204,6706,0,3]]}],"names":{},"players":{},"teams":{},"wiki":null,"intl":1};

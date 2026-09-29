@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["1625332"]={"id":1625332,"name":"Ukraine U23","code":null,"rank":null,"colors":"#014DA2","coach":null,"squad":[],"fx":[],"troph":[["Tournoi Maurice Revello","-1",1,0,"2024",""]],"coaches":[[30944,"Ruslan Rotan","2024","2024",6,0,2]],"venue":null,"tops":{},"form":[],"lineup":null};

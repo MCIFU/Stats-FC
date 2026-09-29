@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["437654"]={"id":437654,"name":"Winner 1E/2D","code":null,"rank":null,"colors":"#333333","coach":null,"squad":[],"fx":[[5521861,"2027-01-29T11:00","Asian Cup",290,437653,"Winner 1C/3ABF",437654,"Winner 1E/2D",null,null,0,null]],"troph":[],"coaches":[],"venue":null,"tops":{},"form":[],"lineup":null};

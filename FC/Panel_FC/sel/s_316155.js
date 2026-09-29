@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["316155"]={"id":316155,"name":"Morocco U23","code":null,"rank":null,"colors":"#E6251E","coach":null,"squad":[],"fx":[],"troph":[["CAF U23 Cup of Nations","10460",1,0,"2023 Morocco",""]],"coaches":[[40614,"Tarik Sektioui","2024","2024",4,0,2]],"venue":null,"tops":{},"form":[],"lineup":null};

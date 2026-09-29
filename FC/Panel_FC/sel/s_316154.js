@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["316154"]={"id":316154,"name":"New Zealand U23","code":null,"rank":null,"colors":"#000000","coach":null,"squad":[],"fx":[],"troph":[["Olympic Qualifying Oceania","-1",2,0,"2024 Paris,2020 Tokyo",""]],"coaches":[[23798,"Darren Bazeley","2024","2024",1,0,2]],"venue":null,"tops":{},"form":[],"lineup":null};

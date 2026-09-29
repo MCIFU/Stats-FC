@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["318828"]={"id":318828,"name":"Mali U23","code":null,"rank":null,"colors":"#046830","coach":null,"squad":[],"fx":[],"troph":[],"coaches":[[1587592,"Alou Badra Diallo","2024","2024",0,1,2]],"venue":["Stade 26 Mars","Bamako",55000,2001],"tops":{},"form":[],"lineup":null};

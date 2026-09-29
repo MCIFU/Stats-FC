@@ -1,0 +1,1 @@
+window.FC_NT=window.FC_NT||{};window.FC_NT["442963"]={"id":442963,"name":"4F","code":null,"rank":null,"colors":"#333333","coach":null,"squad":[],"fx":[],"troph":[],"coaches":[],"venue":null,"tops":{},"form":[],"lineup":null};

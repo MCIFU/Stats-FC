@@ -1,7 +1,7 @@
 # Panel Scouting FC
 
 Abre `index.html` con doble clic (Chrome, Edge o Firefox). Necesita en la misma carpeta: `datos*.js`, `extra*.js`, `partidos*.js` (3 partes cada uno),
-`equipos.js`, `portada.js`, `ligas.js`, `goles.js`, `estadios.js`, `equipaciones.js`, `entrenadores.js`, `nombres.js` y la carpeta `carrera/`.
+`equipos.js`, `portada.js`, `ligas.js`, `selecciones.js`, `goles.js`, `estadios.js`, `equipaciones.js`, `entrenadores.js`, `nombres.js` y las carpetas `carrera/`, `ligas/` y `sel/`.
 Con internet se ven además las fotos recortadas de los jugadores (FotMob), escudos, logos de liga, la galería de Wikimedia Commons y las tipografías.
 
 Todo nombre de jugador, equipo o liga es un enlace: clic normal lo abre, clic con la rueda (botón central) lo abre en otra pestaña.
@@ -26,13 +26,19 @@ Pestañas:
   partidos por jornada con goles, estadio, árbitro y asistencia; 37 rankings de jugadores y 29 de equipos (pulsa uno para verlo entero);
   equipos y estadios con foto, ocupación y entrenador; traspasos y, en LaLiga y LaLiga2, límite salarial (2019-20 a 2026-27).
   Los datos de cada liga están en `ligas/h_<id>.js` y se cargan al abrirla.
+- **Selecciones**: ranking FIFA (211 selecciones) y 22 competiciones: Mundial, Eurocopa, Nations League A-D, Copa América, Copa Oro,
+  Copa África, Copa Asia, Nations League CONCACAF, Finalissima, Juegos Olímpicos y clasificatorias. Cada competición: grupos, cuadro final
+  de cada edición, historia (campeones desde 1930, más títulos), partidos, rankings de jugadores y de selecciones.
+  Cada selección (`#s-<id>`): resumen (ranking, seleccionador, forma, próximos partidos y resultados, último once, destacados),
+  convocatoria con nivel de cada jugador, partidos, palmarés y seleccionadores. Datos en `sel/s_<id>.js` e índice en `selecciones.js`.
+  Fotos con la camiseta de la selección: FIFA (Mundial 2026) y UEFA (Nations League 2026-27); también en la ficha del jugador, junto a la del club.
 
 Logos: `logos/index.html` compara las variantes A–F (claro/oscuro e icono). El panel usa la A.
 
 Los datos se regeneran con `python actualizar_semanal.py` (carpeta FC; `--diario` solo portada, equipos y ligas)
 o al recalcular la valoración (`run_all.py` → `build_web.py`).
 
-Nivel (motor v1.4): mezcla por percentiles de rendimiento estadístico ajustado por liga (45 %), ELO partido a partido (25 %) y valor de
+Nivel (motor v1.5): mezcla por percentiles de rendimiento estadístico ajustado por liga (45 %), ELO partido a partido (25 %) y valor de
 mercado corregido por edad (30 %). Edad calculada con la fecha de nacimiento y posición principal de la ficha de Transfermarkt
 (los Excel de temporada no se modifican). "Rendimiento" en la ficha = solo estadísticas; la vista Oportunidades de Fichajes usa ese dato.
 
