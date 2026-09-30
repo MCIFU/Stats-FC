@@ -151,6 +151,23 @@ main{max-width:1240px;margin:0 auto;padding:20px 16px 48px}
 .p-nt{display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:var(--muted);font-size:12px}
 .p-nt .ntimg{width:96px;height:116px}
 .who-top{align-items:flex-end}
+.car-h{margin:14px 0 8px;font:700 15px var(--brand);letter-spacing:.04em;text-transform:uppercase}
+.ctab{width:100%;border-collapse:collapse}
+.ctab th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;border-bottom:1px solid var(--line)}
+.ctab td{padding:9px 10px;border-bottom:1px solid var(--line)}
+.ctab .cs-h{cursor:pointer}.ctab .cs-h:hover td{background:var(--surface-2)}
+.ctab .cs-h b{font-weight:600}.ctab .cs-s{font-weight:600}
+.ctab .chev{display:inline-block;margin-left:6px;color:var(--muted);transition:transform .15s;font-weight:700}
+.ctab .cs.open .chev{transform:rotate(90deg)}
+.ctab .cs-c{display:none;background:var(--surface-2);font-size:14px}.ctab .cs.open .cs-c{display:table-row}
+.ctab .cs-c td:first-child{padding-left:30px}
+.ctab .tcomp{width:20px;height:20px;object-fit:contain}
+.ctab tfoot td{font-weight:700;background:var(--pitch);color:#fff;border:0}.ctab tfoot .muted{color:rgba(255,255,255,.7)}
+.ctab .cd{display:inline-block;width:10px;height:14px;border-radius:2px;vertical-align:middle}.ctab .cd.y{background:#F5C518}.ctab .cd.r{background:#E23B3B}
+.ctab td:first-child{width:100%;max-width:0}.ctab .tn{min-width:0}.ctab .tn b,.ctab .cs-c .tn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctab td:not(:first-child),.ctab th:not(:first-child){white-space:nowrap}
+.ctab td:first-child{overflow:hidden}.ctab .tn{overflow:hidden}
+@media (max-width:640px){.ctab .hm{display:none}.ctab td,.ctab th{padding:8px 5px;font-size:13px}.ctab .cs-c td:first-child{padding-left:14px}.ctab tfoot small{display:none}}
 @media (max-width:460px){.notes{grid-template-columns:minmax(0,1fr)}}
 /* ---------- tablas */
 .tw{overflow-x:auto}
@@ -962,18 +979,27 @@ tableView("evolucion",{grp:"",lg:"",age:"",min:"450",club:"",sort:"d",desc:true}
   {filters:["grp","lg","age","min","club"],minLabel:"Min. liga 26-27",prep:()=>{const st=store.get("f.evolucion")||{};const cq=norm(st.club||"");
     return P.filter(p=>p.season===1&&p.ca!=null&&p.other!=null&&P[p.other].ca!=null&&(!st.grp||p.grp===+st.grp)&&(!st.lg||p.league===+st.lg)&&(!st.age||(p.age!=null&&p.age<=+st.age))
       &&(p.ligaMin||0)>=(st.min===undefined?450:+st.min||0)&&(!cq||norm(p.clubN).includes(cq))).map(p=>{p._ca0=P[p.other].ca;p._d=p.ca-p._ca0;return p;});}});
-/* ---------- LIGAS */
-(function(){const st={season:"0",sort:"top",desc:true};const fEl=$("#f-ligas"),tEl=$("#t-ligas");
-  fEl.innerHTML=`<label><span class="lbl">Temporada</span><select id="lg-season">${SEASONS.map((s,k)=>`<option value="${k}">${s}</option>`).join("")}</select></label><p class="muted" style="margin:0 0 6px;font-size:13px">Ligas con 150 jugadores valorados o más. Nivel top = media de los 25 mejores.</p>`;
+/* ---------- LIGAS: ranking por nivel de sus equipos (once más usado de cada club), no por número de jugadores */
+(function(){const st={season:"0"};const fEl=$("#f-ligas"),tEl=$("#t-ligas");
+  fEl.innerHTML=`<label><span class="lbl">Temporada</span><select id="lg-season">${SEASONS.map((s,k)=>`<option value="${k}">${s}</option>`).join("")}</select></label><p class="muted" style="margin:0 0 6px;font-size:13px;max-width:95ch">Índice = 50 % nivel medio de los equipos + 30 % nivel de sus 4 mejores equipos + 20 % sus estrellas. El nivel de un equipo es la media de sus 11 jugadores con más minutos de liga; estrellas = media de los mejores jugadores (tantos como equipos tiene la liga). Así no cuenta cuántos jugadores o grupos tiene una liga, sino lo buenos que son sus equipos.</p>`;
   $("#lg-season").addEventListener("change",e=>{st.season=e.target.value;draw();});
-  tEl.addEventListener("click",e=>{const b=e.target.closest("[data-i]");if(b){go("jugador");showPlayer(+b.dataset.i);window.scrollTo(0,0);}});
-  function draw(){const by={};P.forEach(p=>{if(p.season!==+st.season||p.ca==null)return;(by[p.league]=by[p.league]||[]).push(p);});
-    const rows=Object.entries(by).filter(([,v])=>v.length>=150).map(([k,v])=>{const cas=v.map(p=>p.ca).sort((a,b)=>b-a);const top=cas.slice(0,25).reduce((a,b)=>a+b,0)/Math.min(25,cas.length);
-      const campo=v.filter(p=>p.grp!==0).sort((a,b)=>b.ca-a.ca);const young=v.filter(p=>p.age!=null&&p.age<=21&&p.scout!=null&&(p.ligaMin||0)>=450).sort((a,b)=>b.scout-a.scout);
-      return{name:M.leagues[k],n:v.length,top,med:cas[Math.floor(cas.length/2)],str:v[0].lgStr,best:campo.slice(0,3),young:young[0]};}).sort((a,b)=>b.top-a.top);
-    const mx=Math.max(...rows.map(r=>r.top));
-    tEl.innerHTML=`<table><thead><tr><th>#</th><th>Liga</th><th class="r">Jugadores</th><th>Nivel top 25</th><th class="r">Mediana</th><th>Mejores jugadores de campo</th><th>Mejor promesa</th></tr></thead><tbody>${rows.map((r,n)=>`<tr class="${n<3?"m"+(n+1):""}"><td class="rk num">${n+1}</td><td class="pl">${(()=>{const l=Object.keys(LG).find(x=>LG[x].liga===r.name);return l?aL(l,imgOr(lgLogo(l),"tl")+" "+esc(r.name)):esc(r.name);})()}</td><td class="r num">${r.n}</td><td><div class="cabar"><b class="num">${fx(r.top)}</b><i style="width:${Math.max(4,(r.top-50)/(mx-50)*110)}px"></i></div></td><td class="r num">${fx(r.med)}</td><td>${r.best.map(p=>`<a href="#" data-i="${p.i}" style="color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px dotted var(--muted)">${esc(p.name)}</a> <span class="muted num">${fx(p.ca)}</span>`).join(" · ")}</td><td>${r.young?`<a href="#" data-i="${r.young.i}" style="color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px dotted var(--muted)">${esc(r.young.name)}</a> <span class="muted">${r.young.age} años</span>`:"—"}</td></tr>`).join("")}</tbody></table>`;
-    tEl.querySelectorAll("a[data-i]").forEach(a=>a.addEventListener("click",e=>e.preventDefault()));}
+  tEl.addEventListener("click",e=>{const b=e.target.closest("[data-i]");if(b){e.preventDefault();go("jugador");showPlayer(+b.dataset.i);window.scrollTo(0,0);}});
+  const plink=p=>`<a href="#" data-i="${p.i}" style="color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px dotted var(--muted)">${esc(p.name)}</a>`;
+  function draw(){const by={};P.forEach(p=>{if(p.season!==+st.season||p.ca==null)return;((by[p.league]=by[p.league]||{})[p.club]=by[p.league][p.club]||[]).push(p);});
+    const rows=Object.entries(by).map(([k,cl])=>{const teams=[];
+      Object.entries(cl).forEach(([c,ps])=>{const xi=ps.slice().sort((a,b)=>(b.ligaMin||0)-(a.ligaMin||0)).slice(0,11);if(xi.length===11&&(xi[10].ligaMin||0)>0)teams.push({c:+c,v:xi.reduce((s,p)=>s+p.ca,0)/11});});
+      if(teams.length<8)return null;teams.sort((a,b)=>b.v-a.v);
+      const all=Object.values(cl).flat().filter(p=>(p.ligaMin||0)>0);const cas=all.map(p=>p.ca).sort((a,b)=>b-a);
+      const avg=teams.reduce((s,t)=>s+t.v,0)/teams.length,top=teams.slice(0,4).reduce((s,t)=>s+t.v,0)/Math.min(4,teams.length);
+      const nS=Math.max(11,teams.length),stars=cas.slice(0,nS).reduce((a,b)=>a+b,0)/Math.min(nS,cas.length);
+      const campo=all.filter(p=>p.grp!==0).sort((a,b)=>b.ca-a.ca);const young=all.filter(p=>p.age!=null&&p.age<=21&&p.scout!=null&&(p.ligaMin||0)>=450).sort((a,b)=>b.scout-a.scout);
+      return{name:M.leagues[k],idx:.5*avg+.3*top+.2*stars,avg,top,stars,nt:teams.length,bestT:teams[0],best:campo.slice(0,3),young:young[0]};}).filter(Boolean).sort((a,b)=>b.idx-a.idx);
+    const mx=Math.max(...rows.map(r=>r.idx)),mn=Math.min(...rows.map(r=>r.idx));
+    const cn=i=>(M.clubDisp&&M.clubDisp[i])||M.clubs[i];
+    tEl.innerHTML=`<table><thead><tr><th>#</th><th>Liga</th><th data-tip="50 % nivel medio de los equipos + 30 % sus 4 mejores equipos + 20 % sus estrellas">Índice</th><th class="r" data-tip="Media del nivel de todos sus equipos (once con más minutos)">Equipos</th><th class="r" data-tip="Media de sus 4 mejores equipos">Top 4</th><th class="r" data-tip="Media de sus mejores jugadores (tantos como equipos)">Estrellas</th><th>Mejor equipo</th><th>Mejores jugadores de campo</th><th>Mejor promesa</th></tr></thead><tbody>${rows.map((r,n)=>`<tr class="${n<3?"m"+(n+1):""}"><td class="rk num">${n+1}</td><td class="pl">${(()=>{const l=Object.keys(LG).find(x=>LG[x].liga===r.name);return l?aL(l,imgOr(lgLogo(l),"tl")+" "+esc(r.name)):esc(r.name);})()}<br><small class="muted">${r.nt} equipos</small></td>
+      <td><div class="cabar"><b class="num cab ${tierC(r.idx)}">${fx(r.idx)}</b><i style="width:${Math.max(4,(r.idx-mn)/(mx-mn||1)*110)}px"></i></div></td><td class="r num">${fx(r.avg)}</td><td class="r num">${fx(r.top)}</td><td class="r num">${fx(r.stars)}</td>
+      <td>${r.bestT?`<span class="tn">${aT(cn(r.bestT.c),esc(cn(r.bestT.c)))}</span> <span class="muted num">${fx(r.bestT.v)}</span>`:"—"}</td>
+      <td>${r.best.map(p=>`${plink(p)} <span class="muted num">${fx(p.ca)}</span>`).join(" · ")}</td><td>${r.young?`${plink(r.young)} <span class="muted">${r.young.age} años</span>`:"—"}</td></tr>`).join("")}</tbody></table>`;}
   draw();})();
 
 /* ---------- tarjetas nuevas de la ficha */
@@ -1401,6 +1427,21 @@ function loadCar(tm,cb){if(!tm){cb(null);return;}const b=tm%64;if(CARDONE[b]){cb
 const NM=window.FC_NAMES||{clubs:{},comps:{}};
 const seasonLbl=s=>`${String(s).slice(2)}/${String(+s+1).slice(2)}`;
 let carDetail=false,carTable=false;
+const tmComp=c=>`https://tmssl.akamaized.net/images/logo/header/${String(c).toLowerCase()}.png`;
+// trayectoria por temporada y equipo; cada fila se despliega en sus competiciones (como BeSoccer)
+function carTableHTML(L,crest,open1){const by=new Map();
+  L.forEach(r=>{const k=r[0]+"|"+r[2];if(!by.has(k))by.set(k,{s:r[0],c:r[2],R:[]});by.get(k).R.push(r);});
+  const sum=R=>R.reduce((a,r)=>{a.pj+=r[3];a.tit+=r[4]||0;a.min+=r[5];a.g+=r[6];a.a+=r[7];a.ta+=r[8]||0;a.tr+=r[9]||0;return a;},{pj:0,tit:0,min:0,g:0,a:0,ta:0,tr:0});
+  const G=[...by.values()].map(x=>({...x,t:sum(x.R)})).filter(x=>x.t.pj>0).sort((a,b)=>b.s-a.s||b.t.min-a.t.min);
+  if(!G.length)return "";const T=sum(G.flatMap(x=>x.R));
+  const cells=t=>`<td class="r num">${t.pj}</td><td class="r num hm">${fi(t.min)}</td><td class="r num">${t.g}</td><td class="r num">${t.a}</td><td class="r num">${t.ta}</td><td class="r num">${t.tr}</td>`;
+  return `<div class="tw"><table class="ctab"><thead><tr><th>Equipo</th><th class="r">Temp.</th><th class="r" data-tip="Partidos jugados">PJ</th><th class="r hm">Min</th><th class="r" data-tip="Goles">⚽</th><th class="r" data-tip="Asistencias">A</th><th class="r" data-tip="Tarjetas amarillas"><i class="cd y"></i></th><th class="r" data-tip="Tarjetas rojas"><i class="cd r"></i></th></tr></thead>
+    ${G.map((x,k)=>{const open=open1&&k===0;const comps=x.R.filter(r=>r[3]>0).sort((a,b)=>b[3]-a[3]);
+      return `<tbody class="cs ${open?"open":""}"><tr class="cs-h" tabindex="0" role="button" aria-expanded="${open}"><td><span class="tn">${crest(x.c,"tl")}<b>${esc(NM.clubs[x.c]||x.c)}</b><span class="chev" aria-hidden="true">›</span></span></td><td class="r num cs-s">${seasonLbl(x.s)}</td>${cells(x.t)}</tr>
+        ${comps.map(r=>`<tr class="cs-c"><td><span class="tn">${imgOr(tmComp(r[1]),"tl tcomp")}${esc((NM.comps[r[1]]||[r[1]])[0])}</span></td><td class="r muted num" data-tip="Titular en ${r[4]||0} partidos">${r[4]!=null?r[4]+" tit.":""}</td>${cells({pj:r[3],min:r[5],g:r[6],a:r[7],ta:r[8]||0,tr:r[9]||0})}</tr>`).join("")}</tbody>`;}).join("")}
+    <tfoot><tr><td><b>Total</b> <small class="muted">${G.length} temporadas-equipo</small></td><td></td>${cells(T)}</tr></tfoot></table></div>`;}
+document.addEventListener("click",e=>{const h=e.target.closest(".cs-h");if(!h)return;const tb=h.parentNode;tb.classList.toggle("open");h.setAttribute("aria-expanded",tb.classList.contains("open"));});
+document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("cs-h")){e.preventDefault();e.target.click();}});
 function careerCard(p){const el=$("#p-car");el.innerHTML=`<p class="muted" style="margin:0">Cargando trayectoria…</p>`;
   loadCar(+p.tm,d=>{if(cur!==p)return;if(!d||!d.s||!d.s.length){el.innerHTML=`<p class="muted" style="margin:0">Sin trayectoria de Transfermarkt para este jugador.</p>`;return;}
     const S=d.s.filter(r=>r[0]!=null);const ctype=c=>(NM.comps[c]||[])[1];
@@ -1444,14 +1485,13 @@ function careerCard(p){const el=$("#p-car");el.innerHTML=`<p class="muted" style
     const fee=x=>x[5]==="LOAN"?"Cesión":x[5]==="LOAN_RETURN"?"Fin de cesión":x[5]==="INTERNAL_TRANSFER"?"Cantera":x[3]?money(x[3]):x[5]==="FREE_TRANSFER"||x[3]===0?"Libre":"—";
     const TR=T.slice().reverse();
     el.innerHTML=`<div class="kpis"><div><span class="lbl">Partidos (clubes)</span><b>${fi(tot.pj)}</b></div><div><span class="lbl">Goles</span><b>${fi(tot.g)}</b></div><div><span class="lbl">Asistencias</span><b>${fi(tot.a)}</b></div><div><span class="lbl">Minutos</span><b>${fi(tot.min)}</b></div><div><span class="lbl">Clubes</span><b>${new Set(spells.map(x=>x.c)).size}</b></div>${totN.pj?`<div><span class="lbl">Selección</span><b>${totN.pj}</b><small class="muted">${totN.g} goles</small></div>`:""}</div>
-      <div class="lbl" style="margin:4px 0 6px">Clubes</div>${timeline}
+      <h4 class="car-h">Clubes en los que ha jugado</h4>${carTableHTML(CL,crest,true)}
+      ${NS.length?`<h4 class="car-h">Trayectoria con la selección</h4>${carTableHTML(NS,crest,true)}`:""}
+      <div class="lbl" style="margin:18px 0 6px">Etapas</div>${timeline}
       <div class="lbl" style="margin:16px 0 6px">Minutos por temporada <span class="muted" style="text-transform:none;letter-spacing:0">· encima, goles+asistencias</span></div><div class="tw">${bars}</div>
-      ${natBox}
       ${TR.length?`<div class="lbl" style="margin:16px 0 6px">Traspasos</div><div class="trl">${TR.map(x=>`<div class="tr-r"><span class="muted num">${fdl(x[0])}</span><span class="tr-t">${crest(x[1])} ${esc(NM.clubs[x[1]]||"—")} <span class="muted">→</span> ${crest(x[2])} ${esc(NM.clubs[x[2]]||"—")}</span><span class="r">${x[5]==="LOAN"?`<span class="tag loan">Cesión</span>`:`<b class="num">${fee(x)}</b>`}${x[4]?`<small class="muted" style="display:block">valor ${money(x[4])}</small>`:""}</span></div>`).join("")}</div>`:""}
-      <div class="row" style="margin:14px 0 8px;gap:8px"><button type="button" class="star" id="car-tb">${carTable?"Ocultar tabla completa":"Ver tabla completa"}</button>${carTable?`<button type="button" class="star" id="car-tg">${carDetail?"Por temporada y equipo":"Por competición"}</button>`:""}</div>
-      ${carTable?`<div class="tw car" style="max-height:520px;overflow:auto"><table><thead><tr><th>Temp.</th><th>Equipo</th><th>Competiciones</th><th class="r">PJ</th><th class="r">Min</th><th class="r">G</th><th class="r">A</th><th class="r" title="Amarillas">TA</th><th class="r" title="Rojas">TR</th></tr></thead><tbody>${rows}</tbody></table></div>`:""}
       <p class="muted" style="font-size:12px;margin:8px 0 0">Datos de Transfermarkt: clubes (incluida la cantera) y selección, todas las competiciones oficiales y amistosos de selección.</p>`;
-    $("#car-tb").onclick=()=>{carTable=!carTable;careerCard(p);};const tg=$("#car-tg");if(tg)tg.onclick=()=>{carDetail=!carDetail;careerCard(p);};});}
+});}
 
 /* ---------- INICIO */
 const HOME=window.FC_HOME||{matches:[],news:[],comps:[]};
