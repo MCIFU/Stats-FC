@@ -806,7 +806,7 @@ const fdate=d=>d.toLocaleDateString("es-ES",{day:"2-digit",month:"short"}).repla
 const fdateY=d=>d.toLocaleDateString("es-ES",{day:"2-digit",month:"short",year:"numeric"}).replace(".","");
 
 const nLg=(()=>{const c={};P.forEach(p=>{if(p.season===0&&p.ca!=null)c[p.league]=(c[p.league]||0)+1;});return Object.values(c).filter(n=>n>=150).length;})();
-$("#sub").textContent=`${P.length.toLocaleString("es-ES")} fichas de jugador · ${nLg} ligas completas · temporadas 2025-26 y 2026-27 · datos del ${M.generated}`;
+$("#sub").innerHTML=`${P.length.toLocaleString("es-ES")} fichas de jugador · ${nLg} ligas completas · temporadas 2025-26 y 2026-27 · datos del ${M.generated} · <a href="https://github.com/MCIFU/Stats-FC/actions/workflows/actualizar-panel.yml" target="_blank" rel="noopener" style="color:inherit" title="Se actualiza sola los lunes (completa) y los jueves (resultados). Aquí puedes lanzarla a mano: Run workflow.">actualizar</a>`;
 $("#foot").textContent="Notas de 0 a 100 del motor de valoración (Valoracion_FC_v1.2.xlsx). NIVEL = nivel actual, POTENCIAL = techo estimado, ELO = rendimiento partido a partido frente a la fuerza de cada rival, en la misma escala que el nivel (la media de cada liga queda en su nivel medio), FORMA = nivel en los últimos 10 partidos (nivel actual ± lo que rinde por encima o por debajo de lo normal), REGULARIDAD = % de partidos buenos (50 = normal en su posición). Partidos: Transfermarkt. Estadísticas avanzadas: FotMob (Opta) y Understat. La temporada 2026-27 lleva pocas jornadas: sus notas se fían menos.";
 
 /* ---------- buscador reutilizable */

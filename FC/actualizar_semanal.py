@@ -57,8 +57,7 @@ def main():
         run([AUX / "equipos/descargar_equipos.py", "--refrescar", "0.5"])
         run([AUX / "ligas/descargar_ligas.py", "--refrescar", "0.5"])
         run([AUX / "ligas/descargar_historia_ligas.py", "--refrescar", "0.5"])
-    run([AUX / "selecciones/descargar_selecciones.py", "--refrescar", "3"])
-    run([AUX / "partidos/descargar_detalle_partidos.py"])
+        run([AUX / "partidos/descargar_detalle_partidos.py"])
         print(f"\nListo (diario). Registro: {LOG}")
         return
     env = {"TM_REFRESH_DAYS": "perf/=5,squads/=27,ligas/=27"}
@@ -77,6 +76,8 @@ def main():
     run([AUX / "portada/descargar_portada.py"])
     run([AUX / "ligas/descargar_ligas.py", "--refrescar", "0.5"])
     run([AUX / "ligas/descargar_historia_ligas.py", "--refrescar", "0.5"])
+    run([AUX / "selecciones/descargar_selecciones.py", "--refrescar", "3"])
+    run([AUX / "partidos/descargar_detalle_partidos.py"])
     run(["run_all.py", "../../../Temporada 2025-26.xlsx", "../../../Temporada 2026-27.xlsx", "../../Valoracion_FC_v1.2.xlsx",
          "--partidos", "../../partidos_TM.csv.gz", "--avanzadas", "../../avanzadas.csv"], cwd=VAL)
     print(f"\nListo. Registro: {LOG}")

@@ -1,0 +1,114 @@
+# Actualiza Scouting FC y publica la web sin intervención (ni de Claude ni tuya).
+#  - Lunes 03:00 UTC: actualización completa (partidos TM, valor, lesiones, estadísticas, equipos, ligas,
+#    selecciones, partidos, valoración y panel). 2-4 h.
+#  - Jueves 03:00 UTC: actualización ligera (portada, clasificaciones, goles, partidos). ~15 min.
+#  - A mano: pestaña Actions → «Actualizar panel» → Run workflow (eliges completa o ligera).
+# Las cachés de descarga, los Excel de temporada y los datos del panel se guardan entre ejecuciones (actions/cache);
+# si en el repositorio hay datos más nuevos (subidos a mano), mandan los del repositorio.
+# La web se publica en GitHub Pages; los Excel de valoración quedan como archivo descargable de cada ejecución.
+name: Actualizar panel
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+    - cron: "0 3 * * 4"
+  workflow_dispatch:
+    inputs:
+      tipo:
+        description: "completa o ligera"
+        required: true
+        default: "completa"
+        type: choice
+        options: [completa, ligera]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: actualizar-panel
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Dependencias
+        run: pip install -r requirements.txt
+
+      - name: Recuperar cachés y datos de la última ejecución
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            FC/auxiliares/*/cache
+            FC/auxiliares/*/cache_*
+            _estado
+          key: fc-estado-${{ github.run_id }}
+          restore-keys: fc-estado-
+
+      - name: Devolver los datos de la última ejecución (si son más recientes que los del repositorio)
+        run: python .github/scripts/estado.py restaurar
+
+      - name: Actualizar
+        working-directory: FC
+        run: |
+          if [ "${{ github.event.schedule }}" = "0 3 * * 4" ] || [ "${{ inputs.tipo }}" = "ligera" ]; then
+            python actualizar_semanal.py --diario
+          else
+            python actualizar_semanal.py
+          fi
+
+      - name: Registro de la actualización
+        if: always()
+        run: tail -n 80 FC/auxiliares/actualizacion_semanal.log || true
+
+      - name: Apartar los datos para la próxima ejecución
+        if: always()
+        run: python .github/scripts/estado.py guardar
+
+      - name: Guardar cachés y datos
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            FC/auxiliares/*/cache
+            FC/auxiliares/*/cache_*
+            _estado
+          key: fc-estado-${{ github.run_id }}
+
+      - name: Excel de valoración (descargables desde la ejecución)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: excel-valoracion
+          path: |
+            FC/Claude outputs/Valoracion_FC_v1.2*.xlsx
+            FC/Claude outputs/Resumen_FC.xlsx
+            FC/Temporada*.xlsx
+          retention-days: 30
+          if-no-files-found: ignore
+
+      - name: Preparar la web
+        if: success()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: FC/Panel_FC
+
+  publicar:
+    needs: actualizar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.web.outputs.page_url }}
+    steps:
+      - id: web
+        uses: actions/deploy-pages@v4
