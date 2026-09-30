@@ -1,0 +1,1 @@
+window.FC_MD=window.FC_MD||{};window.FC_MD[5885211]={"id":5885211,"date":"2026-09-20T17:00:00.000Z","lid":938794,"league":"Segunda Federacion - Group 4","round":"3","h":[9868,"Xerez",0],"a":[2243,"Don Benito",0],"reason":"FT","pens":null,"stadium":null,"ref":["",""],"att":null,"pom":null,"ev":[],"lu":{"h":null,"a":null},"stats":[],"colors":{"home":"#333333","away":"#333333"}};

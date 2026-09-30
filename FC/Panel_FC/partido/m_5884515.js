@@ -1,0 +1,1 @@
+window.FC_MD=window.FC_MD||{};window.FC_MD[5884515]={"id":5884515,"date":"2026-09-13T17:00:00.000Z","lid":938792,"league":"Segunda Federacion - Group 2","round":"2","h":[7822,"Terrassa",0],"a":[8214,"Barbastro",0],"reason":"FT","pens":null,"stadium":null,"ref":["",""],"att":null,"pom":null,"ev":[],"lu":{"h":null,"a":null},"stats":[],"colors":{"home":"#C01E18","away":"#DBA100"}};

@@ -33,6 +33,18 @@ Pestañas:
   convocatoria con nivel de cada jugador, partidos, palmarés y seleccionadores. Datos en `sel/s_<id>.js` e índice en `selecciones.js`.
   Fotos con la camiseta de la selección: FIFA (Mundial 2026) y UEFA (Nations League 2026-27); también en la ficha del jugador, junto a la del club.
 
+- **Buscador global** (arriba, tecla `/`): jugadores, equipos, selecciones, ligas, competiciones y entrenadores.
+- **Página de partido** (`#m-<id>`, pulsa un resultado): marcador, goleadores, estadio, árbitro, público, mejor jugador, alineaciones en el
+  campo con la nota de cada jugador, suplentes y bajas, cronología (goles, tarjetas, cambios) y estadísticas. Datos en `partido/m_<id>.js`
+  (4.380 partidos de la temporada actual y de selecciones), índice en `partidos_det.js`.
+- **Informe de scouting** (botón «Informe PDF» en la ficha): página A4 para imprimir o guardar en PDF.
+- **Comparar equipos** (`#ce`, también desde cada club): plantilla, clasificación, estadísticas, forma de jugar y mejores jugadores.
+- **Perfiles**: buscador de fichajes por puesto, edad, precio, pie, altura, contrato, liga, nacionalidad y mínimo en cada eje de estilo;
+  valor estimado (regresión por nivel, edad, liga y contrato) y cuánto está infravalorado.
+- **Seguimiento**: alertas de nivel, club, lesión, valor, contrato y forma desde que lo sigues o desde el último «visto».
+- **Selecciones → Convocables**: los mejores jugadores de cada país según la valoración, marcando los convocados.
+- **Instalar como app**: en el móvil, menú del navegador → «Añadir a pantalla de inicio» (funciona cuando está publicado en una web).
+
 Logos: `logos/index.html` compara las variantes A–F (claro/oscuro e icono). El panel usa la A.
 
 Los datos se regeneran con `python actualizar_semanal.py` (carpeta FC; `--diario` solo portada, equipos y ligas)

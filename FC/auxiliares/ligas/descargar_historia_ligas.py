@@ -145,8 +145,11 @@ def liga(lid, nombre, ref, max_seasons=None):
         if k == 0:
             d = cur
         else:  # temporada terminada: no cambia, caché permanente
-            d = cached(f"season_{lid}_{s.replace('/', '-')}.json.gz",
-                       lambda s=s: FM.get(f"https://www.fotmob.com/api/data/leagues?id={lid}&season={urllib.parse.quote(s)}"), None) or {}
+            try:  # FotMob da 502 en algunas temporadas antiguas (Segunda Federación 2016/17): se salta esa
+                d = cached(f"season_{lid}_{s.replace('/', '-')}.json.gz",
+                           lambda s=s: FM.get(f"https://www.fotmob.com/api/data/leagues?id={lid}&season={urllib.parse.quote(s)}"), None) or {}
+            except RuntimeError:
+                continue
         tb = tables(d)
         for t in tb:
             for r in t["all"]:

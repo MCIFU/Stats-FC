@@ -297,6 +297,8 @@
       "GK": 0.0
     },
     "comment": "Nota de partido 0-100. Si hay nota SofaScore: 50 + 30*(nota-6.8). Si no: w_ataque*percentil((G+A)/90 en su posición) + (1-w_ataque)*100*exp(-goles encajados con él en el campo/1.4).",
-    "assist_weight": 0.7
+    "assist_weight": 0.7,
+    "gk_shot_stopping_weight": 0.45,
+    "comment_v15": "v1.5: porteros sin nota SofaScore: nota = 55 % goles encajados + 45 % capacidad de parada de la temporada (percentil entre porteros de goles evitados y % de paradas; 50 si no hay datos)."
   }
 }

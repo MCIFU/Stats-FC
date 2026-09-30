@@ -1,0 +1,1 @@
+window.FC_MD=window.FC_MD||{};window.FC_MD[5883629]={"id":5883629,"date":"2026-09-05T16:45:00.000Z","lid":938783,"league":"Primera Federacion - Group 2","round":"2","h":[8554,"Cartagena",0],"a":[8400,"Gimnàstic",0],"reason":"FT","pens":null,"stadium":null,"ref":["",""],"att":null,"pom":null,"ev":[],"lu":{"h":null,"a":null},"stats":[],"colors":{"home":"#101010","away":"#B5001B"}};

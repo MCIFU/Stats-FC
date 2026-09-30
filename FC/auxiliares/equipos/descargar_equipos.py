@@ -186,6 +186,49 @@ def noticias(q, n=8, max_age=1):
     return cached(f"news_{re.sub(r'[^A-Za-z0-9]+', '_', q)[:80]}.json.gz", fetch, max_age)
 
 
+def _n(s):
+    import unicodedata
+    s = unicodedata.normalize("NFKD", str(s)).encode("ascii", "ignore").decode().lower()
+    s = re.sub(r"[^a-z0-9 ]+", " ", s)
+    stop = {"fc", "cf", "cd", "ud", "sd", "sc", "ac", "as", "club", "de", "del", "la", "el", "futbol", "calcio", "sv", "tsv", "fk",
+            "vfb", "vfl", "1", "1.", "us", "ssd", "asd", "srl", "spa", "afc", "rc", "cp", "sad", "fsv", "e", "v", "u", "rcd", "ss"}
+    return " ".join(w for w in s.split() if w not in stop)
+
+
+def enlazar_por_nombre(pt, ya):
+    """Clubes del Excel sin enlace FotMob (ligas sin estadísticas avanzadas): se buscan por nombre entre los equipos de su
+    liga en las clasificaciones de FotMob (Panel_FC/ligas/h_<id>.js, todas las temporadas). Filiales (B, II, U23) solo con filiales."""
+    import difflib
+    out = {}
+    for liga, g in pt.groupby("liga"):
+        lid = (FM.LEAGUES.get(liga) or (None,))[0]
+        f = FC / "Panel_FC" / "ligas" / f"h_{lid}.js"
+        if not lid or not f.exists():
+            continue
+        t = f.read_text(encoding="utf-8")
+        names = json.loads(t[t.index("]=") + 2:].rstrip().rstrip(";")).get("names") or {}
+        cand = {tid: _n(n) for tid, n in names.items()}
+        usados = {v[0] for v in ya.values()}
+        res = lambda s: bool(re.search(r"\b(b|ii|2|u23|u21|reserves?|atletic|promesas)\b", s))
+        pares = []
+        for club in set(g.excel_club) - set(ya):
+            a = _n(club)
+            for tid, b in cand.items():
+                if tid in usados or res(a) != res(b):
+                    continue
+                r = difflib.SequenceMatcher(None, a, b).ratio()
+                ta, tb = set(a.split()), set(b.split())
+                if ta & tb:
+                    r = max(r, 0.55 + 0.45 * len(ta & tb) / max(len(ta | tb), 1))
+                if r >= 0.72:
+                    pares.append((r, club, tid))
+        for r, club, tid in sorted(pares, reverse=True):
+            if club not in out and tid not in usados:
+                out[club] = (int(tid), liga)
+                usados.add(tid)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--refrescar", type=float, default=1, help="días de validez de la caché de FotMob y noticias")
@@ -200,8 +243,12 @@ def main():
         tid = names.get((season, liga), {}).get(g.sofa_team.mode().iloc[0])
         if tid and (club not in fm_of or season == "2026-27"):
             fm_of[club] = (tid, liga)
-    pt = pd.read_csv((lambda b: b / "partidos_TM.csv.gz" if (b / "partidos_TM.csv.gz").exists() else b / "partidos_TM.csv")(FC / "Claude outputs"), usecols=["excel_club", "club_id"]).dropna()
+    pt = pd.read_csv((lambda b: b / "partidos_TM.csv.gz" if (b / "partidos_TM.csv.gz").exists() else b / "partidos_TM.csv")(FC / "Claude outputs"),
+                     usecols=["excel_club", "club_id", "liga"]).dropna()
     tm_of = pt.groupby("excel_club").club_id.agg(lambda s: str(int(s.mode().iloc[0]))).to_dict()
+    n0 = len(fm_of)
+    fm_of.update(enlazar_por_nombre(pt, fm_of))
+    print(f"  + {len(fm_of) - n0} clubes enlazados por nombre (ligas sin estadísticas avanzadas)")
     print(f"{len(fm_of)} clubes enlazados con FotMob")
     wd = wikidata_clubs(sorted({tm_of[c] for c in fm_of if c in tm_of}))
     kmp = HERE.parent / "tmapi" / "cache" / "meta_clubs.json.gz"

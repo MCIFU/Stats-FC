@@ -1,0 +1,1 @@
+window.FC_MD=window.FC_MD||{};window.FC_MD[5883246]={"id":5883246,"date":"2026-09-04T19:15:00.000Z","lid":938778,"league":"Primera Federacion - Group 1","round":"2","h":[8005,"Ponferradina",0],"a":[8206,"Lugo",0],"reason":"FT","pens":null,"stadium":null,"ref":["",""],"att":null,"pom":null,"ev":[],"lu":{"h":null,"a":null},"stats":[],"colors":{"home":"#023877","away":"#E5101D"}};

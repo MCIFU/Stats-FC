@@ -529,6 +529,21 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
     pos = base.drop_duplicates("player_id").set_index("player_id").pos_group
     m["pos_group"] = m.player_id.map(pos)
     m["match_rating"] = match_ratings(m, cfg)
+    # v1.5: porteros sin nota SofaScore -> la nota del partido dependía solo de los goles encajados (del equipo).
+    # Se mezcla con su capacidad de parada de la temporada (percentil de goles evitados y % de paradas entre porteros).
+    R = cfg["model"]["match_rating"]
+    wss = R.get("gk_shot_stopping_weight", 0)
+    if wss:
+        bb = base.drop_duplicates("player_id").set_index("player_id")
+        gk = bb[bb.pos_group == "GK"]
+        cols = [c for c in ("gk_psxg_minus_ga_p90", "gk_save_pct") if c in gk]
+        if cols:
+            ok = gk.LIGA_Min.fillna(0) >= 450
+            ss = pd.concat([gk[c].where(ok).rank(pct=True) * 100 for c in cols], axis=1).mean(axis=1)
+            mg = m.pos_group == "GK"
+            if "sofa_rating" in m:
+                mg &= pd.to_numeric(m.sofa_rating, errors="coerce").isna()
+            m.loc[mg, "match_rating"] = (1 - wss) * m.loc[mg, "match_rating"] + wss * m.loc[mg, "player_id"].map(ss).fillna(50).to_numpy()
     m["good"] = (m.match_rating >= m.groupby("pos_group").match_rating.transform("median")).astype(float)
     comp = base.drop_duplicates("player_id").set_index("player_id").competition_strength
     elo, rows, n_seen = {}, [], {}
@@ -564,6 +579,22 @@ def match_layer(matches: pd.DataFrame, base: pd.DataFrame, cfg, team_games: pd.D
         rows.append({**r._asdict(), "opp_elo": opp, "opp_strength_match": opp_str, "elo_before": elo[p], "expected": exp, "score": score, "elo_delta": delta})
         elo[p] += delta
     mm = pd.DataFrame(rows)
+    # v1.5: los porteros tienen más dispersión de ELO que los de campo (su nota depende de pocos factores): se encoge su
+    # distancia al ELO de salida de su liga para que tengan la misma desviación típica que el resto.
+    if E.get("equalize_gk_spread", True) and len(mm):
+        pg = mm.drop_duplicates("player_id").set_index("player_id").pos_group
+        anc = {p: _elo_init(comp.get(p, np.nan), E) for p in elo}
+        dev = pd.Series({p: elo[p] - anc[p] for p in elo})
+        isgk = dev.index.map(lambda p: pg.get(p) == "GK")
+        sd_gk, sd_f = dev[isgk].std(), dev[~isgk].std()
+        if pd.notna(sd_gk) and sd_gk > 0 and pd.notna(sd_f):
+            k = float(np.clip(sd_f / sd_gk, 0.5, 1.0))
+            for p in dev.index[isgk]:
+                elo[p] = anc[p] + (elo[p] - anc[p]) * k
+            g = mm.pos_group == "GK"
+            a = mm.loc[g, "player_id"].map(anc)
+            mm.loc[g, "elo_before"] = a + (mm.loc[g, "elo_before"] - a) * k
+            mm.loc[g, "elo_delta"] = mm.loc[g, "elo_delta"] * k
     sc = E["scale_to_100"]
     out = []
     # v1.3: FORMA y REGULARIDAD miran también el final de la temporada anterior (últimos 10 partidos reales)

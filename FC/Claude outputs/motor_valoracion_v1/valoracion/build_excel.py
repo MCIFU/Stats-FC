@@ -288,7 +288,10 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
     wp.column_dimensions["A"].hidden = True
 
     # ---------------- DESGLOSE_CA (de la nota a la estadística)
-    wd = wb.create_sheet("DESGLOSE_CA")
+    # v1.5: en un libro aparte (…_desglose.xlsx): era la hoja más pesada y el libro principal pasaba de 70 MB
+    wb3 = Workbook()
+    wb3.remove(wb3.active)
+    wd = wb3.create_sheet("DESGLOSE_CA")
     groups = cfg["positions"]["groups"]
     rated = b[b.CA_FINAL.notna()]
     chunks = []
@@ -475,6 +478,10 @@ def build(base, cfg, out_path, raw=None, sims=None, corr=None, matches=None, his
         w.sheet_properties.tabColor = TABS.get(w.title, "64748B")
         _tabla(w)
     wb2.save(str(out_path).replace(".xlsx", "_partidos.xlsx"))
+    for w in wb3.worksheets:
+        w.sheet_properties.tabColor = TABS.get(w.title, "64748B")
+        _tabla(w)
+    wb3.save(str(out_path).replace(".xlsx", "_desglose.xlsx"))
     return b
 
 
@@ -623,7 +630,7 @@ def build_leeme(ws, cfg, b, source_note):
         ("Un sistema propio y explicable. NO copia el ELO de BeSoccer ni el CA/PA de Football Manager. Cada número se puede seguir hasta la estadística original.", F_BASE),
         ("", None),
         ("FLUJO", F_BOLD),
-        ("DATOS_ORIGEN → per90 → ajuste por muestra → PERCENTILES (posición; liga y global) → ATRIBUTOS → ROLES → CA → REL_PERF → PA → SCOUT.  ELO / FORM / CONSISTENCY: capa por partido. Las hojas ELO_PARTIDOS y DATOS_ORIGEN están en el libro …_partidos.xlsx (mismo nombre + _partidos).", F_BASE),
+        ("DATOS_ORIGEN → per90 → ajuste por muestra → PERCENTILES (posición; liga y global) → ATRIBUTOS → ROLES → CA → REL_PERF → PA → SCOUT.  ELO / FORM / CONSISTENCY: capa por partido. Las hojas ELO_PARTIDOS y DATOS_ORIGEN están en el libro …_partidos.xlsx y DESGLOSE_CA en …_desglose.xlsx (mismo nombre + sufijo).", F_BASE),
         ("", None),
         ("MÉTRICAS (separadas, no son la misma cosa)", F_BOLD),
         ("CA (Current Ability): nivel actual estimado. CA_RAW = sin contexto; CA_CONTEXT = cómo domina en su liga, situado según el nivel de esa liga; CA_FINAL = mezcla, encogida hacia la media de su liga si hay pocos minutos.", F_BASE),

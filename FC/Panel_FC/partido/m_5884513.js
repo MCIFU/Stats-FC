@@ -1,0 +1,1 @@
+window.FC_MD=window.FC_MD||{};window.FC_MD[5884513]={"id":5884513,"date":"2026-09-27T15:00:00.000Z","lid":938792,"league":"Segunda Federacion - Group 2","round":"4","h":[190077,"Náxara",0],"a":[8214,"Barbastro",0],"reason":"FT","pens":null,"stadium":null,"ref":["",""],"att":null,"pom":null,"ev":[],"lu":{"h":null,"a":null},"stats":[],"colors":{"home":"#333333","away":"#D24109"}};

@@ -1,0 +1,1 @@
+window.FC_MD=window.FC_MD||{};window.FC_MD[5885197]={"id":5885197,"date":"2026-09-05T19:00:00.000Z","lid":938794,"league":"Segunda Federacion - Group 4","round":"1","h":[177231,"CD Estepona",0],"a":[9868,"Xerez",0],"reason":"FT","pens":null,"stadium":null,"ref":["",""],"att":null,"pom":null,"ev":[],"lu":{"h":null,"a":null},"stats":[],"colors":{"home":"#DA202B","away":"#333333"}};
