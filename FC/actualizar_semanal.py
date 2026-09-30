@@ -33,7 +33,10 @@ LIGAS = ("Eredivisie,Süper Lig,Liga Belga,Saudi Pro,Liga MX,Scottish Premiershi
          "Primera Federación,Segunda Federación,League One,League Two,National League,Ligue 2,Ligue 3,3. Liga,Regionalliga,Serie C")
 
 
-def run(args, cwd=FC, env=None):
+FALLOS = []
+
+
+def run(args, cwd=FC, env=None, critico=False):
     t0 = dt.datetime.now()
     print(f"\n=== {' '.join(str(a) for a in args)}", flush=True)
     with open(LOG, "a", encoding="utf-8") as log:
@@ -43,7 +46,13 @@ def run(args, cwd=FC, env=None):
                            stdout=log, stderr=subprocess.STDOUT)
         log.write(f"--- código {r.returncode} en {(dt.datetime.now() - t0).seconds // 60} min\n")
     if r.returncode:
-        sys.exit(f"Falló: {' '.join(map(str, args))} (ver {LOG})")
+        # un paso secundario que falla (una liga, un equipo, una web caída) no para la actualización:
+        # se anota y se sigue con lo que ya había; solo la valoración final (run_all) es imprescindible
+        msg = f"Falló: {' '.join(map(str, args))} (ver {LOG})"
+        if critico:
+            sys.exit(msg)
+        print("  AVISO " + msg, flush=True)
+        FALLOS.append(Path(str(args[0])).name)
 
 
 def main():
@@ -58,7 +67,7 @@ def main():
         run([AUX / "ligas/descargar_ligas.py", "--refrescar", "0.5"])
         run([AUX / "ligas/descargar_historia_ligas.py", "--refrescar", "0.5"])
         run([AUX / "partidos/descargar_detalle_partidos.py"])
-        print(f"\nListo (diario). Registro: {LOG}")
+        print(f"\nListo (diario). Registro: {LOG}" + (f" · pasos con fallo: {', '.join(FALLOS)}" if FALLOS else ""))
         return
     env = {"TM_REFRESH_DAYS": "perf/=5,squads/=27,ligas/=27"}
     if not a.sin_ligas:
@@ -79,8 +88,8 @@ def main():
     run([AUX / "selecciones/descargar_selecciones.py", "--refrescar", "3"])
     run([AUX / "partidos/descargar_detalle_partidos.py"])
     run(["run_all.py", "../../../Temporada 2025-26.xlsx", "../../../Temporada 2026-27.xlsx", "../../Valoracion_FC_v1.2.xlsx",
-         "--partidos", "../../partidos_TM.csv.gz", "--avanzadas", "../../avanzadas.csv"], cwd=VAL)
-    print(f"\nListo. Registro: {LOG}")
+         "--partidos", "../../partidos_TM.csv.gz", "--avanzadas", "../../avanzadas.csv"], cwd=VAL, critico=True)
+    print(f"\nListo. Registro: {LOG}" + (f" · pasos con fallo (se usaron los datos anteriores): {', '.join(FALLOS)}" if FALLOS else ""))
 
 
 if __name__ == "__main__":

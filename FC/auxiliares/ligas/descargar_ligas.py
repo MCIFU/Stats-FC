@@ -151,6 +151,8 @@ def main():
             d = json.loads(gzip.decompress(tj.read_bytes()))
         except Exception:  # noqa: BLE001
             continue
+        if not isinstance(d, dict):  # equipo que FotMob no devolvió (se guarda vacío en la caché)
+            continue
         tid = (d.get("details") or {}).get("id")
         for grp in ((d.get("squad") or {}).get("squad") or []):
             for m in grp.get("members") or []:
